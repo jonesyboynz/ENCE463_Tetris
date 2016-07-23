@@ -40,10 +40,15 @@
 #include "inc\hw_sysctl.h"
 #include "driverlib/sysctl.h"
 #include "drivers/rit128x96x4.h"
+#include "stdio.h"
+#include "stdlib.h"
 
 /* Demo includes. */
-#include "display.h"
 #include "demo_code\basic_io.h"
+
+/* tetris game engine includes */
+#include "display.h"
+#include "game_engine.h"
 
 /* Used as a loop counter to create a very crude delay. */
 #define mainDELAY_LOOP_COUNT		( 0xfffff )
@@ -52,6 +57,8 @@
 void vTaskFunction( void *pvParameters );
 void vTaskDelayTest(void* pvParameters);
 void vTaskImageFun(void* pvParameters);
+void write_background(void* parameters);
+void tetronimoe_drop_test(void* parameters);
 
 /* Define the strings that will be passed in as the task parameters.  These are
 defined const and off the stack to ensure they remain valid when the tasks are
@@ -68,21 +75,25 @@ int main( void )
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
 	RIT128x96x4Init(1000000);
 
+	initalise_game(&game);
+
 	/* Create one of the two tasks. */
-	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
-					"Task 1",				/* Text name for the task.  This is to facilitate debugging only. */
-					240,					/* Stack depth in words. */
-					(void*)pcTextForTask1,	/* Pass the text to be printed in as the task parameter. */
-					1,						/* This task will run at priority 1. */
-					NULL );					/* We are not using the task handle. */
+//	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
+//					"Task 1",				/* Text name for the task.  This is to facilitate debugging only. */
+//					240,					/* Stack depth in words. */
+//					(void*)pcTextForTask1,	/* Pass the text to be printed in as the task parameter. */
+//					1,						/* This task will run at priority 1. */
+//					NULL );					/* We are not using the task handle. */
 
 	/* Create the other task in exactly the same way.  Note this time that we
 	are creating the SAME task, but passing in a different parameter.  We are
 	creating two instances of a single task implementation. */
-	xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
+	//xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
 
-	xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
-	xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
+	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
+	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
+	//xTaskCreate(write_background, "Task 5", 500, NULL, 1, NULL);
+	xTaskCreate(tetronimoe_drop_test, "Task 6", 500, NULL, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -133,11 +144,31 @@ void vTaskDelayTest(void* pvParameters){
 	}
 }
 
+void write_background(void* parameters){
+	write_image(&TETRIS_BACKGROUND, 0, 0);
+	vTaskDelete(NULL);
+}
+void tetronimoe_drop_test(void* parameters){
+	char buffer[10];
+	//portTickType xLastWakeTime;
+	while (1){
+		game.tetrominoes[game.current_peice_index] -> x = 2;
+		draw_current_tetrominoe(&game);
+		vTaskDelay(500 / portTICK_RATE_MS);
+		erase_current_tetrominoe(&game);
+		game.tetrominoes[game.current_peice_index] -> y = (game.tetrominoes[game.current_peice_index] -> y + 1) % 17;
+		if (game.tetrominoes[game.current_peice_index] -> y == 0){
+			game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
+		}
+		snprintf(buffer, 10, "I:%d ", game.tetrominoes[game.current_peice_index] -> y);
+		write_string(buffer, 0, 89, 15);
+	}
+}
+
 void vTaskImageFun(void* pvParameters){
 	int x = 0;
 	portTickType xLastWakeTime;
 	while (1){
-		clear_display();
 		write_image(&EMPTY_CELL, x, 60);
 		x = (x + 1) % 100;
 		write_image(&FULL_CELL, x, 60);

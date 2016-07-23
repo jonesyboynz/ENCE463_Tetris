@@ -18,7 +18,9 @@ C_SRCS += \
 ../queue.c \
 ../rit128x96x4.c \
 ../startup_ccs.c \
-../tasks.c 
+../tasks.c \
+../tetris_background.c \
+../tetrominoe.c 
 
 OBJS += \
 ./display.obj \
@@ -29,7 +31,9 @@ OBJS += \
 ./queue.obj \
 ./rit128x96x4.obj \
 ./startup_ccs.obj \
-./tasks.obj 
+./tasks.obj \
+./tetris_background.obj \
+./tetrominoe.obj 
 
 C_DEPS += \
 ./display.pp \
@@ -40,7 +44,9 @@ C_DEPS += \
 ./queue.pp \
 ./rit128x96x4.pp \
 ./startup_ccs.pp \
-./tasks.pp 
+./tasks.pp \
+./tetris_background.pp \
+./tetrominoe.pp 
 
 C_DEPS__QUOTED += \
 "display.pp" \
@@ -51,7 +57,9 @@ C_DEPS__QUOTED += \
 "queue.pp" \
 "rit128x96x4.pp" \
 "startup_ccs.pp" \
-"tasks.pp" 
+"tasks.pp" \
+"tetris_background.pp" \
+"tetrominoe.pp" 
 
 OBJS__QUOTED += \
 "display.obj" \
@@ -62,7 +70,9 @@ OBJS__QUOTED += \
 "queue.obj" \
 "rit128x96x4.obj" \
 "startup_ccs.obj" \
-"tasks.obj" 
+"tasks.obj" \
+"tetris_background.obj" \
+"tetrominoe.obj" 
 
 OUT_SRCS__QUOTED += \
 "../blank_splash.out" 
@@ -76,6 +86,8 @@ C_SRCS__QUOTED += \
 "../queue.c" \
 "../rit128x96x4.c" \
 "../startup_ccs.c" \
-"../tasks.c" 
+"../tasks.c" \
+"../tetris_background.c" \
+"../tetrominoe.c" 
 
 

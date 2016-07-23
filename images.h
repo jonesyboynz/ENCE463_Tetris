@@ -17,5 +17,6 @@ extern const Image SMALL_CUBE;
 extern const Image CUBE;
 extern const Image FULL_CELL;
 extern const Image EMPTY_CELL;
+extern const Image TETRIS_BACKGROUND;
 
 #endif

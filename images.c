@@ -6,6 +6,7 @@
  */
 
 #include "images.h"
+#include "tetris_background.h" //includes the (extremely large) tetris background image
 
 const unsigned char CUBE_DATA[8] = {0x77, 0x77,
 									0x7f, 0x7f,
@@ -36,3 +37,5 @@ const Image SMALL_CUBE = {SMALL_CUBE_DATA, 2, 2};
 const Image FULL_CELL = {FULL_CELL_DATA, 6, 6};
 
 const Image EMPTY_CELL = {EMPTY_CELL_DATA, 6, 6};
+
+const Image TETRIS_BACKGROUND = {TETRIS_BACKGROUND_DATA, 124, 64};
