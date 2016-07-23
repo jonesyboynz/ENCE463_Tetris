@@ -14,6 +14,9 @@ main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_sysctl.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/sysctl.h
+main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h
+main.obj: ../display.h
+main.obj: ../images.h
 main.obj: ../demo_code/basic_io.h
 
 ../main.c: 
@@ -30,4 +33,7 @@ P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h:
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_sysctl.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/sysctl.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h: 
+../display.h: 
+../images.h: 
 ../demo_code/basic_io.h: 

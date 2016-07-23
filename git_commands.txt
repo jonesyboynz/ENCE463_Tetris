@@ -3,3 +3,6 @@ git add -A
 git commit -m "<message>"
 git push -u origin master
 
+#On windows git behaves slightly differently.
+git push https://eng-git.canterbury.ac.nz/ence463-2016/srj52.git master
+git pull https://eng-git.canterbury.ac.nz/ence463-2016/srj52.git master

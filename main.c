@@ -39,8 +39,10 @@
 #include "inc\hw_memmap.h"
 #include "inc\hw_sysctl.h"
 #include "driverlib/sysctl.h"
+#include "drivers/rit128x96x4.h"
 
 /* Demo includes. */
+#include "display.h"
 #include "demo_code\basic_io.h"
 
 /* Used as a loop counter to create a very crude delay. */
@@ -48,6 +50,8 @@
 
 /* The task function. */
 void vTaskFunction( void *pvParameters );
+void vTaskDelayTest(void* pvParameters);
+void vTaskImageFun(void* pvParameters);
 
 /* Define the strings that will be passed in as the task parameters.  These are
 defined const and off the stack to ensure they remain valid when the tasks are
@@ -62,6 +66,7 @@ int main( void )
 	/* Set the clocking to run from the PLL at 50 MHz.  Assumes 8MHz XTAL,
 	whereas some older eval boards used 6MHz. */
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
+	RIT128x96x4Init(1000000);
 
 	/* Create one of the two tasks. */
 	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
@@ -75,6 +80,9 @@ int main( void )
 	are creating the SAME task, but passing in a different parameter.  We are
 	creating two instances of a single task implementation. */
 	xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
+
+	xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
+	xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -100,7 +108,6 @@ volatile unsigned long ul;
 	{
 		/* Print out the name of this task. */
 		vPrintString( pcTaskName );
-
 		/* Delay for a period. */
 		for( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++ )
 		{
@@ -111,6 +118,32 @@ volatile unsigned long ul;
 	}
 }
 /*-----------------------------------------------------------*/
+
+void vTaskDelayTest(void* pvParameters){
+	portTickType xLastWakeTime;
+	while (1){
+		taskENTER_CRITICAL();
+		RIT128x96x4StringDraw("    Hz", 30, 24, 15);
+		taskEXIT_CRITICAL();
+		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
+		taskENTER_CRITICAL();
+		RIT128x96x4StringDraw("One   ", 30, 24, 15);
+		taskEXIT_CRITICAL();
+		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
+	}
+}
+
+void vTaskImageFun(void* pvParameters){
+	int x = 0;
+	portTickType xLastWakeTime;
+	while (1){
+		clear_display();
+		write_image(&EMPTY_CELL, x, 60);
+		x = (x + 1) % 100;
+		write_image(&FULL_CELL, x, 60);
+		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
+	}
+}
 
 void vApplicationMallocFailedHook( void )
 {
