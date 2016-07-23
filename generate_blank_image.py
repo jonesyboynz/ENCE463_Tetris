@@ -7,6 +7,10 @@ else:
 	width = 128
 	height = 96
 
+assert(width % 2 == 0)
+
+width = width // 2
+
 print("{", end = '')
 for i in range(0, height):
 	for j in range(0, width):
