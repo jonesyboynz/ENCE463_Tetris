@@ -24,6 +24,7 @@ main.obj: ../display.h
 main.obj: ../images.h
 main.obj: ../game_engine.h
 main.obj: ../tetrominoe.h
+main.obj: ../bool.h
 
 ../main.c: 
 ../include/FreeRTOS.h: 
@@ -49,3 +50,4 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h:
 ../images.h: 
 ../game_engine.h: 
 ../tetrominoe.h: 
+../bool.h: 

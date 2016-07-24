@@ -39,37 +39,13 @@ const TetrominoeGrid i_pose2 = {0, 0, 0, 0,
 
 Tetrominoe block0 = {0, 0, 0, {&i_pose1, &i_pose2, &i_pose1, &i_pose2}};
 
-//t block definition
-
-const TetrominoeGrid t_pose1 = {0, 1, 0, 0,
-								1, 1, 1, 0,
-								0, 0, 0, 0,
-								0, 0, 0, 0};
-
-const TetrominoeGrid t_pose2 = {0, 1, 0, 0,
-								0, 1, 1, 0,
-								0, 1, 0, 0,
-								0, 0, 0, 0};
-
-const TetrominoeGrid t_pose3 = {0, 0, 0, 0,
-								1, 1, 1, 0,
-								0, 1, 0, 0,
-								0, 0, 0, 0};
-
-const TetrominoeGrid t_pose4 = {0, 1, 0, 0,
-								1, 1, 0, 0,
-								0, 1, 0, 0,
-								0, 0, 0, 0};
-
-Tetrominoe block6 = {0, 0, 0, {&t_pose1, &t_pose2, &t_pose3, &t_pose4}};
-
 //square block defintion
 const TetrominoeGrid s_pose1 = {0, 0, 0, 0,
 								0, 1, 1, 0,
 								0, 1, 1, 0,
 								0, 0, 0, 0};
 
-Tetrominoe block2 = {&s_pose1, &s_pose1, &s_pose1, &s_pose1};
+Tetrominoe block1 = {0, 0, 0, {&s_pose1, &s_pose1, &s_pose1, &s_pose1}};
 
 //left L block definition
 
@@ -93,7 +69,7 @@ const TetrominoeGrid ll_pose4 = {	0, 0, 0, 0,
 									1, 0, 0, 0,
 									0, 0, 0, 0};
 
-Tetrominoe block3 = {&ll_pose1, &ll_pose2, &ll_pose3, &ll_pose4};
+Tetrominoe block2 = {0, 0, 0, {&ll_pose1, &ll_pose2, &ll_pose3, &ll_pose4}};
 
 //right L block definition
 
@@ -117,7 +93,7 @@ const TetrominoeGrid rl_pose4 = {	1, 0, 0, 0,
 									0, 0, 0, 0,
 									0, 0, 0, 0};
 
-Tetrominoe block3 = {&rl_pose1, &rl_pose2, &rl_pose3, &rl_pose4};
+Tetrominoe block3 = {0, 0, 0, {&rl_pose1, &rl_pose2, &rl_pose3, &rl_pose4}};
 
 //left Z block definition
 
@@ -131,7 +107,7 @@ const TetrominoeGrid lz_pose2 = {	0, 1, 1, 0,
 									0, 0, 0, 0,
 									0, 0, 0, 0};
 
-Tetrominoe block4 = {&lz_pose1, &lz_pose2, &lz_pose1, &lz_pose2};
+Tetrominoe block4 = {0, 0, 0, {&lz_pose1, &lz_pose2, &lz_pose1, &lz_pose2}};
 
 //right Z block definition
 
@@ -145,8 +121,30 @@ const TetrominoeGrid rz_pose2 = {	1, 1, 0, 0,
 									0, 0, 0, 0,
 									0, 0, 0, 0};
 
-Tetrominoe block5 = {&rz_pose1, &rz_pose2, &rz_pose1, &rz_pose2};
+Tetrominoe block5 = {0, 0, 0, {&rz_pose1, &rz_pose2, &rz_pose1, &rz_pose2}};
 
 
+//t block definition
 
+const TetrominoeGrid t_pose1 = {0, 1, 0, 0,
+								1, 1, 1, 0,
+								0, 0, 0, 0,
+								0, 0, 0, 0};
+
+const TetrominoeGrid t_pose2 = {0, 1, 0, 0,
+								0, 1, 1, 0,
+								0, 1, 0, 0,
+								0, 0, 0, 0};
+
+const TetrominoeGrid t_pose3 = {0, 0, 0, 0,
+								1, 1, 1, 0,
+								0, 1, 0, 0,
+								0, 0, 0, 0};
+
+const TetrominoeGrid t_pose4 = {0, 1, 0, 0,
+								1, 1, 0, 0,
+								0, 1, 0, 0,
+								0, 0, 0, 0};
+
+Tetrominoe block6 = {0, 0, 0, {&t_pose1, &t_pose2, &t_pose3, &t_pose4}};
 

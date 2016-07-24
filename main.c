@@ -49,6 +49,8 @@
 /* tetris game engine includes */
 #include "display.h"
 #include "game_engine.h"
+#include "tetrominoe.h"
+#include "bool.h"
 
 /* Used as a loop counter to create a very crude delay. */
 #define mainDELAY_LOOP_COUNT		( 0xfffff )
@@ -59,6 +61,7 @@ void vTaskDelayTest(void* pvParameters);
 void vTaskImageFun(void* pvParameters);
 void write_background(void* parameters);
 void tetronimoe_drop_test(void* parameters);
+void tetronimoe_drop_test2(void* parameters);
 
 /* Define the strings that will be passed in as the task parameters.  These are
 defined const and off the stack to ensure they remain valid when the tasks are
@@ -93,7 +96,7 @@ int main( void )
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 	//xTaskCreate(write_background, "Task 5", 500, NULL, 1, NULL);
-	xTaskCreate(tetronimoe_drop_test, "Task 6", 500, NULL, 1, NULL);
+	xTaskCreate(tetronimoe_drop_test2, "Task 6", 500, NULL, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -148,20 +151,41 @@ void write_background(void* parameters){
 	write_image(&TETRIS_BACKGROUND, 0, 0);
 	vTaskDelete(NULL);
 }
+
 void tetronimoe_drop_test(void* parameters){
-	char buffer[10];
 	//portTickType xLastWakeTime;
 	while (1){
-		game.tetrominoes[game.current_peice_index] -> x = 2;
+		game.tetrominoes[game.current_peice_index] -> x = 0;
 		draw_current_tetrominoe(&game);
-		vTaskDelay(500 / portTICK_RATE_MS);
+		vTaskDelay(250 / portTICK_RATE_MS);
 		erase_current_tetrominoe(&game);
 		game.tetrominoes[game.current_peice_index] -> y = (game.tetrominoes[game.current_peice_index] -> y + 1) % 17;
 		if (game.tetrominoes[game.current_peice_index] -> y == 0){
+			rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
 			game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
 		}
-		snprintf(buffer, 10, "I:%d ", game.tetrominoes[game.current_peice_index] -> y);
-		write_string(buffer, 0, 89, 15);
+	}
+}
+
+void tetronimoe_drop_test2(void* parameters){
+	//portTickType xLastWakeTime;
+	int x_pos = 0;
+	while (1){
+		game.tetrominoes[game.current_peice_index] -> x = x_pos;
+		draw_current_tetrominoe(&game);
+		vTaskDelay(250 / portTICK_RATE_MS);
+		if (can_drop_current_tetrominoe(&game) == TRUE){
+			erase_current_tetrominoe(&game);
+			game.tetrominoes[game.current_peice_index] -> y = (game.tetrominoes[game.current_peice_index] -> y + 1);
+		}
+		else{
+			place_current_tetrominoe(&game);
+			//debug_board(&game);
+			game.tetrominoes[game.current_peice_index] -> y = 0;
+			rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
+			game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
+			x_pos = (x_pos + 2) % 7;
+		}
 	}
 }
 
