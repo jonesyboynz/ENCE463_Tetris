@@ -26,11 +26,11 @@ typedef struct tetrominoe_s {
 } Tetrominoe;
 
 extern Tetrominoe block0; //line
-//extern Tetrominoe block1; //square
-//extern Tetrominoe block2; //left L
-//extern Tetrominoe block3; //right L
-//extern Tetrominoe block4; //left Z
-//extern Tetrominoe block5; //right Z
+extern Tetrominoe block1; //square
+extern Tetrominoe block2; //left L
+extern Tetrominoe block3; //right L
+extern Tetrominoe block4; //left Z
+extern Tetrominoe block5; //right Z
 extern Tetrominoe block6; //t
 
 void reset_tetromineo(Tetrominoe* block);
