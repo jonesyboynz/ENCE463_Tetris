@@ -68,4 +68,8 @@ void place_current_tetrominoe(Game* game);
 
 void debug_board(Game* game);
 
+int spawn_block(Game* game);
+
+void get_next_tetrominie(Game* game);
+
 #endif

@@ -149,7 +149,7 @@ void place_current_tetrominoe(Game* game){//places the current tetrominoe on the
 	}
 }
 
-void debug_board(Game* game){
+void debug_board(Game* game){//prints the current state of the board in the CCS console
 	char text[DEFAULT_GRID_WIDTH + 4];
 	const char *new_line1 = "\n";
 	const char *new_line2 = "END\n";
@@ -166,4 +166,29 @@ void debug_board(Game* game){
 		vPrintString(new_line1);
 	}
 	vPrintString(new_line2);
+}
+
+int spawn_block(Game* game){//spawns the current block
+	Tetrominoe* current_tetrominoe = get_current_tetrominoe(game);
+	current_tetrominoe -> rotation_state = 0;
+	current_tetrominoe -> x = DEFAULT_GRID_WIDTH / 2 - TETROMINOE_GRID_WIDTH / 2 - 1;
+	current_tetrominoe -> y = -1;
+	if (current_tetrominoe_can_occupy(game, 0, 0, 0) == TRUE){
+		return TRUE;
+	}
+	else if (current_tetrominoe_can_occupy(game, 0, 1, 0) == TRUE){
+		current_tetrominoe -> y += 1;
+		return TRUE;
+	}
+	else{
+		return FALSE; //cannot place tetrominoe. game over
+	}
+}
+
+void get_next_tetrominie(Game* game){ //shifts the next tetrominoe index into the current tetrominoe and randomly selects the next tetrominoe
+	//game -> current_tetrominoe_index = game -> next_tetromine_index;
+	//int next = get_random(0, #NUM_TETROMINES);
+	//while (game -> current_tetromine_index == next && game -> repetitions >= 4){
+	//	next = next = get_random(0, #NUM_TETROMINES);
+	//}
 }
