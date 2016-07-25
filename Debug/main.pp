@@ -10,6 +10,7 @@ main.obj: ../include/../portable/portmacro.h
 main.obj: ../include/mpu_wrappers.h
 main.obj: ../include/task.h
 main.obj: ../include/list.h
+main.obj: ../include/queue.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_sysctl.h
@@ -22,8 +23,10 @@ main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 main.obj: ../demo_code/basic_io.h
 main.obj: ../display.h
 main.obj: ../images.h
+main.obj: ../include/queue.h
 main.obj: ../game_engine.h
 main.obj: ../tetrominoe.h
+main.obj: ../include/queue.h
 main.obj: ../bool.h
 
 ../main.c: 
@@ -36,6 +39,7 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stddef.h:
 ../include/mpu_wrappers.h: 
 ../include/task.h: 
 ../include/list.h: 
+../include/queue.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_sysctl.h: 
@@ -48,6 +52,8 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h:
 ../demo_code/basic_io.h: 
 ../display.h: 
 ../images.h: 
+../include/queue.h: 
 ../game_engine.h: 
 ../tetrominoe.h: 
+../include/queue.h: 
 ../bool.h: 

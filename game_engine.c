@@ -1,6 +1,7 @@
 /* FreeRTOS includes. */
 #include "include/FreeRTOS.h"
 #include "include/task.h"
+#include "include/queue.h"
 
 /* Demo includes. */
 #include "demo_code\basic_io.h"
@@ -11,11 +12,14 @@
 #include "display.h"
 #include "bool.h"
 
+#include "stdlib.h"
+
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
 Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
-Game game = {&game_board, tetrominoes, 7, 0};
+
+Game game = {&game_board, tetrominoes, 7, 0, NULL};
 
 void clear_board(Board* board){ //clears all the 
 	int i;
@@ -31,7 +35,8 @@ void initalise_game(Game* game){ //intalises the game. Mainly clears data
 		reset_tetromineo(game -> tetrominoes[i]);
 	}
 	game -> current_peice_index = 0;
-	draw_background();
+	//create_display_queue(game -> display_queue);
+	draw_background(); //move this somewhere else???
 }
 
 void draw_background(void){ //draws the background at pre-defined offset
@@ -58,7 +63,11 @@ void draw_current_tetrominoe_as(Game* game, const Image* image){ //draws a tetro
 		if (tetrominoe_array[i] != 0){
 			int y_pos = calculate_tetris_grid_y_position(game -> board, current_tetrominoe -> x + i % TETROMINOE_GRID_WIDTH, image -> height);
 			int x_pos = calculate_tetris_grid_x_position(game -> board, current_tetrominoe -> y + i / TETROMINOE_GRID_HEIGHT, image -> width);
-			write_image(image, x_pos, y_pos);
+
+			DisplayTask task = {(void*) image, x_pos, y_pos, WRITE_IMAGE};
+			//execute_display_task(&task);
+			enqueue_display_task(game -> display_queue, &task);
+			//write_image(image, x_pos, y_pos);
 		}
 	}
 }

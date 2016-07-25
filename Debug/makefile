@@ -8,6 +8,7 @@ CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/arm_5.1.6
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
+"./buttons.obj" \
 "./display.obj" \
 "./game_engine.obj" \
 "./images.obj" \
@@ -159,8 +160,8 @@ ENCE463-Tetris.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "display.pp" "game_engine.pp" "images.pp" "list.pp" "main.pp" "queue.pp" "rit128x96x4.pp" "startup_ccs.pp" "tasks.pp" "tetris_background.pp" "tetrominoe.pp" "portable\heap_2.pp" "portable\port.pp" "demo_code\basic_io.pp" 
-	-$(RM) "display.obj" "game_engine.obj" "images.obj" "list.obj" "main.obj" "queue.obj" "rit128x96x4.obj" "startup_ccs.obj" "tasks.obj" "tetris_background.obj" "tetrominoe.obj" "portable\heap_2.obj" "portable\port.obj" "portable\portasm.obj" "demo_code\basic_io.obj" 
+	-$(RM) "buttons.pp" "display.pp" "game_engine.pp" "images.pp" "list.pp" "main.pp" "queue.pp" "rit128x96x4.pp" "startup_ccs.pp" "tasks.pp" "tetris_background.pp" "tetrominoe.pp" "portable\heap_2.pp" "portable\port.pp" "demo_code\basic_io.pp" 
+	-$(RM) "buttons.obj" "display.obj" "game_engine.obj" "images.obj" "list.obj" "main.obj" "queue.obj" "rit128x96x4.obj" "startup_ccs.obj" "tasks.obj" "tetris_background.obj" "tetrominoe.obj" "portable\heap_2.obj" "portable\port.obj" "portable\portasm.obj" "demo_code\basic_io.obj" 
 	-$(RM) "portable\portasm.pp" 
 	-@echo 'Finished clean'
 	-@echo ' '

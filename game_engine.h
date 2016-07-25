@@ -16,6 +16,7 @@
 
 #include "tetrominoe.h"
 #include "images.h"
+#include "include/queue.h"
 
 typedef struct board_s {
 	int* grid;
@@ -28,6 +29,7 @@ typedef struct game_s {
 	Tetrominoe** tetrominoes;
 	int num_tetrominoes;
 	int current_peice_index;
+	xQueueHandle* display_queue;
 } Game;
 
 extern Game game;

@@ -10,6 +10,7 @@ OUT_SRCS += \
 ../blank_splash.out 
 
 C_SRCS += \
+../buttons.c \
 ../display.c \
 ../game_engine.c \
 ../images.c \
@@ -23,6 +24,7 @@ C_SRCS += \
 ../tetrominoe.c 
 
 OBJS += \
+./buttons.obj \
 ./display.obj \
 ./game_engine.obj \
 ./images.obj \
@@ -36,6 +38,7 @@ OBJS += \
 ./tetrominoe.obj 
 
 C_DEPS += \
+./buttons.pp \
 ./display.pp \
 ./game_engine.pp \
 ./images.pp \
@@ -49,6 +52,7 @@ C_DEPS += \
 ./tetrominoe.pp 
 
 C_DEPS__QUOTED += \
+"buttons.pp" \
 "display.pp" \
 "game_engine.pp" \
 "images.pp" \
@@ -62,6 +66,7 @@ C_DEPS__QUOTED += \
 "tetrominoe.pp" 
 
 OBJS__QUOTED += \
+"buttons.obj" \
 "display.obj" \
 "game_engine.obj" \
 "images.obj" \
@@ -78,6 +83,7 @@ OUT_SRCS__QUOTED += \
 "../blank_splash.out" 
 
 C_SRCS__QUOTED += \
+"../buttons.c" \
 "../display.c" \
 "../game_engine.c" \
 "../images.c" \

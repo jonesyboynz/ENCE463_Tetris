@@ -33,6 +33,7 @@
 /* FreeRTOS includes. */
 #include "include/FreeRTOS.h"
 #include "include/task.h"
+#include "include/queue.h"
 
 /* Stellaris library includes. */
 #include "inc\hw_types.h"
@@ -62,6 +63,7 @@ void vTaskImageFun(void* pvParameters);
 void write_background(void* parameters);
 void tetronimoe_drop_test(void* parameters);
 void tetronimoe_drop_test2(void* parameters);
+void vQueueTest(void* parameters);
 
 /* Define the strings that will be passed in as the task parameters.  These are
 defined const and off the stack to ensure they remain valid when the tasks are
@@ -96,7 +98,17 @@ int main( void )
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 	//xTaskCreate(write_background, "Task 5", 500, NULL, 1, NULL);
+
+	xQueueHandle display_queue2;
+	display_queue2 = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
+	//create_display_queue(display_queue2);
+	game.display_queue = &display_queue2;
+
 	xTaskCreate(tetronimoe_drop_test2, "Task 6", 500, NULL, 1, NULL);
+
+	xTaskCreate(xDisplayTask, "display task", 500, (void*) display_queue2, 1, NULL);
+
+	xTaskCreate(vQueueTest, "display task test", 500, (void*) display_queue2, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -199,6 +211,20 @@ void vTaskImageFun(void* pvParameters){
 		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
 	}
 }
+
+void vQueueTest(void* parameters){
+	xQueueHandle display_queue = (xQueueHandle) parameters;
+
+	while (1){
+		DisplayTask task1 ={(void*) &FULL_CELL, 0, 0, WRITE_IMAGE};
+		enqueue_display_task(&display_queue, &task1);
+		vTaskDelay(250 / portTICK_RATE_MS);
+		DisplayTask task2 = {(void*) &EMPTY_CELL, 0, 0, WRITE_IMAGE};
+		enqueue_display_task(&display_queue, &task2);
+		vTaskDelay(250 / portTICK_RATE_MS);
+	}
+}
+
 
 void vApplicationMallocFailedHook( void )
 {
