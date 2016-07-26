@@ -11,36 +11,57 @@
 #include "tetrominoe.h"
 #include "display.h"
 #include "bool.h"
-
-#include "stdlib.h"
+#include "board.h"
+#include "buttons.h"
+#include "math.h"
 
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
 Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
 
-Game game = {&game_board, tetrominoes, 7, 0, NULL};
+Game game = {&game_board, tetrominoes, 7, 0, NULL, NULL, 0};
 
-void clear_board(Board* board){ //clears all the 
-	int i;
-	for (i = 0; i < board -> width * board -> height; i++){
-		board -> grid[i] = 0;
+void xGameEngineTask(void* parameters){ //the main task for the game engine
+	Game* game = (Game*) parameters;
+	while (1){
+		//start screen loop
+		//game loop
+		//score loop
 	}
 }
 
+void game_loop(Game* game){
+	//do game stupp
+}
+
+void splash_screen_loop(Game* game){
+	//show the splash screen
+}
+
+void score_screen_loop(Game* game){
+	//show the score, etc
+}
+
 void initalise_game(Game* game){ //intalises the game. Mainly clears data
-	clear_board(game -> board);
+	initalise_display_queue(&(game -> display_queue));
+	initalise_button_event_queue(&(game -> button_queue));
+	initalise_buttons();
+	reset_game(game);
+}
+
+void reset_game(Game* game){ //resets the game
 	int i;
 	for (i = 0; i < game -> num_tetrominoes; i++){
 		reset_tetromineo(game -> tetrominoes[i]);
 	}
 	game -> current_peice_index = 0;
-	//create_display_queue(game -> display_queue);
-	draw_background(); //move this somewhere else???
-}
+	game -> score = 0;
+	clear_board(game -> board);
 
-void draw_background(void){ //draws the background at pre-defined offset
-	write_image(&TETRIS_BACKGROUND, BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X);
+	quick_clear_screen(&(game -> display_queue));
+	quick_send_image(&(game -> display_queue), BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X, &TETRIS_BACKGROUND);
+	//draw_background(); //move this somewhere else???
 }
 
 Tetrominoe* get_current_tetrominoe(Game* game){ //grabs the currently active tetrominoe
@@ -64,10 +85,8 @@ void draw_current_tetrominoe_as(Game* game, const Image* image){ //draws a tetro
 			int y_pos = calculate_tetris_grid_y_position(game -> board, current_tetrominoe -> x + i % TETROMINOE_GRID_WIDTH, image -> height);
 			int x_pos = calculate_tetris_grid_x_position(game -> board, current_tetrominoe -> y + i / TETROMINOE_GRID_HEIGHT, image -> width);
 
-			DisplayTask task = {(void*) image, x_pos, y_pos, WRITE_IMAGE};
-			//execute_display_task(&task);
-			enqueue_display_task(game -> display_queue, &task);
-			//write_image(image, x_pos, y_pos);
+			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
+			enqueue_display_task(&(game -> display_queue), &task);
 		}
 	}
 }
@@ -91,7 +110,7 @@ int current_tetrominoe_can_occupy(Game* game, int x_shift, int y_shift, int rota
 	const int* tetrominoe_array = selected_tetrominoe -> poses[selected_tetrominoe_pose] -> array;
 	int i;
 	for (i = 0; i < TETROMINOE_GRID_LENGTH; i++){
-		if (is_off_grid(game -> board, selected_tetrominoe -> x + x_shift + i % TETROMINOE_GRID_WIDTH, selected_tetrominoe -> y + y_shift + i / TETROMINOE_GRID_HEIGHT) == TRUE){
+		if (is_off_board(game -> board, selected_tetrominoe -> x + x_shift + i % TETROMINOE_GRID_WIDTH, selected_tetrominoe -> y + y_shift + i / TETROMINOE_GRID_HEIGHT) == TRUE){
 			if (tetrominoe_array[i] != 0){
 				return FALSE;
 			}
@@ -117,33 +136,6 @@ int can_shift_current_tetrominoe(Game* game, int direction){//calculates whether
 	return current_tetrominoe_can_occupy(game, direction, 0, 0);
 }
 
-int is_off_grid(Board* board, int x, int y){ //indicates whether or not a coordinate is on the board
-	if (x >= board -> width || x < 0 || y >= board -> height || y < 0){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
-
-}
-
-int is_occupied(Board* board, int x, int y){ //calculates whether or not a cell on the board is occupied
-	if (board -> grid[y * board -> width + x] != 0){
-		return TRUE;
-	}
-	else{
-		return FALSE;
-	}
-}
-
-int abs_modulo(int number, int divisor){ //executes a modulus functions which always returns a positive value
-	int result = number % divisor;
-	while (result < 0){
-		result += divisor;
-	}
-	return result;
-}
-
 void place_current_tetrominoe(Game* game){//places the current tetrominoe on the board
 
 	Tetrominoe* current_tetrominoe = get_current_tetrominoe(game);
@@ -152,8 +144,9 @@ void place_current_tetrominoe(Game* game){//places the current tetrominoe on the
 	for (i = 0; i < TETROMINOE_GRID_LENGTH; i++){
 		int x_pos = (current_tetrominoe -> x + (i % TETROMINOE_GRID_WIDTH));
 		int y_pos = (current_tetrominoe -> y + (i / TETROMINOE_GRID_HEIGHT));
-		if (is_off_grid(game -> board, x_pos, y_pos) == FALSE && tetrominoe_array[i] != 0){
-			game -> board -> grid[x_pos + y_pos * game -> board -> width] = tetrominoe_array[i];
+		if (is_off_board(game -> board, x_pos, y_pos) == FALSE && tetrominoe_array[i] != 0){
+			set_board_value(game -> board, x_pos, y_pos, tetrominoe_array[i]);
+			//game -> board -> grid[x_pos + y_pos * game -> board -> width] = tetrominoe_array[i];
 		}
 	}
 }
@@ -200,4 +193,48 @@ void get_next_tetrominie(Game* game){ //shifts the next tetrominoe index into th
 	//while (game -> current_tetromine_index == next && game -> repetitions >= 4){
 	//	next = next = get_random(0, #NUM_TETROMINES);
 	//}
+}
+
+void clear_full_rows(Game* game){ //clears the full rows in the game board
+	int rows = num_complete_rows(game -> board);
+	while (rows > 0){
+		int x;
+		int row_index = get_next_complete_row(game -> board);
+		for (x = 0; x < game -> board -> width; x++){
+			int top = highest_occupied_cell_in_column(game -> board, x);
+			temp_fill_cells(game, x, row_index, top);
+		}
+		clear_row(game -> board, row_index);
+		for (x = 0; x < game -> board -> width; x++){
+			int top = highest_occupied_cell_in_column(game -> board, x);
+			redraw_empty_cells(game, x, row_index, top + 1);
+		}
+		//empty top cell
+	}
+}
+
+void temp_fill_cells(Game* game, int column, int bottom_row, int top_row){ //draws all emtpry cells as full cells withing a given column range
+	int y;
+	for (y = bottom_row; y < top_row; y++){
+		if (get_board_value(game -> board, column, y) == EMPTY_CELL_VALUE){
+			const Image* image = &FULL_CELL;
+			int y_pos = calculate_tetris_grid_y_position(game -> board, column, image -> height);
+			int x_pos = calculate_tetris_grid_x_position(game -> board, y, image -> width);
+			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
+			enqueue_display_task(&(game -> display_queue), &task);
+		}
+	}
+}
+
+void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row){ //redraws the emptry cells in a given row
+	int y;
+	for (y = bottom_row; y < top_row; y++){
+		if (get_board_value(game -> board, column, y) == EMPTY_CELL_VALUE){
+			const Image* image = &EMPTY_CELL;
+			int y_pos = calculate_tetris_grid_y_position(game -> board, column, image -> height);
+			int x_pos = calculate_tetris_grid_x_position(game -> board, y, image -> width);
+			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
+			enqueue_display_task(&(game -> display_queue), &task);
+		}
+	}
 }

@@ -8,8 +8,9 @@
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 
-#define WRITE_IMAGE 0
-#define CLEAR_SCREEN 1
+#define COMMAND_WRITE_IMAGE 0
+#define COMMAND_CLEAR_SCREEN 1
+#define COMMAND_INITALISE_SCREEN 2
 
 #define DISPLAY_QUEUE_LENGTH 40
 
@@ -35,8 +36,14 @@ void xDisplayTask(void* parameters);
 
 void execute_display_task(DisplayTask* task);
 
-void create_display_queue(xQueueHandle queue);
+void initalise_display_queue(xQueueHandle* queue);
 
 void enqueue_display_task(xQueueHandle* queue, DisplayTask* task);
+
+void quick_initalise_screen(xQueueHandle* queue);
+
+void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image);
+
+void quick_clear_screen(xQueueHandle* queue);
 
 #endif /* DISPLAY_H_ */

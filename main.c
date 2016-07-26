@@ -41,6 +41,7 @@
 #include "inc\hw_sysctl.h"
 #include "driverlib/sysctl.h"
 #include "drivers/rit128x96x4.h"
+#include "driverlib/interrupt.h"
 #include "stdio.h"
 #include "stdlib.h"
 
@@ -52,6 +53,8 @@
 #include "game_engine.h"
 #include "tetrominoe.h"
 #include "bool.h"
+#include "buttons.h"
+#include "math.h"
 
 /* Used as a loop counter to create a very crude delay. */
 #define mainDELAY_LOOP_COUNT		( 0xfffff )
@@ -81,6 +84,9 @@ int main( void )
 	RIT128x96x4Init(1000000);
 
 	initalise_game(&game);
+	//initalise_button_interrupts();
+	initalise_random_number_generator(512512);
+	IntMasterEnable ();
 
 	/* Create one of the two tasks. */
 //	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
@@ -99,16 +105,16 @@ int main( void )
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 	//xTaskCreate(write_background, "Task 5", 500, NULL, 1, NULL);
 
-	xQueueHandle display_queue2;
-	display_queue2 = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
-	//create_display_queue(display_queue2);
-	game.display_queue = &display_queue2;
+	//xQueueHandle display_queue2;
+	//display_queue2 = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
+	//initalise_display_queue(&display_queue2);
+	//game.display_queue = &display_queue2;
 
-	xTaskCreate(tetronimoe_drop_test2, "Task 6", 500, NULL, 1, NULL);
+	xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, NULL, 1, NULL);
 
-	xTaskCreate(xDisplayTask, "display task", 500, (void*) display_queue2, 1, NULL);
+	xTaskCreate(xDisplayTask, "display task", 500, (void*) game.display_queue, 1, NULL);
 
-	xTaskCreate(vQueueTest, "display task test", 500, (void*) display_queue2, 1, NULL);
+	xTaskCreate(vQueueTest, "display task test", 500, (void*) game.display_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -194,8 +200,10 @@ void tetronimoe_drop_test2(void* parameters){
 			place_current_tetrominoe(&game);
 			//debug_board(&game);
 			game.tetrominoes[game.current_peice_index] -> y = 0;
-			rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
-			game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
+			game.tetrominoes[game.current_peice_index] -> rotation_state = rand_range(0, 3);
+			//rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
+			game.current_peice_index = rand_range(0, game.num_tetrominoes);
+			//game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
 			x_pos = (x_pos + 2) % 7;
 		}
 	}
@@ -216,10 +224,10 @@ void vQueueTest(void* parameters){
 	xQueueHandle display_queue = (xQueueHandle) parameters;
 
 	while (1){
-		DisplayTask task1 ={(void*) &FULL_CELL, 0, 0, WRITE_IMAGE};
+		DisplayTask task1 ={(void*) &FULL_CELL, 0, 0, COMMAND_WRITE_IMAGE};
 		enqueue_display_task(&display_queue, &task1);
 		vTaskDelay(250 / portTICK_RATE_MS);
-		DisplayTask task2 = {(void*) &EMPTY_CELL, 0, 0, WRITE_IMAGE};
+		DisplayTask task2 = {(void*) &EMPTY_CELL, 0, 0, COMMAND_WRITE_IMAGE};
 		enqueue_display_task(&display_queue, &task2);
 		vTaskDelay(250 / portTICK_RATE_MS);
 	}

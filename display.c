@@ -43,7 +43,7 @@ void clear_display(void){
 	taskEXIT_CRITICAL();
 }
 
-void xDisplayTask(void* parameters){ //display task
+void xDisplayTask(void* parameters){ //display task. handles all output to the rit display
 
 	xQueueHandle display_queue = (xQueueHandle) parameters;
 	DisplayTask task;
@@ -65,18 +65,19 @@ void xDisplayTask(void* parameters){ //display task
 }
 
 void execute_display_task(DisplayTask* task){ //executes a display task and frees the task structure
-	if (task -> command == WRITE_IMAGE){
+	if (task -> command == COMMAND_WRITE_IMAGE){
 		write_image((const Image*) task -> data, task -> x, task -> y);
 	}
-	else if (task -> command == CLEAR_SCREEN){
+	else if (task -> command == COMMAND_CLEAR_SCREEN){
 		clear_display();
 	}
-	free(task);
+	else if (task -> command == COMMAND_INITALISE_SCREEN){
+		initalise_display();
+	}
 }
 
-void create_display_queue(xQueueHandle queue){ //initalises a display queue
-	//DO NOT CALL THIS FUNCTION. IT IS 100% BROKEN
-	queue = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
+void initalise_display_queue(xQueueHandle* queue){ //initalises a display queue
+	*queue = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
 	if (queue == NULL){
 		/* FAILED to create queue */
 #ifdef ENABLE_DEBUG_MSG
@@ -86,7 +87,7 @@ void create_display_queue(xQueueHandle queue){ //initalises a display queue
 	}
 }
 
-void enqueue_display_task(xQueueHandle* queue, DisplayTask* task){
+void enqueue_display_task(xQueueHandle* queue, DisplayTask* task){ //enqueues a display task
 
 	if (xQueueSendToBack(*queue, task, 0) != pdPASS){
 		// data could not be put on the queue
@@ -95,4 +96,21 @@ void enqueue_display_task(xQueueHandle* queue, DisplayTask* task){
 		vPrintString(fail_message);
 #endif
 	}
+}
+
+void quick_initalise_screen(xQueueHandle* queue){ //sends the commands needed to initalise the screen
+	DisplayTask task1 = {NULL, 0, 0, COMMAND_INITALISE_SCREEN};
+	DisplayTask task2 = {NULL, 0, 0, COMMAND_CLEAR_SCREEN};
+	enqueue_display_task(queue, &task1);
+	enqueue_display_task(queue, &task2);
+}
+
+void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image){ //sends an image to the display task
+	DisplayTask task = {(void*) image, x, y, COMMAND_WRITE_IMAGE};
+	enqueue_display_task(queue, &task);
+}
+
+void quick_clear_screen(xQueueHandle* queue){ //sends the commands needed to clear the screen
+	DisplayTask task = {NULL, 0, 0, COMMAND_CLEAR_SCREEN};
+	enqueue_display_task(queue, &task);
 }

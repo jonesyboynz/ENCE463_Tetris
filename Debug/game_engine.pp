@@ -16,11 +16,13 @@ game_engine.obj: ../game_engine.h
 game_engine.obj: ../tetrominoe.h
 game_engine.obj: ../images.h
 game_engine.obj: ../include/queue.h
+game_engine.obj: ../board.h
 game_engine.obj: ../display.h
 game_engine.obj: ../include/queue.h
 game_engine.obj: ../bool.h
-game_engine.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
-game_engine.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h
+game_engine.obj: ../buttons.h
+game_engine.obj: ../include/queue.h
+game_engine.obj: ../math.h
 
 ../game_engine.c: 
 ../include/FreeRTOS.h: 
@@ -38,8 +40,10 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stddef.h:
 ../tetrominoe.h: 
 ../images.h: 
 ../include/queue.h: 
+../board.h: 
 ../display.h: 
 ../include/queue.h: 
 ../bool.h: 
-c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
-c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h: 
+../buttons.h: 
+../include/queue.h: 
+../math.h: 

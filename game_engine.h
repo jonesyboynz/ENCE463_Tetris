@@ -17,28 +17,31 @@
 #include "tetrominoe.h"
 #include "images.h"
 #include "include/queue.h"
-
-typedef struct board_s {
-	int* grid;
-	int width;
-	int height;
-} Board;
+#include "board.h"
 
 typedef struct game_s {
 	Board* board;
 	Tetrominoe** tetrominoes;
 	int num_tetrominoes;
 	int current_peice_index;
-	xQueueHandle* display_queue;
+	xQueueHandle display_queue;
+	xQueueHandle button_queue;
+	int score;
 } Game;
 
 extern Game game;
+
+void game_loop(Game* game);
+
+void splash_screen_loop(Game* game);
+
+void score_screen_loop(Game* game);
 
 void clear_board(Board* board);
 
 void initalise_game(Game* game);
 
-void draw_background(void);
+void reset_game(Game* game);
 
 Tetrominoe* get_current_tetrominoe(Game* game);
 
@@ -53,10 +56,6 @@ int calculate_tetris_grid_y_position(Board* board, int grid_position, int size);
 int calculate_tetris_grid_x_position(Board* board, int grid_position, int size);
 
 int current_tetrominoe_can_occupy(Game* game, int x_shift, int y_shift, int rotation);
-
-int is_off_grid(Board* board, int x, int y);
-
-int is_occupied(Board* board, int x, int y);
 
 int abs_modulo(int number, int divisor);
 
@@ -73,5 +72,11 @@ void debug_board(Game* game);
 int spawn_block(Game* game);
 
 void get_next_tetrominie(Game* game);
+
+void clear_full_rows(Game* game);
+
+void temp_fill_cells(Game* game, int column, int bottom_row, int top_row);
+
+void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row);
 
 #endif

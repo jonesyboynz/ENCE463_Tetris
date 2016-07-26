@@ -8,18 +8,21 @@ CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/arm_5.1.6
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
+"./board.obj" \
 "./buttons.obj" \
 "./display.obj" \
 "./game_engine.obj" \
 "./images.obj" \
 "./list.obj" \
 "./main.obj" \
+"./math.obj" \
 "./queue.obj" \
 "./rit128x96x4.obj" \
 "./startup_ccs.obj" \
 "./tasks.obj" \
 "./tetris_background.obj" \
 "./tetrominoe.obj" \
+"./text_images.obj" \
 "./portable/heap_2.obj" \
 "./portable/port.obj" \
 "./portable/portasm.obj" \
@@ -147,7 +150,7 @@ all: ENCE463-Tetris.out
 ENCE463-Tetris.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off -z -m"ENCE463-Tetris.map" --heap_size=0x800 --stack_size=0x800 -i"P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib/ccs-cm3/Debug/driverlib-cm3.lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ENCE463-Tetris_linkInfo.xml" --rom_model -o "ENCE463-Tetris.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off -z -m"ENCE463-Tetris.map" --heap_size=0x800 --stack_size=0x1600 -i"P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib/ccs-cm3/Debug/driverlib-cm3.lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ENCE463-Tetris_linkInfo.xml" --rom_model -o "ENCE463-Tetris.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -160,8 +163,8 @@ ENCE463-Tetris.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "buttons.pp" "display.pp" "game_engine.pp" "images.pp" "list.pp" "main.pp" "queue.pp" "rit128x96x4.pp" "startup_ccs.pp" "tasks.pp" "tetris_background.pp" "tetrominoe.pp" "portable\heap_2.pp" "portable\port.pp" "demo_code\basic_io.pp" 
-	-$(RM) "buttons.obj" "display.obj" "game_engine.obj" "images.obj" "list.obj" "main.obj" "queue.obj" "rit128x96x4.obj" "startup_ccs.obj" "tasks.obj" "tetris_background.obj" "tetrominoe.obj" "portable\heap_2.obj" "portable\port.obj" "portable\portasm.obj" "demo_code\basic_io.obj" 
+	-$(RM) "board.pp" "buttons.pp" "display.pp" "game_engine.pp" "images.pp" "list.pp" "main.pp" "math.pp" "queue.pp" "rit128x96x4.pp" "startup_ccs.pp" "tasks.pp" "tetris_background.pp" "tetrominoe.pp" "text_images.pp" "portable\heap_2.pp" "portable\port.pp" "demo_code\basic_io.pp" 
+	-$(RM) "board.obj" "buttons.obj" "display.obj" "game_engine.obj" "images.obj" "list.obj" "main.obj" "math.obj" "queue.obj" "rit128x96x4.obj" "startup_ccs.obj" "tasks.obj" "tetris_background.obj" "tetrominoe.obj" "text_images.obj" "portable\heap_2.obj" "portable\port.obj" "portable\portasm.obj" "demo_code\basic_io.obj" 
 	-$(RM) "portable\portasm.pp" 
 	-@echo 'Finished clean'
 	-@echo ' '
