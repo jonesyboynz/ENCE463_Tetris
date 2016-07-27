@@ -14,6 +14,13 @@
 
 #define CELL_SIZE 6
 
+#define INITIAL_SCORE 0
+#define INITIAL_COMPLETED_ROWS 0
+#define INITIAL_LEVEL 1
+#define INITIAL_CURRENT_PEICE 0
+#define INITIAL_NEXT_PEICE 0
+#define INITIAL_PEICE_REPETITIONS 0
+
 #include "tetrominoe.h"
 #include "images.h"
 #include "include/queue.h"
@@ -24,12 +31,18 @@ typedef struct game_s {
 	Tetrominoe** tetrominoes;
 	int num_tetrominoes;
 	int current_peice_index;
+	int next_peice_index;
+	int peice_repetitions;
 	xQueueHandle display_queue;
 	xQueueHandle button_queue;
 	int score;
+	int completed_rows;
+	int level;
 } Game;
 
-extern Game game;
+extern Game base_game;
+
+void xGameEngineTask(void* parameters);
 
 void game_loop(Game* game);
 
@@ -42,6 +55,10 @@ void clear_board(Board* board);
 void initalise_game(Game* game);
 
 void reset_game(Game* game);
+
+void game_loop(Game* game);
+
+void button_process_loop(Game* game);
 
 Tetrominoe* get_current_tetrominoe(Game* game);
 
@@ -69,9 +86,9 @@ void place_current_tetrominoe(Game* game);
 
 void debug_board(Game* game);
 
-int spawn_block(Game* game);
+int spawn_new_tetrominoe(Game* game);
 
-void get_next_tetrominie(Game* game);
+void get_next_tetrominoe(Game* game);
 
 void clear_full_rows(Game* game);
 

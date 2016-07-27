@@ -83,10 +83,9 @@ int main( void )
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
 	RIT128x96x4Init(1000000);
 
-	initalise_game(&game);
+	initalise_game(&base_game);
 	//initalise_button_interrupts();
 	initalise_random_number_generator(512512);
-	IntMasterEnable ();
 
 	/* Create one of the two tasks. */
 //	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
@@ -110,11 +109,13 @@ int main( void )
 	//initalise_display_queue(&display_queue2);
 	//game.display_queue = &display_queue2;
 
-	xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, NULL, 1, NULL);
+	//xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, &base_game, 1, NULL);
 
-	xTaskCreate(xDisplayTask, "display task", 500, (void*) game.display_queue, 1, NULL);
+	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
 
-	xTaskCreate(vQueueTest, "display task test", 500, (void*) game.display_queue, 1, NULL);
+	xTaskCreate(xDisplayTask, "display task", 500, (void*) base_game.display_queue, 1, NULL);
+
+	xTaskCreate(vQueueTest, "display task test", 500, (void*) base_game.display_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -173,36 +174,41 @@ void write_background(void* parameters){
 void tetronimoe_drop_test(void* parameters){
 	//portTickType xLastWakeTime;
 	while (1){
-		game.tetrominoes[game.current_peice_index] -> x = 0;
-		draw_current_tetrominoe(&game);
+		base_game.tetrominoes[base_game.current_peice_index] -> x = 0;
+		draw_current_tetrominoe(&base_game);
 		vTaskDelay(250 / portTICK_RATE_MS);
-		erase_current_tetrominoe(&game);
-		game.tetrominoes[game.current_peice_index] -> y = (game.tetrominoes[game.current_peice_index] -> y + 1) % 17;
-		if (game.tetrominoes[game.current_peice_index] -> y == 0){
-			rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
-			game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
+		erase_current_tetrominoe(&base_game);
+		base_game.tetrominoes[base_game.current_peice_index] -> y = (base_game.tetrominoes[base_game.current_peice_index] -> y + 1) % 17;
+		if (base_game.tetrominoes[base_game.current_peice_index] -> y == 0){
+			rotate_tetromineo(base_game.tetrominoes[base_game.current_peice_index]);
+			base_game.current_peice_index = (base_game.current_peice_index + 1) % base_game.num_tetrominoes;
 		}
 	}
 }
 
 void tetronimoe_drop_test2(void* parameters){
 	//portTickType xLastWakeTime;
+	Game* game = (Game*) parameters;
 	int x_pos = 0;
 	while (1){
-		game.tetrominoes[game.current_peice_index] -> x = x_pos;
-		draw_current_tetrominoe(&game);
+		game -> tetrominoes[game -> current_peice_index] -> x = x_pos;
+		draw_current_tetrominoe(game);
 		vTaskDelay(250 / portTICK_RATE_MS);
-		if (can_drop_current_tetrominoe(&game) == TRUE){
-			erase_current_tetrominoe(&game);
-			game.tetrominoes[game.current_peice_index] -> y = (game.tetrominoes[game.current_peice_index] -> y + 1);
+		if (can_drop_current_tetrominoe(game) == TRUE){
+			erase_current_tetrominoe(game);
+			get_current_tetrominoe(game) -> y = get_current_tetrominoe(game) -> y + 1;
 		}
 		else{
-			place_current_tetrominoe(&game);
+			place_current_tetrominoe(game);
 			//debug_board(&game);
-			game.tetrominoes[game.current_peice_index] -> y = 0;
-			game.tetrominoes[game.current_peice_index] -> rotation_state = rand_range(0, 3);
-			//rotate_tetromineo(game.tetrominoes[game.current_peice_index]);
-			game.current_peice_index = rand_range(0, game.num_tetrominoes);
+			//game.tetrominoes[game.current_peice_index] -> y = 0;
+			//game.tetrominoes[game.current_peice_index] -> rotation_state = rand_range(0, 3);
+			get_next_tetrominoe(game);
+			if (spawn_new_tetrominoe(game) != TRUE){
+				reset_game(game);
+			}
+			rotate_tetromineo(game -> tetrominoes[game -> current_peice_index]);
+			//game.current_peice_index = rand_range(0, game.num_tetrominoes);
 			//game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
 			x_pos = (x_pos + 2) % 7;
 		}

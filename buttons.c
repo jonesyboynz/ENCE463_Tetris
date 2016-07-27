@@ -54,6 +54,7 @@ void initalise_button_interrupts(void) { //intialises the buttons for interrupt 
 
     IntEnable (INT_GPIOG);
 
+    IntMasterEnable ();
 }
 
 void initalise_buttons(void){ //initalises the buttons for standard polling mode

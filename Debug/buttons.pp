@@ -10,6 +10,7 @@ buttons.obj: ../include/portable.h
 buttons.obj: ../include/../portable/portmacro.h
 buttons.obj: ../include/mpu_wrappers.h
 buttons.obj: ../include/queue.h
+buttons.obj: ../bool.h
 buttons.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h
 buttons.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h
 buttons.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_ints.h
@@ -36,6 +37,7 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stddef.h:
 ../include/../portable/portmacro.h: 
 ../include/mpu_wrappers.h: 
 ../include/queue.h: 
+../bool.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_memmap.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_types.h: 
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_ints.h: 

@@ -48,6 +48,7 @@ int num_complete_rows(Board* board){ //returns the number of comleted rows on th
 		int is_complete = TRUE;
 		for (x = 0; x < board -> width; x++){
 			if (get_board_value(board, x, y) == EMPTY_CELL_VALUE){
+				is_complete = FALSE;
 				break;
 			}
 		}
