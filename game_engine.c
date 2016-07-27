@@ -26,13 +26,22 @@ void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
 	while (1){
 		//start screen loop
-		//game loop
+		game loop(game);
 		//score loop
 	}
 }
 
 void game_loop(Game* game){
-	//do game stupp
+	int running = TRUE;
+	reset_game(game);
+	while (running == TRUE){
+		//spawn block
+		//wait for button inputs
+		//execute button inputs as they come
+		//on timeout: if block can go down then go down otherwise place the block
+		//if a block was placed then try and spawn a new block
+		//if a block was 
+	}
 }
 
 void splash_screen_loop(Game* game){

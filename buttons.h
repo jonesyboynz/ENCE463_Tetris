@@ -19,6 +19,9 @@
 #define PRESS_EVENT 0
 #define RELEASE_EVENT 1
 
+#define PRESSED 0
+#define RELEASED 1
+
 #include "include/FreeRTOS.h"
 #include "include/queue.h"
 
@@ -27,6 +30,10 @@ typedef struct button_event_s {
 	int event_type;
 } ButtonEvent;
 
+typedef struct button_s {
+	int port;
+} Button;
+
 void button_handler(void);
 
 void initalise_button_interrupts(void);
@@ -34,6 +41,8 @@ void initalise_button_interrupts(void);
 void initalise_buttons(void);
 
 int read_buttons(void);
+
+unsigned int read_button(int button_id);
 
 void xButtonReadTask(void* parameters);
 

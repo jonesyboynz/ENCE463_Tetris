@@ -6,6 +6,7 @@
  */
 
 #include "buttons.h"
+#include "bool.h"
 
 //system includes
 #include "inc/hw_memmap.h"
@@ -68,9 +69,21 @@ int read_buttons(void){ //reads the buttons
 	return (up_state * 1 + down_state * 2 + left_state * 4 + right_state * 8);
 }
 
+unsigned int read_button(int button_id){ //reads a button
+	return  GPIOPinRead(GPIO_PORTG_BASE, button_id);
+}
+
 void xButtonReadTask(void* parameters){ //task to pereodically poll the buttons
-	//get a queue
-	//read the buttons and push button events onto the queue
+	xQueueHandle button_queue = (xQueueHandle) parameters;
+	unsigned int up_state = read_button(NAV_UP);
+	unsigned int down_state = read_button(NAV_DOWN);
+	unsigned int left_state = read_button(NAV_LEFT);
+	unsigned int right_state = read_button(NAV_RIGHT);
+	ButtonEvent event;
+	while (TRUE){
+		
+
+	}
 }
 
 void initalise_button_event_queue(xQueueHandle* queue){ //initalises a button event queue
