@@ -53,6 +53,8 @@ const Image NUMBER7 = {NUMBER7_DATA, 6, 3};
 const Image NUMBER8 = {NUMBER8_DATA, 6, 3};
 const Image NUMBER9 = {NUMBER9_DATA, 6, 3};
 
+const Image NUMBERS[10] = {NUMBER0, NUMBER1, NUMBER2, NUMBER3, NUMBER4, NUMBER5, NUMBER6, NUMBER7, NUMBER8, NUMBER9}
+
 /*IMAGES TO ADD:
  * "next block"
  * "score"

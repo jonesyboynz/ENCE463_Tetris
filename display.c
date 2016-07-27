@@ -37,10 +37,27 @@ void initalise_display(void){ //thread safe screen initalisation
 	taskEXIT_CRITICAL();
 }
 
-void clear_display(void){
+void clear_display(void){ //thread safe display clear
 	taskENTER_CRITICAL();
 	RIT128x96x4Clear();
 	taskEXIT_CRITICAL();
+}
+
+void write_tetris_number(int number, int x, int y){ //displays a number in the tetris screen mode (rotated 90deg)
+	int numsize = 10;
+	int y_shift = 0;
+	int number_copy = number;
+	while (numsize <= number){
+		numsize *= 10;
+	}
+	while (numsize > 1){
+		numsize /= 10;
+		int value = number_copy / numsize;
+		number_copy = number_copy - (numsize * value);
+		write_image(&(NUMBERS[value], x, y + y_shift));
+		y_shift += NUMBERS[value].y + 1;
+	}
+
 }
 
 void xDisplayTask(void* parameters){ //display task. handles all output to the rit display

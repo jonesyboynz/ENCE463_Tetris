@@ -28,6 +28,8 @@ void write_string(char* string, int x, int y, int brightness);
 
 void write_image(const Image* image, int x, int y);
 
+void write_tetris_number(int number, int x, int y);
+
 void initalise_display(void);
 
 void clear_display(void);

@@ -30,4 +30,6 @@ extern const Image NUMBER7;
 extern const Image NUMBER8;
 extern const Image NUMBER9;
 
+extern const Image NUMBERS[10];
+
 #endif
