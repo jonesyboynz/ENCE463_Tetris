@@ -49,6 +49,6 @@ void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image);
 
 void quick_clear_screen(xQueueHandle* queue);
 
-void quick_send_image(xQueueHandle* queue, int x, int y, int number);
+void quick_send_number(xQueueHandle* queue, int x, int y, int number);
 
 #endif /* DISPLAY_H_ */

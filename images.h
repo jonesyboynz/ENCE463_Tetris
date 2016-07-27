@@ -30,8 +30,8 @@ extern const Image NUMBER7;
 extern const Image NUMBER8;
 extern const Image NUMBER9;
 
-extern const Image NUMBERS[10];
-extern const Image RUNNING_ANIMATION[4];
+extern const Image* NUMBERS[10];
+extern const Image* RUNNING_ANIMATION[4];
 
 extern const Image SCORE_IMAGE;
 

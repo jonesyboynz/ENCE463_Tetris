@@ -14,6 +14,7 @@
 #include "board.h"
 #include "buttons.h"
 #include "math.h"
+#include "timer.h"
 
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
@@ -60,24 +61,37 @@ void game_loop(Game* game){ //loop in which the game runs
 	}
 }
 
-void button_process_loop(Game* game){
-	//use button loops to rotate, shift and drop the blocks
+void button_process_loop(Game* game){ //a loop in which the game waits for button events
 	int running = TRUE;
-	portTickType initial_time, current_time, difference, max_value;
-	max_value = 0xffffffff;
-	initial_time = xTaskGetTickCount();
+	Timeout timer;
+	ButtonEvent event;
+	start_timeout(&timer, 100);
 	while (running){
-		current_time = xTaskGetTickCount();
-		if (initial_time > current_time){
-			difference = (max_value - initial_time) + current_time + 1;
+		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
 		}
 		else{
-			difference = current_time - initial_time;
+			process_button_event(&event, game);
 		}
-		if (difference / portTICK_RATE_MS > 100){
+		if (has_timed_out(&timer) == TRUE){
 			running = FALSE;
 		}
+	}
+}
 
+void process_button_event(ButtonEvent* event, Game* game){ //processes a button event
+	if (event -> event_type == PRESSED){
+		if (event -> button_id == NAV_UP){
+			try_rotate_current_tetrominoe(game);
+		}
+		else if (event -> button_id == NAV_LEFT){
+			//try_shift_current_tetrominoe(game, LEFT);
+		}
+		else if (event -> button_id == NAV_RIGHT){
+			//try_shift_current_tetrominoe(game, RIGHT);
+		}
+		else if (event -> button_id == NAV_DOWN){
+			//try_drop_current_tetrominoe(game);
+		}
 	}
 }
 
@@ -111,6 +125,9 @@ void reset_game(Game* game){ //resets the game
 
 	quick_clear_screen(&(game -> display_queue));
 	quick_send_image(&(game -> display_queue), BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X, &TETRIS_BACKGROUND);
+	//quick_send_image(&(game -> display_queue), 66, 0, &NEXT_IMAGE);
+	//quick_send_image(&(game -> display_queue), 66, 19, &LEVEL_IMAGE);
+	//quick_send_image(&(game -> display_queue), 66, 39, &SCORE_IMAGE);
 	get_next_tetrominoe(game); //initalise the tetrominoes
 	get_next_tetrominoe(game); //the next tetrominoe is known
 	//todo clear the button queue
@@ -296,5 +313,13 @@ void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row){ //
 			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
 			enqueue_display_task(&(game -> display_queue), &task);
 		}
+	}
+}
+
+void try_rotate_current_tetrominoe(Game* game){ //attempts to rotate the current tetrominoe
+	if (can_rotate_current_tetrominoe(game) == TRUE){
+		erase_current_tetrominoe(game);
+		rotate_tetromineo(get_current_tetrominoe(game));
+		draw_current_tetrominoe(game);
 	}
 }

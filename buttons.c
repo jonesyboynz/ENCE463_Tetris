@@ -75,16 +75,16 @@ unsigned int read_button(int button_id){ //reads a button
 }
 
 void xButtonReadTask(void* parameters){ //task to pereodically poll the buttons
-	xQueueHandle button_queue = (xQueueHandle) parameters;
-	unsigned int up_state = read_button(NAV_UP);
-	unsigned int down_state = read_button(NAV_DOWN);
-	unsigned int left_state = read_button(NAV_LEFT);
-	unsigned int right_state = read_button(NAV_RIGHT);
-	ButtonEvent event;
-	while (TRUE){
-		
-
-	}
+//	xQueueHandle button_queue = (xQueueHandle) parameters;
+//	unsigned int up_state = read_button(NAV_UP);
+//	unsigned int down_state = read_button(NAV_DOWN);
+//	unsigned int left_state = read_button(NAV_LEFT);
+//	unsigned int right_state = read_button(NAV_RIGHT);
+//	ButtonEvent event;
+//	while (TRUE){
+//
+//
+//	}
 }
 
 void initalise_button_event_queue(xQueueHandle* queue){ //initalises a button event queue
@@ -94,5 +94,10 @@ void initalise_button_event_queue(xQueueHandle* queue){ //initalises a button ev
 	}
 }
 
+void enqueue_button_event(xQueueHandle* queue, ButtonEvent* event){ //enqueues a button event
+	if (xQueueSendToBack(*queue, event, 0) != pdPASS){
+		// data could not be put on the queue
+	}
+}
 
 

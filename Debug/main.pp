@@ -29,9 +29,15 @@ main.obj: ../game_engine.h
 main.obj: ../tetrominoe.h
 main.obj: ../include/queue.h
 main.obj: ../board.h
-main.obj: ../bool.h
 main.obj: ../buttons.h
+main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_ints.h
+main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/gpio.h
+main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/pin_map.h
+main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/systick.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 main.obj: ../include/queue.h
+main.obj: ../bool.h
 main.obj: ../math.h
 
 ../main.c: 
@@ -63,7 +69,13 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h:
 ../tetrominoe.h: 
 ../include/queue.h: 
 ../board.h: 
-../bool.h: 
 ../buttons.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/inc/hw_ints.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/gpio.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/pin_map.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/systick.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
 ../include/queue.h: 
+../bool.h: 
 ../math.h: 

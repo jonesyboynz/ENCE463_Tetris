@@ -30,6 +30,6 @@ extern const unsigned char SCORE_IMAGE_DATA[57];
 
 extern const unsigned char NEXT_IMAGE_DATA[45];
 
-const unsigned char LEVEL_IMAGE_DATA[57];
+extern const unsigned char LEVEL_IMAGE_DATA[57];
 
 #endif /* TEXT_IMAGES_H_ */

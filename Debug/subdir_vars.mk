@@ -24,7 +24,8 @@ C_SRCS += \
 ../tasks.c \
 ../tetris_background.c \
 ../tetrominoe.c \
-../text_images.c 
+../text_images.c \
+../timer.c 
 
 OBJS += \
 ./board.obj \
@@ -41,7 +42,8 @@ OBJS += \
 ./tasks.obj \
 ./tetris_background.obj \
 ./tetrominoe.obj \
-./text_images.obj 
+./text_images.obj \
+./timer.obj 
 
 C_DEPS += \
 ./board.pp \
@@ -58,7 +60,8 @@ C_DEPS += \
 ./tasks.pp \
 ./tetris_background.pp \
 ./tetrominoe.pp \
-./text_images.pp 
+./text_images.pp \
+./timer.pp 
 
 C_DEPS__QUOTED += \
 "board.pp" \
@@ -75,7 +78,8 @@ C_DEPS__QUOTED += \
 "tasks.pp" \
 "tetris_background.pp" \
 "tetrominoe.pp" \
-"text_images.pp" 
+"text_images.pp" \
+"timer.pp" 
 
 OBJS__QUOTED += \
 "board.obj" \
@@ -92,7 +96,8 @@ OBJS__QUOTED += \
 "tasks.obj" \
 "tetris_background.obj" \
 "tetrominoe.obj" \
-"text_images.obj" 
+"text_images.obj" \
+"timer.obj" 
 
 OUT_SRCS__QUOTED += \
 "../blank_splash.out" 
@@ -112,6 +117,7 @@ C_SRCS__QUOTED += \
 "../tasks.c" \
 "../tetris_background.c" \
 "../tetrominoe.c" \
-"../text_images.c" 
+"../text_images.c" \
+"../timer.c" 
 
 

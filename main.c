@@ -66,7 +66,8 @@ void vTaskImageFun(void* pvParameters);
 void write_background(void* parameters);
 void tetronimoe_drop_test(void* parameters);
 void tetronimoe_drop_test2(void* parameters);
-void vQueueTest(void* parameters);
+void vDisplayRunning(void* parameters);
+void vButtonTest(void* parameters);
 
 /* Define the strings that will be passed in as the task parameters.  These are
 defined const and off the stack to ensure they remain valid when the tasks are
@@ -102,7 +103,6 @@ int main( void )
 
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
-	//xTaskCreate(write_background, "Task 5", 500, NULL, 1, NULL);
 
 	//xQueueHandle display_queue2;
 	//display_queue2 = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
@@ -115,7 +115,9 @@ int main( void )
 
 	xTaskCreate(xDisplayTask, "display task", 500, (void*) base_game.display_queue, 1, NULL);
 
-	xTaskCreate(vQueueTest, "display task test", 500, (void*) base_game.display_queue, 1, NULL);
+	xTaskCreate(vDisplayRunning, "display task test", 500, (void*) base_game.display_queue, 1, NULL);
+
+	xTaskCreate(vButtonTest, "button test", 200, (void*) base_game.button_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -164,11 +166,6 @@ void vTaskDelayTest(void* pvParameters){
 		taskEXIT_CRITICAL();
 		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
 	}
-}
-
-void write_background(void* parameters){
-	write_image(&TETRIS_BACKGROUND, 0, 0);
-	vTaskDelete(NULL);
 }
 
 void tetronimoe_drop_test(void* parameters){
@@ -226,16 +223,25 @@ void vTaskImageFun(void* pvParameters){
 	}
 }
 
-void vQueueTest(void* parameters){
+void vDisplayRunning(void* parameters){
 	xQueueHandle display_queue = (xQueueHandle) parameters;
+	int index = 0;
 
 	while (1){
-		DisplayTask task1 ={(void*) &FULL_CELL, 0, 0, COMMAND_WRITE_IMAGE};
+		DisplayTask task1 ={(void*) RUNNING_ANIMATION[index], 0, 94};
 		enqueue_display_task(&display_queue, &task1);
-		vTaskDelay(250 / portTICK_RATE_MS);
-		DisplayTask task2 = {(void*) &EMPTY_CELL, 0, 0, COMMAND_WRITE_IMAGE};
-		enqueue_display_task(&display_queue, &task2);
-		vTaskDelay(250 / portTICK_RATE_MS);
+		vTaskDelay(50 / portTICK_RATE_MS);
+		index = (index + 1)  % 4;
+	}
+}
+
+void vButtonTest(void* parameters){
+	xQueueHandle ButtonQueue = (xQueueHandle) parameters;
+
+	while (1){
+		ButtonEvent event = {NAV_UP, PRESS_EVENT};
+		enqueue_button_event(&ButtonQueue, &event);
+		vTaskDelay(2000 / portTICK_RATE_MS);
 	}
 }
 

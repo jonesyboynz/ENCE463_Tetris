@@ -4,7 +4,7 @@
 #define DEFAULT_GRID_HEIGHT 20
 #define DEFAULT_GRID_WIDTH 10
 
-#define BACKGROUND_OFFSET_X 16
+#define BACKGROUND_OFFSET_X 0
 #define BACKGROUND_OFFSET_Y 2
 #define BACKGROUND_HOLDOFF_X 2
 #define BACKGROUND_HOLDOFF_Y 2
@@ -25,6 +25,7 @@
 #include "images.h"
 #include "include/queue.h"
 #include "board.h"
+#include "buttons.h"
 
 typedef struct game_s {
 	Board* board;
@@ -59,6 +60,8 @@ void reset_game(Game* game);
 void game_loop(Game* game);
 
 void button_process_loop(Game* game);
+
+void process_button_event(ButtonEvent* event, Game* game);
 
 Tetrominoe* get_current_tetrominoe(Game* game);
 
@@ -95,5 +98,7 @@ void clear_full_rows(Game* game);
 void temp_fill_cells(Game* game, int column, int bottom_row, int top_row);
 
 void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row);
+
+void try_rotate_current_tetrominoe(Game* game);
 
 #endif

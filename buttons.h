@@ -9,6 +9,18 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
+//system includes
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "inc/hw_ints.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/systick.h"
+#include "driverlib/interrupt.h"
+#include "stdio.h"
+#include "stdlib.h"
+
+
 #define NAV_UP GPIO_PIN_3
 #define NAV_DOWN GPIO_PIN_4
 #define NAV_LEFT GPIO_PIN_5
@@ -48,5 +60,6 @@ void xButtonReadTask(void* parameters);
 
 void initalise_button_event_queue(xQueueHandle* queue);
 
+void enqueue_button_event(xQueueHandle* queue, ButtonEvent* event);
 
 #endif /* BUTTONS_H_ */

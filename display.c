@@ -54,8 +54,8 @@ void write_tetris_number(int number, int x, int y){ //displays a number in the t
 		numsize /= 10;
 		int value = number_copy / numsize;
 		number_copy = number_copy - (numsize * value);
-		write_image(&(NUMBERS[value], x, y + y_shift));
-		y_shift += NUMBERS[value].y + 1;
+		write_image(NUMBERS[value], x, y + y_shift);
+		y_shift += NUMBERS[value] -> height + 1;
 	}
 
 }
@@ -135,7 +135,7 @@ void quick_clear_screen(xQueueHandle* queue){ //sends the commands needed to cle
 	enqueue_display_task(queue, &task);
 }
 
-void quick_send_image(xQueueHandle* queue, int x, int y, int number){ //sends an number to the display task
+void quick_send_number(xQueueHandle* queue, int x, int y, int number){ //sends an number to the display task
 	DisplayTask task = {(void*) number, x, y, COMMAND_WRITE_NUMBER};
 	enqueue_display_task(queue, &task);
 }
