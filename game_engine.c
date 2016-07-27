@@ -42,7 +42,8 @@ void game_loop(Game* game){ //loop in which the game runs
 		button_process_loop(game);
 		if (can_drop_current_tetrominoe(game) == TRUE){
 			erase_current_tetrominoe(game);
-			get_current_tetrominoe(game) -> y = get_current_tetrominoe(game) -> y + 1;
+			shift_tetrominoe(get_current_tetrominoe(game), 0 , 1);
+			//get_current_tetrominoe(game) -> y = get_current_tetrominoe(game) -> y + 1;
 		}
 		else{
 			place_current_tetrominoe(game);
@@ -84,13 +85,13 @@ void process_button_event(ButtonEvent* event, Game* game){ //processes a button 
 			try_rotate_current_tetrominoe(game);
 		}
 		else if (event -> button_id == NAV_LEFT){
-			//try_shift_current_tetrominoe(game, LEFT);
+			try_shift_current_tetrominoe(game, LEFT);
 		}
 		else if (event -> button_id == NAV_RIGHT){
-			//try_shift_current_tetrominoe(game, RIGHT);
+			try_shift_current_tetrominoe(game, RIGHT);
 		}
 		else if (event -> button_id == NAV_DOWN){
-			//try_drop_current_tetrominoe(game);
+			full_drop_current_tetrominoe(game);
 		}
 	}
 }
@@ -322,4 +323,20 @@ void try_rotate_current_tetrominoe(Game* game){ //attempts to rotate the current
 		rotate_tetromineo(get_current_tetrominoe(game));
 		draw_current_tetrominoe(game);
 	}
+}
+
+void try_shift_current_tetrominoe(Game* game, int direction){
+	if (can_shift_current_tetrominoe(game, direction) == TRUE){
+		erase_current_tetrominoe(game);
+		shift_tetrominoe(get_current_tetrominoe(game), direction, 0);
+		draw_current_tetrominoe(game);
+	}
+}
+
+void full_drop_current_tetrominoe(Game* game){//drops a tetrominoe till it can go no lower
+	erase_current_tetrominoe(game);
+	while(can_drop_current_tetrominoe(game)){
+		shift_tetrominoe(get_current_tetrominoe(game), 0, 1);
+	}
+	draw_current_tetrominoe(game);
 }

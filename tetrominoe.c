@@ -10,18 +10,23 @@
 //line block definition
 
 
-void reset_tetromineo(Tetrominoe* block){
+void reset_tetromineo(Tetrominoe* block){ //resets the tetrominoe
 	block -> x = 0;
 	block -> y = 0;
 	block -> rotation_state = 0;
 }
 
-const int* get_tetromineo_grid(Tetrominoe* block){
+const int* get_tetromineo_grid(Tetrominoe* block){ //grabs the grid that defines the tetrominoe
 	return block -> poses[block -> rotation_state] -> array;
 }
 
-void rotate_tetromineo(Tetrominoe* block){
+void rotate_tetromineo(Tetrominoe* block){ //rotates the tetrominoe 90degrees
 	block -> rotation_state = (block -> rotation_state + 1) % TETROMINOE_STATES;
+}
+
+void shift_tetrominoe(Tetrominoe* block, int x, int y){ //translates the current tetrominoe by some given values
+	block -> x += x;
+	block -> y += y;
 }
 
 

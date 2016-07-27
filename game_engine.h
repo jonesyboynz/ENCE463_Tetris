@@ -101,4 +101,8 @@ void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row);
 
 void try_rotate_current_tetrominoe(Game* game);
 
+void try_shift_current_tetrominoe(Game* game, int direction);
+
+void full_drop_current_tetrominoe(Game* game);
+
 #endif

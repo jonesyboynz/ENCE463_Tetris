@@ -39,4 +39,6 @@ const int* get_tetromineo_grid(Tetrominoe* block);
 
 void rotate_tetromineo(Tetrominoe* block);
 
+void shift_tetrominoe(Tetrominoe* block, int x, int y);
+
 #endif /* TETROMINOE_H_ */
