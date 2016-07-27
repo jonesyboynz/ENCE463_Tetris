@@ -15,10 +15,9 @@
 unsigned long seed;
 
 unsigned int urand(void){ //compute an unsigned random number
-	seed = (seed * seed) % 1777 + 3;
-	taskENTER_CRITICAL();
-	//EEPROMProgram(&seed, 4, 4);
-	taskEXIT_CRITICAL();
+
+	seed = seed ^ ((unsigned int ) xTaskGetTickCount());
+	seed = (seed * (seed % 29)) % 1777 + 3;
 	return (unsigned int) seed;
 }
 

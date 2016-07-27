@@ -2,7 +2,6 @@
 #include "include/FreeRTOS.h"
 #include "include/task.h"
 #include "include/queue.h"
-#include "timers.h"
 
 /* Demo includes. */
 #include "demo_code\basic_io.h"
@@ -22,7 +21,6 @@ Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
 
 Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1};
-int TILT = 0;
 
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
@@ -65,16 +63,22 @@ void game_loop(Game* game){ //loop in which the game runs
 void button_process_loop(Game* game){
 	//use button loops to rotate, shift and drop the blocks
 	int running = TRUE;
-	int x = 0;
-	xTimerHandle timer = xTimerCreate("timer", (250 / portTICK_RATE_MS), pdFALSE, (void*) &x, timer_callback);
-
+	portTickType initial_time, current_time, difference, max_value;
+	max_value = 0xffffffff;
+	initial_time = xTaskGetTickCount();
 	while (running){
+		current_time = xTaskGetTickCount();
+		if (initial_time > current_time){
+			difference = (max_value - initial_time) + current_time + 1;
+		}
+		else{
+			difference = current_time - initial_time;
+		}
+		if (difference / portTICK_RATE_MS > 100){
+			running = FALSE;
+		}
 
 	}
-}
-
-void timer_callback(xTimerHandle pxTimer){
-	TILT = 1;
 }
 
 void splash_screen_loop(Game* game){
@@ -220,7 +224,7 @@ void debug_board(Game* game){//prints the current state of the board in the CCS 
 int spawn_new_tetrominoe(Game* game){//spawns the current block
 	Tetrominoe* current_tetrominoe = get_current_tetrominoe(game);
 	current_tetrominoe -> rotation_state = 0;
-	current_tetrominoe -> x = game -> board -> width / 2;
+	current_tetrominoe -> x = game -> board -> width / 2 - 2;
 	current_tetrominoe -> y = -1;
 	if (current_tetrominoe_can_occupy(game, 0, 0, 0) == TRUE){
 		return TRUE;
@@ -236,9 +240,11 @@ int spawn_new_tetrominoe(Game* game){//spawns the current block
 
 void get_next_tetrominoe(Game* game){ //shifts the next tetrominoe index into the current tetrominoe and randomly selects the next tetrominoe
 	game -> current_peice_index = game -> next_peice_index;
-	int next = (game -> current_peice_index + 1) % game -> num_tetrominoes; //todo replace this with a random number generator!
+	//int next = (game -> current_peice_index + 1) % game -> num_tetrominoes; //todo replace this with a random number generator!
+	int next = rand_range(0, game -> num_tetrominoes - 1);
 	while (game -> current_peice_index == next && game -> peice_repetitions > 4){
-		next = (game -> current_peice_index + 1) % game -> num_tetrominoes;
+		//next = (game -> current_peice_index + 1) % game -> num_tetrominoes;
+		next = rand_range(0, game -> num_tetrominoes - 1);
 	}
 	game -> next_peice_index = next;
 	if (game -> next_peice_index == game -> current_peice_index){
