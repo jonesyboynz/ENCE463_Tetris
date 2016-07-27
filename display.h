@@ -11,6 +11,7 @@
 #define COMMAND_WRITE_IMAGE 0
 #define COMMAND_CLEAR_SCREEN 1
 #define COMMAND_INITALISE_SCREEN 2
+#define COMMAND_WRITE_NUMBER 3
 
 #define DISPLAY_QUEUE_LENGTH 40
 
@@ -47,5 +48,7 @@ void quick_initalise_screen(xQueueHandle* queue);
 void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image);
 
 void quick_clear_screen(xQueueHandle* queue);
+
+void quick_send_image(xQueueHandle* queue, int x, int y, int number);
 
 #endif /* DISPLAY_H_ */

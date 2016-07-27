@@ -91,6 +91,9 @@ void execute_display_task(DisplayTask* task){ //executes a display task and free
 	else if (task -> command == COMMAND_INITALISE_SCREEN){
 		initalise_display();
 	}
+	else if (task -> command == COMMAND_WRITE_NUMBER){
+		write_tetris_number((int) task -> data, task -> x, task -> y);
+	}
 }
 
 void initalise_display_queue(xQueueHandle* queue){ //initalises a display queue
@@ -129,5 +132,10 @@ void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image){ //
 
 void quick_clear_screen(xQueueHandle* queue){ //sends the commands needed to clear the screen
 	DisplayTask task = {NULL, 0, 0, COMMAND_CLEAR_SCREEN};
+	enqueue_display_task(queue, &task);
+}
+
+void quick_send_image(xQueueHandle* queue, int x, int y, int number){ //sends an number to the display task
+	DisplayTask task = {(void*) number, x, y, COMMAND_WRITE_NUMBER};
 	enqueue_display_task(queue, &task);
 }
