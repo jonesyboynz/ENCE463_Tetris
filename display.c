@@ -4,6 +4,7 @@
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */
+ //freertos includes
 #include "include/FreeRTOS.h"
 #include "include/task.h"
 #include "include/queue.h"
@@ -11,6 +12,7 @@
 #include "drivers/rit128x96x4.h"
 #include "display.h"
 #include "images.h"
+#include "strings.h"
 
 /* Demo includes. */
 #include "demo_code\basic_io.h"
@@ -60,6 +62,31 @@ void write_tetris_number(int number, int x, int y){ //displays a number in the t
 
 }
 
+void write_tetris_string(char* string, int x, int y){ //displays a string in the tetris screen mode (rotated 90deg)
+	int index = 0;
+	int y_shift = 0;
+	int x_shift = 0;
+	while (string[index] != '\00'){
+		char current_character = string[index];
+		if (current_character == '\n'){
+			x_shift -= FONT[0] -> height + 1;
+			y_shift = 0;
+		}
+		else{
+			if (current_character == ' '){
+				current_character = 28;
+			}
+			current_character -= 'A';
+			if (current_character > 29){
+				current_character = 29;
+			}
+			write_image (FONT[current_character], x + x_shift, y + y_shift);
+			y_shift += FONT[current_character] -> width + 1;
+		}
+		index += 1;
+	}
+}
+
 void xDisplayTask(void* parameters){ //display task. handles all output to the rit display
 
 	xQueueHandle display_queue = (xQueueHandle) parameters;
@@ -93,6 +120,12 @@ void execute_display_task(DisplayTask* task){ //executes a display task and free
 	}
 	else if (task -> command == COMMAND_WRITE_NUMBER){
 		write_tetris_number((int) task -> data, task -> x, task -> y);
+	}
+	else if (task -> command == COMMAND_WRITE_STRING){
+		write_tetris_string((char*) task -> data, task -> x, task -> y);
+	}
+	else if (task -> command == COMMAND_WRITE_RIT_STRING){
+		write_string((char*) task -> data, task -> x, task -> y, MAX_BRIGHTNESS);
 	}
 }
 
@@ -137,5 +170,15 @@ void quick_clear_screen(xQueueHandle* queue){ //sends the commands needed to cle
 
 void quick_send_number(xQueueHandle* queue, int x, int y, int number){ //sends an number to the display task
 	DisplayTask task = {(void*) number, x, y, COMMAND_WRITE_NUMBER};
+	enqueue_display_task(queue, &task);
+}
+
+void quick_send_string(xQueueHandle* queue, int x, int y, char* string){ //sends a string
+	DisplayTask task = {(void*) string, x, y, COMMAND_WRITE_STRING};
+	enqueue_display_task(queue, &task);
+}
+
+void quick_send_string_rit(xQueueHandle* queue, int x, int y, char* string){ //sends a rit string
+	DisplayTask task = {(void*) string, x, y, COMMAND_WRITE_RIT_STRING};
 	enqueue_display_task(queue, &task);
 }

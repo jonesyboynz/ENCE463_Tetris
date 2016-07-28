@@ -62,11 +62,39 @@ const Image RUNNING_ANIMATION3 = {RUNNING_ANIMATION3_DATA, 2, 2};
 
 const Image* RUNNING_ANIMATION[4] = {&RUNNING_ANIMATION0, &RUNNING_ANIMATION1, &RUNNING_ANIMATION2, &RUNNING_ANIMATION3};
 
-const Image SCORE_IMAGE = {SCORE_IMAGE_DATA, 6, 19};
+const Image LETTER_A = {&LETTER_A_DATA, 6, 3};
+const Image LETTER_B = {&LETTER_B_DATA, 6, 3};
+const Image LETTER_C = {&LETTER_C_DATA, 6, 3};
+const Image LETTER_D = {&LETTER_D_DATA, 6, 3};
+const Image LETTER_E = {&LETTER_E_DATA, 6, 3};
+const Image LETTER_F = {&LETTER_F_DATA, 6, 3};
+const Image LETTER_G = {&LETTER_G_DATA, 6, 3};
+const Image LETTER_H = {&LETTER_H_DATA, 6, 3};
+const Image LETTER_I = {&LETTER_I_DATA, 6, 3};
+const Image LETTER_J = {&LETTER_J_DATA, 6, 3};
+const Image LETTER_K = {&LETTER_K_DATA, 6, 3};
+const Image LETTER_L = {&LETTER_L_DATA, 6, 3};
+const Image LETTER_M = {&LETTER_M_DATA, 6, 5};
+const Image LETTER_N = {&LETTER_N_DATA, 6, 3};
+const Image LETTER_O = {&LETTER_O_DATA, 6, 3};
+const Image LETTER_P = {&LETTER_P_DATA, 6, 3};
+const Image LETTER_Q = {&LETTER_Q_DATA, 6, 4};
+const Image LETTER_R = {&LETTER_R_DATA, 6, 3};
+const Image LETTER_S = {&LETTER_S_DATA, 6, 3};
+const Image LETTER_T = {&LETTER_T_DATA, 6, 3};
+const Image LETTER_U = {&LETTER_U_DATA, 6, 3};
+const Image LETTER_V = {&LETTER_V_DATA, 6, 3};
+const Image LETTER_W = {&LETTER_W_DATA, 6, 5};
+const Image LETTER_X = {&LETTER_X_DATA, 6, 3};
+const Image LETTER_Y = {&LETTER_Y_DATA, 6, 3};
+const Image LETTER_Z = {&LETTER_Z_DATA, 6, 3};
+const Image LETTER__ = {&LETTER___DATA, 6, 3};
+const Image LETTER_UNDEFINED = {&LETTER_UNDEFINED_DATA, 6, 3};
 
-const Image NEXT_IMAGE = {NEXT_IMAGE_DATA, 6, 15};
-
-const Image LEVEL_IMAGE = {LEVEL_IMAGE_DATA, 6, 19};
+const Image* FONT[30] = {	&LETTER_A, &LETTER_B, &LETTER_C, &LETTER_D, &LETTER_E, &LETTER_F, &LETTER_G, &LETTER_H,
+							&LETTER_I, &LETTER_J, &LETTER_K, &LETTER_L, &LETTER_M, &LETTER_N, &LETTER_O, &LETTER_P,
+							&LETTER_Q, &LETTER_R, &LETTER_S, &LETTER_T, &LETTER_U, &LETTER_V, &LETTER_W, &LETTER_X,
+							&LETTER_Y, &LETTER_Z, &LETTER__, &LETTER_UNDEFINED, &LETTER_UNDEFINED, &LETTER_UNDEFINED};
 
 /*IMAGES TO ADD:
  * "game over"
