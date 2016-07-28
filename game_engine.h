@@ -81,6 +81,10 @@ void button_process_loop(Game* game);
 
 void process_button_event(ButtonEvent* event, Game* game);
 
+void splash_screen_loop(Game* game);
+
+void score_screen_loop(Game* game);
+
 Tetrominoe* get_current_tetrominoe(Game* game);
 
 void draw_current_tetrominoe(Game* game);

@@ -29,12 +29,20 @@ Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1};
 
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
+	initalise_game(game);
+
+	//create the button and display tasks
+	xTaskCreate(xDisplayTask, "display task", 300, (void*) game -> display_queue, 1, NULL);
+	xTaskCreate(xButtonReadTask, "button poll task", 300, (void*) game -> button_queue, 1, NULL);
+
 	while (TRUE){
 		//start screen loop
 		//
+		splash_screen_loop(game);
+		reset_game(game);
 		game_loop(game);
 		//score loop
-		reset_game(game);
+
 	}
 }
 
@@ -101,7 +109,20 @@ void process_button_event(ButtonEvent* event, Game* game){ //processes a button 
 }
 
 void splash_screen_loop(Game* game){
-	//show the splash screen
+	int waiting = TRUE;
+	quick_clear_screen(&(game -> display_queue));
+	quick_send_string(&(game -> display_queue), 1, 37, (char*) AUTHOR_STRING);
+	quick_send_string(&(game -> display_queue), 1, 1, (char*) VERSION_STRING);
+	quick_send_number(&(game -> display_queue), 1, 30, 1);
+	quick_send_string(&(game -> display_queue), 100, 35, (char*) TEMP_TETRIS_STRING);
+	ButtonEvent event;
+	while (waiting == TRUE){
+		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
+		}
+		else if (event.event_type == PRESSED){
+			waiting = FALSE;
+		}
+	}
 }
 
 void score_screen_loop(Game* game){
@@ -111,7 +132,6 @@ void score_screen_loop(Game* game){
 void initalise_game(Game* game){ //intalises the game. Mainly clears data
 	initalise_display_queue(&(game -> display_queue));
 	initalise_button_event_queue(&(game -> button_queue));
-	reset_game(game);
 }
 
 void reset_game(Game* game){ //resets the game
@@ -314,6 +334,7 @@ void clear_full_rows(Game* game){ //clears the full rows in the game board
 			int top = highest_occupied_cell_in_column(game -> board, x);
 			redraw_empty_cells(game, x, row_index, top + 1);
 		}
+		rows -= 1;
 		//empty top cell
 	}
 }

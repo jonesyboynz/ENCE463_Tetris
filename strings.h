@@ -3,6 +3,8 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
+extern const char* DISPLAY_QUEUE_ERROR_MESSAGE;
+
 extern const char* SCORE_STRING;
 extern const char* LEVEL_STRING;
 extern const char* NEXT_STRING;

@@ -82,44 +82,19 @@ int main( void )
 	/* Set the clocking to run from the PLL at 50 MHz.  Assumes 8MHz XTAL,
 	whereas some older eval boards used 6MHz. */
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
-	RIT128x96x4Init(1000000);
-
-	initalise_game(&base_game);
+	//RIT128x96x4Init(1000000);
 	//initalise_button_interrupts();
 	initalise_random_number_generator(512512);
 
-	/* Create one of the two tasks. */
-//	xTaskCreate(	vTaskFunction,			/* Pointer to the function that implements the task. */
-//					"Task 1",				/* Text name for the task.  This is to facilitate debugging only. */
-//					240,					/* Stack depth in words. */
-//					(void*)pcTextForTask1,	/* Pass the text to be printed in as the task parameter. */
-//					1,						/* This task will run at priority 1. */
-//					NULL );					/* We are not using the task handle. */
-
-	/* Create the other task in exactly the same way.  Note this time that we
-	are creating the SAME task, but passing in a different parameter.  We are
-	creating two instances of a single task implementation. */
+	//debugging tasks
 	//xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
-
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
-
-	//xQueueHandle display_queue2;
-	//display_queue2 = xQueueCreate(DISPLAY_QUEUE_LENGTH, sizeof(DisplayTask));
-	//initalise_display_queue(&display_queue2);
-	//game.display_queue = &display_queue2;
-
 	//xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, &base_game, 1, NULL);
-
-	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
-
-	xTaskCreate(xDisplayTask, "display task", 300, (void*) base_game.display_queue, 1, NULL);
-
-	xTaskCreate(vDisplayRunning, "display task test", 200, (void*) base_game.display_queue, 1, NULL);
-
 	//xTaskCreate(vButtonTest, "button test", 200, (void*) base_game.button_queue, 1, NULL);
 
-	xTaskCreate(xButtonReadTask, "button task", 300, (void*) base_game.button_queue, 1, NULL);
+	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
+	//xTaskCreate(vDisplayRunning, "display task test", 200, (void*) base_game.display_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	

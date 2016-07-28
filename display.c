@@ -20,6 +20,8 @@
 #include "stdlib.h"
 
 //#define ENABLE_DEBUG_MSG
+#define ERROR_MSG_X_POS 116
+#define ERROR_MSG_Y_POS 65
 
 void write_string(char* string, int x, int y, int brightness){ //thread safe string draw
 	taskENTER_CRITICAL();
@@ -74,11 +76,13 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 		}
 		else{
 			if (current_character == ' '){
-				current_character = 28;
+				current_character = 26;
 			}
-			current_character -= 'A';
-			if (current_character > 29){
-				current_character = 29;
+			else{
+				current_character -= 'A';
+				if (current_character > 29){
+					current_character = 29;
+				}
 			}
 			write_image (FONT[current_character], x + x_shift, y + y_shift);
 			y_shift += FONT[current_character] -> height + 1;
@@ -88,22 +92,16 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 }
 
 void xDisplayTask(void* parameters){ //display task. handles all output to the rit display
-
+	initalise_display();
 	xQueueHandle display_queue = (xQueueHandle) parameters;
 	DisplayTask task;
 	while (1){
 		if (xQueueReceive(display_queue, &task, 0) != pdPASS){
-			/* NOTHING WAS RECIEVED */
-//			const char *fail_message = "Nothing in display queue\n";
-//			vPrintString(fail_message);
+			//nothing recieved
 		}
 		else{
 			//process task
 			execute_display_task(&task);
-#ifdef ENABLE_DEBUG_MSG
-			const char *success_message = "processing display task\n";
-			vPrintString(success_message);
-#endif
 		}
 	}
 }
@@ -141,13 +139,12 @@ void initalise_display_queue(xQueueHandle* queue){ //initalises a display queue
 }
 
 void enqueue_display_task(xQueueHandle* queue, DisplayTask* task){ //enqueues a display task
-
 	if (xQueueSendToBack(*queue, task, 0) != pdPASS){
 		// data could not be put on the queue
-#ifdef ENABLE_DEBUG_MSG
-		const char *fail_message = "Failed to push data onto queue\n";
-		vPrintString(fail_message);
-#endif
+		DisplayTask error_task = {&DISPLAY_QUEUE_ERROR_MESSAGE, ERROR_MSG_X_POS, ERROR_MSG_Y_POS, COMMAND_WRITE_STRING};
+		DisplayTask temp;
+		xQueueReceive(*queue, &temp, 0); //discard a task
+		xQueueSendToBack(*queue, &error_task, 0);
 	}
 }
 
