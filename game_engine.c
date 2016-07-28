@@ -1,3 +1,6 @@
+//Game engine API - Contains functions to drive the game engine
+//By Simon Jones
+
 /* FreeRTOS includes. */
 #include "include/FreeRTOS.h"
 #include "include/task.h"
@@ -15,6 +18,7 @@
 #include "buttons.h"
 #include "math.h"
 #include "timer.h"
+#include "strings.h"
 
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
@@ -36,6 +40,7 @@ void xGameEngineTask(void* parameters){ //the main task for the game engine
 
 void game_loop(Game* game){ //loop in which the game runs
 	spawn_new_tetrominoe(game);
+	update_score_and_level(game, 0);
 	int running = TRUE;
 	while (running == TRUE){
 		draw_current_tetrominoe(game);
@@ -49,9 +54,8 @@ void game_loop(Game* game){ //loop in which the game runs
 			place_current_tetrominoe(game);
 			int completed_rows = num_complete_rows(game -> board);
 			if (completed_rows > 0){
-				game -> score += ((completed_rows * completed_rows) + 2) / 2 * 100;
-				game -> completed_rows += completed_rows;
 				clear_full_rows(game);
+				update_score_and_level(game, completed_rows);
 			}
 			get_next_tetrominoe(game);
 			if (spawn_new_tetrominoe(game) != TRUE){
@@ -66,7 +70,7 @@ void button_process_loop(Game* game){ //a loop in which the game waits for butto
 	int running = TRUE;
 	Timeout timer;
 	ButtonEvent event;
-	start_timeout(&timer, 100);
+	start_timeout(&timer, 300);
 	while (running){
 		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
 		}
@@ -107,7 +111,6 @@ void score_screen_loop(Game* game){
 void initalise_game(Game* game){ //intalises the game. Mainly clears data
 	initalise_display_queue(&(game -> display_queue));
 	initalise_button_event_queue(&(game -> button_queue));
-	initalise_buttons();
 	reset_game(game);
 }
 
@@ -123,12 +126,11 @@ void reset_game(Game* game){ //resets the game
 	game -> level = 1;
 	game -> completed_rows = 0;
 	clear_board(game -> board);
-
 	quick_clear_screen(&(game -> display_queue));
 	quick_send_image(&(game -> display_queue), BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X, &TETRIS_BACKGROUND);
-	//quick_send_image(&(game -> display_queue), 66, 0, &NEXT_IMAGE);
-	//quick_send_image(&(game -> display_queue), 66, 19, &LEVEL_IMAGE);
-	//quick_send_image(&(game -> display_queue), 66, 39, &SCORE_IMAGE);
+	quick_send_string(&(game -> display_queue), NEXT_TEXT_X, NEXT_TEXT_Y, (char*) NEXT_STRING);
+	quick_send_string(&(game -> display_queue), LEVEL_TEXT_X, LEVEL_TEXT_Y, (char*) LEVEL_STRING);
+	quick_send_string(&(game -> display_queue), SCORE_TEXT_X, SCORE_TEXT_Y, (char*) SCORE_STRING);
 	get_next_tetrominoe(game); //initalise the tetrominoes
 	get_next_tetrominoe(game); //the next tetrominoe is known
 	//todo clear the button queue
@@ -148,14 +150,29 @@ void erase_current_tetrominoe(Game* game){ //removes the current tetronimoe
 
 void draw_current_tetrominoe_as(Game* game, const Image* image){ //draws a tetronome from a series of given images
 	Tetrominoe* current_tetrominoe = get_current_tetrominoe(game);
-	const int* tetrominoe_array = get_tetromineo_grid(current_tetrominoe);
+	draw_tetrominoe(game, current_tetrominoe, image, current_tetrominoe -> x, current_tetrominoe -> y);
+//	const int* tetrominoe_array = get_tetromineo_grid(current_tetrominoe);
+//	int i;
+//	for (i = 0; i < TETROMINOE_GRID_LENGTH; i++){
+//		if (tetrominoe_array[i] != 0){
+//			int y_pos = calculate_tetris_grid_y_position(game -> board, current_tetrominoe -> x + i % TETROMINOE_GRID_WIDTH, image -> height);
+//			int x_pos = calculate_tetris_grid_x_position(game -> board, current_tetrominoe -> y + i / TETROMINOE_GRID_HEIGHT, image -> width);
+//
+//			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
+//			enqueue_display_task(&(game -> display_queue), &task);
+//		}
+//	}
+}
+
+void draw_tetrominoe(Game* game, Tetrominoe* selected_tetrominoe, const Image* cell_image, int x, int y){ //draw a tetrominoe at some x, y coordinates
+	const int* tetrominoe_array = get_tetromineo_grid(selected_tetrominoe);
 	int i;
 	for (i = 0; i < TETROMINOE_GRID_LENGTH; i++){
 		if (tetrominoe_array[i] != 0){
-			int y_pos = calculate_tetris_grid_y_position(game -> board, current_tetrominoe -> x + i % TETROMINOE_GRID_WIDTH, image -> height);
-			int x_pos = calculate_tetris_grid_x_position(game -> board, current_tetrominoe -> y + i / TETROMINOE_GRID_HEIGHT, image -> width);
+			int y_pos = calculate_tetris_grid_y_position(game -> board, x + i % TETROMINOE_GRID_WIDTH, cell_image -> height);
+			int x_pos = calculate_tetris_grid_x_position(game -> board, y + i / TETROMINOE_GRID_HEIGHT, cell_image -> width);
 
-			DisplayTask task = {(void*) image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
+			DisplayTask task = {(void*) cell_image, x_pos, y_pos, COMMAND_WRITE_IMAGE};
 			enqueue_display_task(&(game -> display_queue), &task);
 		}
 	}
@@ -257,11 +274,10 @@ int spawn_new_tetrominoe(Game* game){//spawns the current block
 }
 
 void get_next_tetrominoe(Game* game){ //shifts the next tetrominoe index into the current tetrominoe and randomly selects the next tetrominoe
+	erase_next_tetrominoe_on_side(game);
 	game -> current_peice_index = game -> next_peice_index;
-	//int next = (game -> current_peice_index + 1) % game -> num_tetrominoes; //todo replace this with a random number generator!
 	int next = rand_range(0, game -> num_tetrominoes - 1);
 	while (game -> current_peice_index == next && game -> peice_repetitions > 4){
-		//next = (game -> current_peice_index + 1) % game -> num_tetrominoes;
 		next = rand_range(0, game -> num_tetrominoes - 1);
 	}
 	game -> next_peice_index = next;
@@ -271,6 +287,17 @@ void get_next_tetrominoe(Game* game){ //shifts the next tetrominoe index into th
 	else{
 		game -> peice_repetitions = 0;
 	}
+	draw_next_tetrominoe_on_side(game);
+}
+
+void draw_next_tetrominoe_on_side(Game* game){ //draws the next tetrominoe on the side
+	game -> tetrominoes[game -> next_peice_index] -> rotation_state = 0;
+	draw_tetrominoe(game, game -> tetrominoes[game -> next_peice_index], &FULL_CELL, NEXT_TETROMINOE_X_GRID_POSITION, NEXT_TETROMINOE_Y_GRID_POSITION);
+}
+
+void erase_next_tetrominoe_on_side(Game* game){ //erases the current drawing of the next tetromominoe
+	game -> tetrominoes[game -> next_peice_index] -> rotation_state = 0;
+	draw_tetrominoe(game, game -> tetrominoes[game -> next_peice_index], &EMPTY_CELL, NEXT_TETROMINOE_X_GRID_POSITION, NEXT_TETROMINOE_Y_GRID_POSITION);
 }
 
 void clear_full_rows(Game* game){ //clears the full rows in the game board
@@ -339,4 +366,23 @@ void full_drop_current_tetrominoe(Game* game){//drops a tetrominoe till it can g
 		shift_tetrominoe(get_current_tetrominoe(game), 0, 1);
 	}
 	draw_current_tetrominoe(game);
+}
+
+void update_score_display(Game* game){
+	quick_send_number(&(game -> display_queue), SCORE_POSITION_X, SCORE_POSITION_Y, game -> score);
+}
+
+void update_level_display(Game* game){
+	quick_send_number(&(game -> display_queue), LEVEL_POSITION_X, LEVEL_POSITION_Y, game -> level);
+}
+
+void update_score_and_level(Game* game, int rows_broken){
+	if (rows_broken > 1){ //catch the initial case
+		game -> score += ((rows_broken * rows_broken) + 2) / 2 * 100;
+		game -> completed_rows += rows_broken;
+	}
+	//update level
+	//update tick rate based on level
+	update_level_display(game);
+	update_score_display(game);
 }

@@ -54,3 +54,12 @@ int abs_modulo(int number, int divisor){ //executes a modulus functions which al
 	return result;
 }
 
+int symbols_in_number(int number){ //returns the number of sumbols needed to display a number
+	int count = 1;
+	while (number > 0){
+		number /= 10;
+		count += 1;
+	}
+	return count;
+}
+

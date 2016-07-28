@@ -113,11 +113,13 @@ int main( void )
 
 	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
 
-	xTaskCreate(xDisplayTask, "display task", 500, (void*) base_game.display_queue, 1, NULL);
+	xTaskCreate(xDisplayTask, "display task", 300, (void*) base_game.display_queue, 1, NULL);
 
-	xTaskCreate(vDisplayRunning, "display task test", 500, (void*) base_game.display_queue, 1, NULL);
+	xTaskCreate(vDisplayRunning, "display task test", 200, (void*) base_game.display_queue, 1, NULL);
 
-	xTaskCreate(vButtonTest, "button test", 200, (void*) base_game.button_queue, 1, NULL);
+	//xTaskCreate(vButtonTest, "button test", 200, (void*) base_game.button_queue, 1, NULL);
+
+	xTaskCreate(xButtonReadTask, "button task", 300, (void*) base_game.button_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
@@ -239,7 +241,7 @@ void vButtonTest(void* parameters){
 	xQueueHandle ButtonQueue = (xQueueHandle) parameters;
 
 	while (1){
-		ButtonEvent event = {NAV_UP, PRESS_EVENT};
+		ButtonEvent event = {NAV_LEFT, PRESS_EVENT};
 		enqueue_button_event(&ButtonQueue, &event);
 		vTaskDelay(2000 / portTICK_RATE_MS);
 	}

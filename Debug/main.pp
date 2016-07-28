@@ -36,6 +36,9 @@ main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/pin_map.
 main.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/systick.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: ../timer.h
+main.obj: ../include/task.h
+main.obj: ../include/queue.h
 main.obj: ../include/queue.h
 main.obj: ../bool.h
 main.obj: ../math.h
@@ -76,6 +79,9 @@ P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/pin_map.h:
 P:/My\ Documents/2015/courses/ENCE361/StellarisWare/driverlib/systick.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+../timer.h: 
+../include/task.h: 
+../include/queue.h: 
 ../include/queue.h: 
 ../bool.h: 
 ../math.h: 

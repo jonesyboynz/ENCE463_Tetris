@@ -12,6 +12,8 @@ timer.obj: ../include/task.h
 timer.obj: ../include/list.h
 timer.obj: ../include/queue.h
 timer.obj: ../timer.h
+timer.obj: ../include/task.h
+timer.obj: ../include/queue.h
 timer.obj: ../bool.h
 
 ../timer.c: 
@@ -26,4 +28,6 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stddef.h:
 ../include/list.h: 
 ../include/queue.h: 
 ../timer.h: 
+../include/task.h: 
+../include/queue.h: 
 ../bool.h: 

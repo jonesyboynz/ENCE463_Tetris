@@ -69,7 +69,7 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 	while (string[index] != '\00'){
 		char current_character = string[index];
 		if (current_character == '\n'){
-			x_shift -= FONT[0] -> height + 1;
+			x_shift -= FONT[0] -> width + 1;
 			y_shift = 0;
 		}
 		else{
@@ -81,7 +81,7 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 				current_character = 29;
 			}
 			write_image (FONT[current_character], x + x_shift, y + y_shift);
-			y_shift += FONT[current_character] -> width + 1;
+			y_shift += FONT[current_character] -> height + 1;
 		}
 		index += 1;
 	}

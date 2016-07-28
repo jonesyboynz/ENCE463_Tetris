@@ -15,6 +15,7 @@ display.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1
 display.obj: ../display.h
 display.obj: ../images.h
 display.obj: ../include/queue.h
+display.obj: ../strings.h
 display.obj: ../demo_code/basic_io.h
 display.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 display.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h
@@ -34,6 +35,7 @@ P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/r
 ../display.h: 
 ../images.h: 
 ../include/queue.h: 
+../strings.h: 
 ../demo_code/basic_io.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h: 

@@ -4,10 +4,28 @@
 #define DEFAULT_GRID_HEIGHT 20
 #define DEFAULT_GRID_WIDTH 10
 
-#define BACKGROUND_OFFSET_X 0
+#define BACKGROUND_OFFSET_X 1
 #define BACKGROUND_OFFSET_Y 2
 #define BACKGROUND_HOLDOFF_X 2
 #define BACKGROUND_HOLDOFF_Y 2
+
+#define SCORE_TEXT_X 64 - 3
+#define SCORE_TEXT_Y 72
+
+#define LEVEL_TEXT_X 32 - 3
+#define LEVEL_TEXT_Y 72
+
+#define NEXT_TEXT_X 104 - 3
+#define NEXT_TEXT_Y 74
+
+#define SCORE_POSITION_X (SCORE_TEXT_X - 9)
+#define SCORE_POSITION_Y (SCORE_TEXT_Y)
+
+#define LEVEL_POSITION_X (LEVEL_TEXT_X - 9)
+#define LEVEL_POSITION_Y (LEVEL_TEXT_Y)
+
+#define NEXT_TETROMINOE_X_GRID_POSITION (DEFAULT_GRID_WIDTH + 2)
+#define NEXT_TETROMINOE_Y_GRID_POSITION 5
 
 #define LEFT -1
 #define RIGHT 1
@@ -71,6 +89,8 @@ void erase_current_tetrominoe(Game* game);
 
 void draw_current_tetrominoe_as(Game* game, const Image* image);
 
+void draw_tetrominoe(Game* game, Tetrominoe* tetrominoe, const Image* cell_image, int x, int y);
+
 int calculate_tetris_grid_y_position(Board* board, int grid_position, int size);
 
 int calculate_tetris_grid_x_position(Board* board, int grid_position, int size);
@@ -93,6 +113,10 @@ int spawn_new_tetrominoe(Game* game);
 
 void get_next_tetrominoe(Game* game);
 
+void draw_next_tetrominoe_on_side(Game* game);
+
+void erase_next_tetrominoe_on_side(Game* game);
+
 void clear_full_rows(Game* game);
 
 void temp_fill_cells(Game* game, int column, int bottom_row, int top_row);
@@ -104,5 +128,15 @@ void try_rotate_current_tetrominoe(Game* game);
 void try_shift_current_tetrominoe(Game* game, int direction);
 
 void full_drop_current_tetrominoe(Game* game);
+
+void draw_next_tetrominoe_on_side(Game* game);
+
+void erase_next_tetrominoe_on_side(Game* game);
+
+void update_score_display(Game* game);
+
+void update_level_display(Game* game);
+
+void update_score_and_level(Game* game, int rows_broken);
 
 #endif

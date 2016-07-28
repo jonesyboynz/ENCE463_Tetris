@@ -16,6 +16,6 @@ void initalise_random_number_generator(unsigned long seed);
 
 int abs_modulo(int number, int divisor);
 
-
+int symbols_in_number(int number);
 
 #endif /* MATH_H_ */
