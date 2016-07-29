@@ -152,7 +152,7 @@ all: ENCE463-Tetris.out
 ENCE463-Tetris.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off -z -m"ENCE463-Tetris.map" --heap_size=0x3200 --stack_size=0x3200 -i"P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib/ccs-cm3/Debug/driverlib-cm3.lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ENCE463-Tetris_linkInfo.xml" --rom_model -o "ENCE463-Tetris.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off -z -m"ENCE463-Tetris.map" --heap_size=0x800 --stack_size=0x2000 -i"P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib/ccs-cm3/Debug/driverlib-cm3.lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ENCE463-Tetris_linkInfo.xml" --rom_model -o "ENCE463-Tetris.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
