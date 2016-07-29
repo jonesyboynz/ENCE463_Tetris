@@ -16,7 +16,12 @@ void clear_board(Board* board){ //clears the board
 }
 
 int get_board_value(Board* board, int x, int y){ //gets the value at specific coordinates on the board
-	return board -> grid[y * board -> width + x];
+	if (x >= 0 && y >= 0 && x < board -> width && y < board -> height){
+		return board -> grid[y * board -> width + x];
+	}
+	else{
+		return CELL_OFF_BOARD_VALUE;
+	}
 }
 
 void set_board_value(Board* board, int x, int y, int value){ //sets the value of a cell on the board at a specific location
@@ -30,6 +35,7 @@ int get_next_complete_row(Board* board){//returns the highest complete row
 		int is_complete = TRUE;
 		for (x = 0; x < board -> width; x++){
 			if (get_board_value(board, x, y) == EMPTY_CELL_VALUE){
+				is_complete = FALSE;
 				break;
 			}
 		}
@@ -83,29 +89,29 @@ void clear_row(Board* board, int row){ //does a complete tetris row clear and dr
 	for (x = 0; x < board -> width; x++){
 		set_board_value(board, x, row, EMPTY_CELL_VALUE);
 		int target = highest_occupied_cell_in_column(board, x);
-		if (target > row){
-			//trickle down
+		if (target < row){
+			trickle_down_column(board, row, x);
 		}
 	}
 }
 
 void trickle_down_column(Board* board, int base_row, int column){ //trickles a column down. used to when rows are being destroyed.
 	int y;
-	for (y = base_row; y < board -> height - 2; y++){
-		set_board_value(board, column, y, get_board_value(board, column, y + 1));
+	for (y = base_row; y > 0; y--){
+		set_board_value(board, column, y, get_board_value(board, column, y - 1));
 	}
-	set_board_value(board, column, board -> height - 1, EMPTY_CELL_VALUE);
+	set_board_value(board, column, 0, EMPTY_CELL_VALUE);
 }
 
 int highest_occupied_cell_in_column(Board* board, int column){ //returns the height of the highest occupied cell in a column
-	int i = board -> height - 1;
-	while (i >= 0){
+	int i = 0;
+	while (i < board -> height){
 		if (get_board_value(board, column, i) != EMPTY_CELL_VALUE){
 			return i;
 		}
-		i -= 1;
+		i += 1;
 	}
-	return NO_CELL_OCCUPIED;
+	return board -> height - 1;
 }
 
 

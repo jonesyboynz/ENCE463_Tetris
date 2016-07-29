@@ -25,7 +25,9 @@ int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
 Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
 
-Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1};
+int tick_rates[20] = {500, 475, 450, 325, 300, 290, 280, 270, 260, 250, 240, 230, 210, 200, 166, 133, 100, 50, 30, 16};
+Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1, tick_rates, 0};
+
 
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
@@ -41,7 +43,7 @@ void xGameEngineTask(void* parameters){ //the main task for the game engine
 		splash_screen_loop(game);
 		reset_game(game);
 		game_loop(game);
-		//score loop
+		score_screen_loop(game);
 
 	}
 }
@@ -78,7 +80,7 @@ void button_process_loop(Game* game){ //a loop in which the game waits for butto
 	int running = TRUE;
 	Timeout timer;
 	ButtonEvent event;
-	start_timeout(&timer, 300);
+	start_timeout(&timer, game -> current_tick_rate);
 	while (running){
 		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
 		}
@@ -111,10 +113,21 @@ void process_button_event(ButtonEvent* event, Game* game){ //processes a button 
 void splash_screen_loop(Game* game){
 	int waiting = TRUE;
 	quick_clear_screen(&(game -> display_queue));
-	quick_send_string(&(game -> display_queue), 1, 37, (char*) AUTHOR_STRING);
+	quick_send_string(&(game -> display_queue), 100, 35, (char*) TEMP_TETRIS_STRING);
 	quick_send_string(&(game -> display_queue), 1, 1, (char*) VERSION_STRING);
 	quick_send_number(&(game -> display_queue), 1, 30, 1);
-	quick_send_string(&(game -> display_queue), 100, 35, (char*) TEMP_TETRIS_STRING);
+	quick_send_string(&(game -> display_queue), 1, 37, (char*) AUTHOR_STRING);
+
+	quick_send_image(&(game -> display_queue), 64, 44, &BUTTON_ICON);
+	quick_send_image(&(game -> display_queue), 56, 52, &BUTTON_ICON);
+	quick_send_image(&(game -> display_queue), 56, 36, &BUTTON_ICON);
+	quick_send_image(&(game -> display_queue), 48, 44, &BUTTON_ICON);
+
+	quick_send_string(&(game -> display_queue), 75, 36, (char*) ROTATE_HELP_MSG);
+	quick_send_string(&(game -> display_queue), 39, 30, (char*) DROP_HELP_MSG);
+	quick_send_string(&(game -> display_queue), 57, 19, (char*) LEFT_HELP_MSG);
+	quick_send_string(&(game -> display_queue), 57, 62, (char*) RIGHT_HELP_MSG);
+
 	ButtonEvent event;
 	while (waiting == TRUE){
 		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
@@ -126,7 +139,29 @@ void splash_screen_loop(Game* game){
 }
 
 void score_screen_loop(Game* game){
-	//show the score, etc
+	int waiting = TRUE;
+	quick_clear_screen(&(game -> display_queue));
+	quick_send_string(&(game -> display_queue), 106, 30, (char*) TEMP_GAME_OVER_STRING);
+
+	quick_send_string(&(game -> display_queue), 85, 15, (char*) FINAL_SCORE_STRING);
+	quick_send_number(&(game -> display_queue), 85, 65, game -> score);
+
+	quick_send_string(&(game -> display_queue), 64, 15, (char*) LEVELS_CLEARED_STRING);
+	quick_send_number(&(game -> display_queue), 64, 75, game -> level);
+
+	quick_send_string(&(game -> display_queue), 44, 20, (char*) ROWS_COMPLETED_STRING);
+	quick_send_number(&(game -> display_queue), 44, 70, game -> completed_rows);
+
+	quick_send_string(&(game -> display_queue), 21, 5, (char*) THANKS_STRING);
+
+	ButtonEvent event;
+	while (waiting == TRUE){
+		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
+		}
+		else if (event.event_type == PRESSED){
+			waiting = FALSE;
+		}
+	}
 }
 
 void initalise_game(Game* game){ //intalises the game. Mainly clears data
@@ -145,6 +180,7 @@ void reset_game(Game* game){ //resets the game
 	game -> score = 0;
 	game -> level = 1;
 	game -> completed_rows = 0;
+	game -> current_tick_rate = game -> tick_rates[game -> level - 1];
 	clear_board(game -> board);
 	quick_clear_screen(&(game -> display_queue));
 	quick_send_image(&(game -> display_queue), BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X, &TETRIS_BACKGROUND);
@@ -322,26 +358,28 @@ void erase_next_tetrominoe_on_side(Game* game){ //erases the current drawing of 
 
 void clear_full_rows(Game* game){ //clears the full rows in the game board
 	int rows = num_complete_rows(game -> board);
+	//debug_board(game);
 	while (rows > 0){
 		int x;
 		int row_index = get_next_complete_row(game -> board);
 		for (x = 0; x < game -> board -> width; x++){
-			int top = highest_occupied_cell_in_column(game -> board, x);
-			temp_fill_cells(game, x, row_index, top);
+			int highest_occupied = highest_occupied_cell_in_column(game -> board, x);
+			temp_fill_cells(game, x, highest_occupied, row_index);
 		}
 		clear_row(game -> board, row_index);
 		for (x = 0; x < game -> board -> width; x++){
-			int top = highest_occupied_cell_in_column(game -> board, x);
-			redraw_empty_cells(game, x, row_index, top + 1);
+			int highest_occupied = highest_occupied_cell_in_column(game -> board, x);
+			redraw_empty_cells(game, x, highest_occupied - 1, row_index);
 		}
 		rows -= 1;
 		//empty top cell
 	}
+	//debug_board(game);
 }
 
 void temp_fill_cells(Game* game, int column, int bottom_row, int top_row){ //draws all emtpry cells as full cells withing a given column range
 	int y;
-	for (y = bottom_row; y < top_row; y++){
+	for (y = bottom_row; y <= top_row; y++){
 		if (get_board_value(game -> board, column, y) == EMPTY_CELL_VALUE){
 			const Image* image = &FULL_CELL;
 			int y_pos = calculate_tetris_grid_y_position(game -> board, column, image -> height);
@@ -352,9 +390,9 @@ void temp_fill_cells(Game* game, int column, int bottom_row, int top_row){ //dra
 	}
 }
 
-void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row){ //redraws the emptry cells in a given row
+void redraw_empty_cells(Game* game, int column, int bottom_row, int top_row){ //redraws the emptry cells in a given column
 	int y;
-	for (y = bottom_row; y < top_row; y++){
+	for (y = bottom_row; y <= top_row; y++){
 		if (get_board_value(game -> board, column, y) == EMPTY_CELL_VALUE){
 			const Image* image = &EMPTY_CELL;
 			int y_pos = calculate_tetris_grid_y_position(game -> board, column, image -> height);
@@ -398,12 +436,15 @@ void update_level_display(Game* game){
 }
 
 void update_score_and_level(Game* game, int rows_broken){
-	if (rows_broken > 1){ //catch the initial case
+	if (rows_broken >= 1){ //catch the initial case
 		game -> score += ((rows_broken * rows_broken) + 2) / 2 * 100;
 		game -> completed_rows += rows_broken;
+		game -> level = game -> completed_rows / ROWS_TILL_LEVEL_ADVANCE + 1;
 	}
-	//update level
-	//update tick rate based on level
+
+	if (game -> level <= 20){
+		game -> current_tick_rate = game -> tick_rates[game -> level];
+	}
 	update_level_display(game);
 	update_score_display(game);
 }

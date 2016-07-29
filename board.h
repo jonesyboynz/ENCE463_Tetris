@@ -15,8 +15,12 @@ typedef struct board_s {
 } Board;
 
 #define NO_COMPLETE_ROW -1
+
 #define NO_CELL_OCCUPIED -1
+
+#define FULL_CELL_VALUE 1
 #define EMPTY_CELL_VALUE 0
+#define CELL_OFF_BOARD_VALUE 0
 
 void clear_board(Board* board);
 
@@ -33,6 +37,8 @@ int is_off_board(Board* board, int x, int y);
 int is_occupied(Board* board, int x, int y);
 
 void clear_row(Board* board, int row);
+
+void trickle_down_column(Board* board, int base_row, int column);
 
 int highest_occupied_cell_in_column(Board* board, int column);
 

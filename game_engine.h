@@ -39,6 +39,8 @@
 #define INITIAL_NEXT_PEICE 0
 #define INITIAL_PEICE_REPETITIONS 0
 
+#define ROWS_TILL_LEVEL_ADVANCE 2
+
 #include "tetrominoe.h"
 #include "images.h"
 #include "include/queue.h"
@@ -57,6 +59,8 @@ typedef struct game_s {
 	int score;
 	int completed_rows;
 	int level;
+	int* tick_rates;
+	int current_tick_rate;
 } Game;
 
 extern Game base_game;

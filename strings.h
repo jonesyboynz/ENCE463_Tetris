@@ -13,9 +13,15 @@ extern const char* FINAL_SCORE_STRING;
 extern const char* LEVELS_CLEARED_STRING;
 extern const char* THANKS_STRING;
 extern const char* TEMP_GAME_OVER_STRING;
+extern const char* ROWS_COMPLETED_STRING;
 
 extern const char* AUTHOR_STRING;
 extern const char* VERSION_STRING;
 extern const char* TEMP_TETRIS_STRING;
+
+extern const char* ROTATE_HELP_MSG;
+extern const char* DROP_HELP_MSG;
+extern const char* LEFT_HELP_MSG;
+extern const char* RIGHT_HELP_MSG;
 
 #endif

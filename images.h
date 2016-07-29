@@ -19,6 +19,8 @@ extern const Image FULL_CELL;
 extern const Image EMPTY_CELL;
 extern const Image TETRIS_BACKGROUND;
 
+extern const Image BUTTON_ICON;
+
 extern const Image NUMBER0;
 extern const Image NUMBER1;
 extern const Image NUMBER2;
