@@ -38,12 +38,14 @@ void initalise_buttons(Button** buttons){ //initalises the buttons for standard 
 	for (i = 0; i < NUM_BUTTONS; i++){
 		port_ids |= buttons[i] -> port;
 		button_ids |= buttons[i] -> id;
-		initalise_button(buttons[i]);
 	}
 	taskENTER_CRITICAL();
-	SysCtlPeripheralEnable (GPIO_PORTG_BASE); //calling this several times is a bit dodgey
-	GPIOPadConfigSet (GPIO_PORTG_BASE, NAV_BUTTONS, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+	SysCtlPeripheralEnable (port_ids); //calling this several times is a bit dodgey
+	GPIOPadConfigSet (port_ids, button_ids, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 	taskEXIT_CRITICAL();
+	for (i = 0; i < NUM_BUTTONS; i++){
+		initalise_button(buttons[i]);
+	}
 }
 
 void initalise_button (Button* button){//initalises a single button
