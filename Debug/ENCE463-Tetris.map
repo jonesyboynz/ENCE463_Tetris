@@ -1,17 +1,17 @@
 ******************************************************************************
                   TI ARM Linker PC v5.1.6                      
 ******************************************************************************
->> Linked Mon Aug 01 10:42:57 2016
+>> Linked Mon Aug 01 15:04:26 2016
 
 OUTPUT FILE NAME:   <ENCE463-Tetris.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 0000692d
+ENTRY POINT SYMBOL: "_c_int00"  address: 00006931
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  00008c22  000373de  R  X
+  FLASH                 00000000   00040000  00008c26  000373da  R  X
   SRAM                  20000000   00010000  00007cfc  00008304  RW X
 
 
@@ -21,8 +21,8 @@ run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
 00000000    00000000    00008c28   00008c28    r-x
   00000000    00000000    000000f0   000000f0    r-- .intvecs
-  000000f0    000000f0    00006a94   00006a94    r-x .text
-  00006b84    00006b84    00001dc6   00001dc6    r-- .const
+  000000f0    000000f0    00006a98   00006a98    r-x .text
+  00006b88    00006b88    00001dc6   00001dc6    r-- .const
   00008950    00008950    000002d8   000002d8    r-- .cinit
 20000000    20000000    00007cfc   00000000    rw-
   20000000    20000000    00003200   00000000    rw- .sysmem
@@ -39,131 +39,131 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    000000f0     
                   00000000    000000f0     startup_ccs.obj (.intvecs)
 
-.text      0    000000f0    00006a94     
+.text      0    000000f0    00006a98     
                   000000f0    00000ebc     rtsv7M3_T_le_eabi.lib : _printfi.obj (.text)
-                  00000fac    00000bdc     game_engine.obj (.text)
-                  00001b88    00000ab8     tasks.obj (.text)
-                  00002640    00000614     queue.obj (.text)
-                  00002c54    00000550     math.obj (.text)
-                  000031a4    00000510     rit128x96x4.obj (.text)
-                  000036b4    000003fc     display.obj (.text)
-                  00003ab0    000003cc     rtsv7M3_T_le_eabi.lib : memory.obj (.text)
-                  00003e7c    00000310                           : lowlev.obj (.text)
-                  0000418c    000002d4                           : trgdrv.obj (.text)
-                  00004460    000002bc     main.obj (.text)
-                  0000471c    00000280     board.obj (.text)
-                  0000499c    000001f4     rtsv7M3_T_le_eabi.lib : ull_div_t2.obj (.text)
-                  00004b90    000001d8     driverlib-cm3.lib : sysctl.obj (.text:SysCtlClockGet)
-                  00004d68    000001c0     rtsv7M3_T_le_eabi.lib : fopen.obj (.text)
-                  00004f28    000001bc     buttons.obj (.text)
-                  000050e4    000001bc     heap_2.obj (.text)
-                  000052a0    000001b6     rtsv7M3_T_le_eabi.lib : fd_add_t2.obj (.text)
-                  00005456    00000002     --HOLE-- [fill = 0]
-                  00005458    00000144     driverlib-cm3.lib : sysctl.obj (.text:SysCtlClockSet)
-                  0000559c    00000136     rtsv7M3_T_le_eabi.lib : fd_div_t2.obj (.text)
-                  000056d2    00000002     --HOLE-- [fill = 0]
-                  000056d4    00000134                           : fputs.obj (.text)
-                  00005808    0000012e     list.obj (.text)
-                  00005936    000000fc     rtsv7M3_T_le_eabi.lib : fd_mul_t2.obj (.text)
-                  00005a32    00000002     --HOLE-- [fill = 0]
-                  00005a34    000000e4     port.obj (.text)
-                  00005b18    000000dc     rtsv7M3_T_le_eabi.lib : setvbuf.obj (.text)
-                  00005bf4    000000dc     timer.obj (.text)
-                  00005cd0    000000c8     driverlib-cm3.lib : gpio.obj (.text:GPIOPadConfigSet)
-                  00005d98    000000c0     rtsv7M3_T_le_eabi.lib : fflush.obj (.text)
-                  00005e58    000000ac                           : _io_perm.obj (.text)
-                  00005f04    0000009c     portasm.obj (.text)
-                  00005fa0    0000009c     rtsv7M3_T_le_eabi.lib : fputc.obj (.text)
-                  0000603c    0000009c                           : memcpy_t2.obj (.text)
-                  000060d8    00000098                           : fclose.obj (.text)
-                  00006170    00000094                           : auto_init.obj (.text)
-                  00006204    00000088     driverlib-cm3.lib : sysctl.obj (.text:SysCtlPeripheralReset)
-                  0000628c    00000086     rtsv7M3_T_le_eabi.lib : fd_cmp_t2.obj (.text:__aeabi_cdcmple)
-                  00006312    00000086                           : fd_cmp_t2.obj (.text:__aeabi_cdrcmple)
-                  00006398    00000078                           : memset_t2.obj (.text)
-                  00006410    00000074     tetrominoe.obj (.text)
-                  00006484    00000070     rtsv7M3_T_le_eabi.lib : printf.obj (.text)
-                  000064f4    00000064                           : fseek.obj (.text)
-                  00006558    00000060     basic_io.obj (.text)
-                  000065b8    00000060     rtsv7M3_T_le_eabi.lib : sprintf.obj (.text)
-                  00006618    00000060                           : trgmsg.obj (.text)
-                  00006678    0000005e                           : copy_decompress_rle.obj (.text)
-                  000066d6    0000005a                           : ltoa.obj (.text)
-                  00006730    00000058     driverlib-cm3.lib : sysctl.obj (.text:SysCtlPeripheralEnable)
-                  00006788    0000004c     rtsv7M3_T_le_eabi.lib : atoi.obj (.text)
-                  000067d4    00000048                           : fd_toi_t2.obj (.text)
-                  0000681c    00000044     driverlib-cm3.lib : ssi.obj (.text:SSIConfigSetExpClk)
-                  00006860    00000044     rtsv7M3_T_le_eabi.lib : cpy_tbl.obj (.text)
-                  000068a4    00000044                           : exit.obj (.text)
-                  000068e8    00000044                           : xdtest.obj (.text)
-                  0000692c    00000034                           : boot.obj (.text)
-                  00006960    00000030                           : strncpy.obj (.text)
-                  00006990    0000002e     driverlib-cm3.lib : gpio.obj (.text:GPIODirModeSet)
-                  000069be    0000002e     rtsv7M3_T_le_eabi.lib : i_tofd_t2.obj (.text)
-                  000069ec    00000022                           : memcmp.obj (.text)
-                  00006a0e    0000001a                           : memccpy.obj (.text)
-                  00006a28    00000018                           : args_main.obj (.text)
-                  00006a40    00000018                           : ll_mul_t2.obj (.text)
-                  00006a58    00000018                           : strcmp.obj (.text)
-                  00006a70    00000016                           : memchr.obj (.text)
-                  00006a86    00000016                           : strchr.obj (.text)
-                  00006a9c    00000014                           : _lock.obj (.text)
-                  00006ab0    00000014                           : strlen.obj (.text)
-                  00006ac4    00000012     driverlib-cm3.lib : gpio.obj (.text:GPIOPinTypeGPIOOutput)
-                  00006ad6    00000012                       : gpio.obj (.text:GPIOPinTypeSSI)
-                  00006ae8    00000012                       : ssi.obj (.text:SSIDataGetNonBlocking)
-                  00006afa    00000012     rtsv7M3_T_le_eabi.lib : copy_zero_init.obj (.text:decompress:ZI)
-                  00006b0c    00000012                           : strcpy.obj (.text)
-                  00006b1e    0000000e                           : copy_decompress_none.obj (.text:decompress:none)
-                  00006b2c    0000000e                           : xdclass.obj (.text)
-                  00006b3a    0000000c     startup_ccs.obj (.text)
-                  00006b46    0000000a     driverlib-cm3.lib : ssi.obj (.text:SSIDataPut)
-                  00006b50    0000000a                       : ssi.obj (.text:SSIDisable)
-                  00006b5a    0000000a                       : ssi.obj (.text:SSIEnable)
-                  00006b64    00000008                       : ssi.obj (.text:SSIBusy)
-                  00006b6c    00000006                       : gpio.obj (.text:GPIOPinRead)
-                  00006b72    00000006                       : gpio.obj (.text:GPIOPinWrite)
-                  00006b78    00000006                       : sysctl.obj (.text:SysCtlDelay)
-                  00006b7e    00000006     rtsv7M3_T_le_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  00000fac    00000bd4     game_engine.obj (.text)
+                  00001b80    00000ab8     tasks.obj (.text)
+                  00002638    00000614     queue.obj (.text)
+                  00002c4c    00000550     math.obj (.text)
+                  0000319c    00000510     rit128x96x4.obj (.text)
+                  000036ac    000003fc     display.obj (.text)
+                  00003aa8    000003cc     rtsv7M3_T_le_eabi.lib : memory.obj (.text)
+                  00003e74    00000310                           : lowlev.obj (.text)
+                  00004184    000002d4                           : trgdrv.obj (.text)
+                  00004458    000002cc     main.obj (.text)
+                  00004724    00000280     board.obj (.text)
+                  000049a4    000001f4     rtsv7M3_T_le_eabi.lib : ull_div_t2.obj (.text)
+                  00004b98    000001d8     driverlib-cm3.lib : sysctl.obj (.text:SysCtlClockGet)
+                  00004d70    000001c0     rtsv7M3_T_le_eabi.lib : fopen.obj (.text)
+                  00004f30    000001bc     heap_2.obj (.text)
+                  000050ec    000001b8     buttons.obj (.text)
+                  000052a4    000001b6     rtsv7M3_T_le_eabi.lib : fd_add_t2.obj (.text)
+                  0000545a    00000002     --HOLE-- [fill = 0]
+                  0000545c    00000144     driverlib-cm3.lib : sysctl.obj (.text:SysCtlClockSet)
+                  000055a0    00000136     rtsv7M3_T_le_eabi.lib : fd_div_t2.obj (.text)
+                  000056d6    00000002     --HOLE-- [fill = 0]
+                  000056d8    00000134                           : fputs.obj (.text)
+                  0000580c    0000012e     list.obj (.text)
+                  0000593a    000000fc     rtsv7M3_T_le_eabi.lib : fd_mul_t2.obj (.text)
+                  00005a36    00000002     --HOLE-- [fill = 0]
+                  00005a38    000000e4     port.obj (.text)
+                  00005b1c    000000dc     rtsv7M3_T_le_eabi.lib : setvbuf.obj (.text)
+                  00005bf8    000000dc     timer.obj (.text)
+                  00005cd4    000000c8     driverlib-cm3.lib : gpio.obj (.text:GPIOPadConfigSet)
+                  00005d9c    000000c0     rtsv7M3_T_le_eabi.lib : fflush.obj (.text)
+                  00005e5c    000000ac                           : _io_perm.obj (.text)
+                  00005f08    0000009c     portasm.obj (.text)
+                  00005fa4    0000009c     rtsv7M3_T_le_eabi.lib : fputc.obj (.text)
+                  00006040    0000009c                           : memcpy_t2.obj (.text)
+                  000060dc    00000098                           : fclose.obj (.text)
+                  00006174    00000094                           : auto_init.obj (.text)
+                  00006208    00000088     driverlib-cm3.lib : sysctl.obj (.text:SysCtlPeripheralReset)
+                  00006290    00000086     rtsv7M3_T_le_eabi.lib : fd_cmp_t2.obj (.text:__aeabi_cdcmple)
+                  00006316    00000086                           : fd_cmp_t2.obj (.text:__aeabi_cdrcmple)
+                  0000639c    00000078                           : memset_t2.obj (.text)
+                  00006414    00000074     tetrominoe.obj (.text)
+                  00006488    00000070     rtsv7M3_T_le_eabi.lib : printf.obj (.text)
+                  000064f8    00000064                           : fseek.obj (.text)
+                  0000655c    00000060     basic_io.obj (.text)
+                  000065bc    00000060     rtsv7M3_T_le_eabi.lib : sprintf.obj (.text)
+                  0000661c    00000060                           : trgmsg.obj (.text)
+                  0000667c    0000005e                           : copy_decompress_rle.obj (.text)
+                  000066da    0000005a                           : ltoa.obj (.text)
+                  00006734    00000058     driverlib-cm3.lib : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  0000678c    0000004c     rtsv7M3_T_le_eabi.lib : atoi.obj (.text)
+                  000067d8    00000048                           : fd_toi_t2.obj (.text)
+                  00006820    00000044     driverlib-cm3.lib : ssi.obj (.text:SSIConfigSetExpClk)
+                  00006864    00000044     rtsv7M3_T_le_eabi.lib : cpy_tbl.obj (.text)
+                  000068a8    00000044                           : exit.obj (.text)
+                  000068ec    00000044                           : xdtest.obj (.text)
+                  00006930    00000034                           : boot.obj (.text)
+                  00006964    00000030                           : strncpy.obj (.text)
+                  00006994    0000002e     driverlib-cm3.lib : gpio.obj (.text:GPIODirModeSet)
+                  000069c2    0000002e     rtsv7M3_T_le_eabi.lib : i_tofd_t2.obj (.text)
+                  000069f0    00000022                           : memcmp.obj (.text)
+                  00006a12    0000001a                           : memccpy.obj (.text)
+                  00006a2c    00000018                           : args_main.obj (.text)
+                  00006a44    00000018                           : ll_mul_t2.obj (.text)
+                  00006a5c    00000018                           : strcmp.obj (.text)
+                  00006a74    00000016                           : memchr.obj (.text)
+                  00006a8a    00000016                           : strchr.obj (.text)
+                  00006aa0    00000014                           : _lock.obj (.text)
+                  00006ab4    00000014                           : strlen.obj (.text)
+                  00006ac8    00000012     driverlib-cm3.lib : gpio.obj (.text:GPIOPinTypeGPIOOutput)
+                  00006ada    00000012                       : gpio.obj (.text:GPIOPinTypeSSI)
+                  00006aec    00000012                       : ssi.obj (.text:SSIDataGetNonBlocking)
+                  00006afe    00000012     rtsv7M3_T_le_eabi.lib : copy_zero_init.obj (.text:decompress:ZI)
+                  00006b10    00000012                           : strcpy.obj (.text)
+                  00006b22    0000000e                           : copy_decompress_none.obj (.text:decompress:none)
+                  00006b30    0000000e                           : xdclass.obj (.text)
+                  00006b3e    0000000c     startup_ccs.obj (.text)
+                  00006b4a    0000000a     driverlib-cm3.lib : ssi.obj (.text:SSIDataPut)
+                  00006b54    0000000a                       : ssi.obj (.text:SSIDisable)
+                  00006b5e    0000000a                       : ssi.obj (.text:SSIEnable)
+                  00006b68    00000008                       : ssi.obj (.text:SSIBusy)
+                  00006b70    00000006                       : gpio.obj (.text:GPIOPinRead)
+                  00006b76    00000006                       : gpio.obj (.text:GPIOPinWrite)
+                  00006b7c    00000006                       : sysctl.obj (.text:SysCtlDelay)
+                  00006b82    00000006     rtsv7M3_T_le_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
 
-.const     0    00006b84    00001dc6     
-                  00006b84    00000f80     tetris_background.obj (.const:.string:TETRIS_BACKGROUND_DATA)
-                  00007b04    00000240     images.obj (.const)
-                  00007d44    000001e0     rit128x96x4.obj (.const:g_pucFont)
-                  00007f24    0000016d     text_images.obj (.const:.string)
-                  00008091    00000001     --HOLE-- [fill = 0]
-                  00008092    00000102     rtsv7M3_T_le_eabi.lib : ctype.obj (.const:.string:_ctypes_)
-                  00008194    000000c0     strings.obj (.const:.string)
-                  00008254    00000080     display.obj (.const)
-                  000082d4    0000006c     driverlib-cm3.lib : sysctl.obj (.const:g_pulXtals)
-                  00008340    00000050     images.obj (.const:.string)
-                  00008390    0000004f     rit128x96x4.obj (.const:.string:g_pucRIT128x96x4Init)
-                  000083df    00000001     --HOLE-- [fill = 0]
-                  000083e0    00000040     driverlib-cm3.lib : sysctl.obj (.const)
-                  00008420    00000040     tetrominoe.obj (.const:i_pose1)
-                  00008460    00000040     tetrominoe.obj (.const:i_pose2)
-                  000084a0    00000040     tetrominoe.obj (.const:ll_pose1)
-                  000084e0    00000040     tetrominoe.obj (.const:ll_pose2)
-                  00008520    00000040     tetrominoe.obj (.const:ll_pose3)
-                  00008560    00000040     tetrominoe.obj (.const:ll_pose4)
-                  000085a0    00000040     tetrominoe.obj (.const:lz_pose1)
-                  000085e0    00000040     tetrominoe.obj (.const:lz_pose2)
-                  00008620    00000040     tetrominoe.obj (.const:rl_pose1)
-                  00008660    00000040     tetrominoe.obj (.const:rl_pose2)
-                  000086a0    00000040     tetrominoe.obj (.const:rl_pose3)
-                  000086e0    00000040     tetrominoe.obj (.const:rl_pose4)
-                  00008720    00000040     tetrominoe.obj (.const:rz_pose1)
-                  00008760    00000040     tetrominoe.obj (.const:rz_pose2)
-                  000087a0    00000040     tetrominoe.obj (.const:s_pose1)
-                  000087e0    00000040     tetrominoe.obj (.const:t_pose1)
-                  00008820    00000040     tetrominoe.obj (.const:t_pose2)
-                  00008860    00000040     tetrominoe.obj (.const:t_pose3)
-                  000088a0    00000040     tetrominoe.obj (.const:t_pose4)
-                  000088e0    00000030     game_engine.obj (.const)
-                  00008910    00000018     main.obj (.const)
-                  00008928    00000014     tasks.obj (.const:.string)
-                  0000893c    0000000c     rit128x96x4.obj (.const:.string)
-                  00008948    00000002     heap_2.obj (.const)
+.const     0    00006b88    00001dc6     
+                  00006b88    00000f80     tetris_background.obj (.const:.string:TETRIS_BACKGROUND_DATA)
+                  00007b08    00000240     images.obj (.const)
+                  00007d48    000001e0     rit128x96x4.obj (.const:g_pucFont)
+                  00007f28    0000016d     text_images.obj (.const:.string)
+                  00008095    00000001     --HOLE-- [fill = 0]
+                  00008096    00000102     rtsv7M3_T_le_eabi.lib : ctype.obj (.const:.string:_ctypes_)
+                  00008198    000000c0     strings.obj (.const:.string)
+                  00008258    00000080     display.obj (.const)
+                  000082d8    0000006c     driverlib-cm3.lib : sysctl.obj (.const:g_pulXtals)
+                  00008344    00000050     images.obj (.const:.string)
+                  00008394    0000004f     rit128x96x4.obj (.const:.string:g_pucRIT128x96x4Init)
+                  000083e3    00000001     --HOLE-- [fill = 0]
+                  000083e4    00000040     driverlib-cm3.lib : sysctl.obj (.const)
+                  00008424    00000040     tetrominoe.obj (.const:i_pose1)
+                  00008464    00000040     tetrominoe.obj (.const:i_pose2)
+                  000084a4    00000040     tetrominoe.obj (.const:ll_pose1)
+                  000084e4    00000040     tetrominoe.obj (.const:ll_pose2)
+                  00008524    00000040     tetrominoe.obj (.const:ll_pose3)
+                  00008564    00000040     tetrominoe.obj (.const:ll_pose4)
+                  000085a4    00000040     tetrominoe.obj (.const:lz_pose1)
+                  000085e4    00000040     tetrominoe.obj (.const:lz_pose2)
+                  00008624    00000040     tetrominoe.obj (.const:rl_pose1)
+                  00008664    00000040     tetrominoe.obj (.const:rl_pose2)
+                  000086a4    00000040     tetrominoe.obj (.const:rl_pose3)
+                  000086e4    00000040     tetrominoe.obj (.const:rl_pose4)
+                  00008724    00000040     tetrominoe.obj (.const:rz_pose1)
+                  00008764    00000040     tetrominoe.obj (.const:rz_pose2)
+                  000087a4    00000040     tetrominoe.obj (.const:s_pose1)
+                  000087e4    00000040     tetrominoe.obj (.const:t_pose1)
+                  00008824    00000040     tetrominoe.obj (.const:t_pose2)
+                  00008864    00000040     tetrominoe.obj (.const:t_pose3)
+                  000088a4    00000040     tetrominoe.obj (.const:t_pose4)
+                  000088e4    00000030     game_engine.obj (.const)
+                  00008914    00000018     main.obj (.const)
+                  0000892c    00000014     tasks.obj (.const:.string)
+                  00008940    0000000c     rit128x96x4.obj (.const:.string)
+                  0000894c    00000002     heap_2.obj (.const)
 
 .cinit     0    00008950    000002d8     
                   00008950    000002b0     (.cinit..data.load) [load image, compression = rle]
@@ -244,185 +244,185 @@ address    name
 --------   ----
 20007be8   AUTHOR_STRING
 20007b54   BUTTONS
-00007b34   BUTTON_ICON
-00008370   BUTTON_ICON_DATA
-000068a5   C$$EXIT
-00006643   C$$IO$$
-00007b04   CUBE
-00008340   CUBE_DATA
+00007b38   BUTTON_ICON
+00008374   BUTTON_ICON_DATA
+000068a9   C$$EXIT
+00006647   C$$IO$$
+00007b08   CUBE
+00008344   CUBE_DATA
 20007bb4   DISPLAY_QUEUE_ERROR_MESSAGE
 20007b0c   DOWN
 20007bdc   DROP_HELP_MSG
-00002d19   EEPROMBlockCountGet
-00002fcd   EEPROMBlockHide
-00002f5d   EEPROMBlockLock
-00002f0b   EEPROMBlockPasswordSet
-00002ed3   EEPROMBlockProtectGet
-00002ee7   EEPROMBlockProtectSet
-00002f85   EEPROMBlockUnlock
-00002cc9   EEPROMInit
-00003061   EEPROMIntClear
-0000300d   EEPROMIntDisable
-00002fe5   EEPROMIntEnable
-00003031   EEPROMIntStatus
-00002e95   EEPROMMassErase
-00002d79   EEPROMProgram
-00002e53   EEPROMProgramNonBlocking
-00002d27   EEPROMRead
-00002d0d   EEPROMSizeGet
-00003089   EEPROMStatusGet
-00007b28   EMPTY_CELL
-0000835e   EMPTY_CELL_DATA
+00002d11   EEPROMBlockCountGet
+00002fc5   EEPROMBlockHide
+00002f55   EEPROMBlockLock
+00002f03   EEPROMBlockPasswordSet
+00002ecb   EEPROMBlockProtectGet
+00002edf   EEPROMBlockProtectSet
+00002f7d   EEPROMBlockUnlock
+00002cc1   EEPROMInit
+00003059   EEPROMIntClear
+00003005   EEPROMIntDisable
+00002fdd   EEPROMIntEnable
+00003029   EEPROMIntStatus
+00002e8d   EEPROMMassErase
+00002d71   EEPROMProgram
+00002e4b   EEPROMProgramNonBlocking
+00002d1f   EEPROMRead
+00002d05   EEPROMSizeGet
+00003081   EEPROMStatusGet
+00007b2c   EMPTY_CELL
+00008362   EMPTY_CELL_DATA
 20007bc4   FINAL_SCORE_STRING
 20007a7c   FONT
-00007b1c   FULL_CELL
-0000834c   FULL_CELL_DATA
-00006991   GPIODirModeSet
-00005cd1   GPIOPadConfigSet
-00006b6d   GPIOPinRead
-00006ac5   GPIOPinTypeGPIOOutput
-00006ad7   GPIOPinTypeSSI
-00006b73   GPIOPinWrite
-00004419   HOSTclock
-000043e1   HOSTclose
-000043a3   HOSTgetenv
-00004347   HOSTlseek
-000042f5   HOSTopen
-000042a9   HOSTread
-0000424b   HOSTrename
-00004211   HOSTtime
-000041d9   HOSTunlink
-0000418d   HOSTwrite
+00007b20   FULL_CELL
+00008350   FULL_CELL_DATA
+00006995   GPIODirModeSet
+00005cd5   GPIOPadConfigSet
+00006b71   GPIOPinRead
+00006ac9   GPIOPinTypeGPIOOutput
+00006adb   GPIOPinTypeSSI
+00006b77   GPIOPinWrite
+00004411   HOSTclock
+000043d9   HOSTclose
+0000439b   HOSTgetenv
+0000433f   HOSTlseek
+000042ed   HOSTopen
+000042a1   HOSTread
+00004243   HOSTrename
+00004209   HOSTtime
+000041d1   HOSTunlink
+00004185   HOSTwrite
 20007b3c   LEFT
 20007be0   LEFT_HELP_MSG
-00007bf4   LETTER_A
-00007f86   LETTER_A_DATA
-00007c00   LETTER_B
-00007f8f   LETTER_B_DATA
-00007c0c   LETTER_C
-00007f98   LETTER_C_DATA
-00007c18   LETTER_D
-00007fa1   LETTER_D_DATA
-00007c24   LETTER_E
-00007faa   LETTER_E_DATA
-00007c30   LETTER_F
-00007fb3   LETTER_F_DATA
-00007c3c   LETTER_G
-00007fbc   LETTER_G_DATA
-00007c48   LETTER_H
-00007fc5   LETTER_H_DATA
-00007c54   LETTER_I
-00007fce   LETTER_I_DATA
-00007c60   LETTER_J
-00007fd7   LETTER_J_DATA
-00007c6c   LETTER_K
-00007fe0   LETTER_K_DATA
-00007c78   LETTER_L
-00007fe9   LETTER_L_DATA
-00007c84   LETTER_M
-00007ff2   LETTER_M_DATA
-00007c90   LETTER_N
-00008001   LETTER_N_DATA
-00007c9c   LETTER_O
-0000800a   LETTER_O_DATA
-00007ca8   LETTER_P
-00008013   LETTER_P_DATA
-00007cb4   LETTER_Q
-0000801c   LETTER_Q_DATA
-00007cc0   LETTER_R
-00008028   LETTER_R_DATA
-00007ccc   LETTER_S
-00008031   LETTER_S_DATA
-00007cd8   LETTER_T
-0000803a   LETTER_T_DATA
-00007ce4   LETTER_U
-00007d38   LETTER_UNDEFINED
-00008088   LETTER_UNDEFINED_DATA
-00008043   LETTER_U_DATA
-00007cf0   LETTER_V
-0000804c   LETTER_V_DATA
-00007cfc   LETTER_W
-00008055   LETTER_W_DATA
-00007d08   LETTER_X
-00008064   LETTER_X_DATA
-00007d14   LETTER_Y
-0000806d   LETTER_Y_DATA
-00007d20   LETTER_Z
-00008076   LETTER_Z_DATA
-00007d2c   LETTER__
-0000807f   LETTER___DATA
+00007bf8   LETTER_A
+00007f8a   LETTER_A_DATA
+00007c04   LETTER_B
+00007f93   LETTER_B_DATA
+00007c10   LETTER_C
+00007f9c   LETTER_C_DATA
+00007c1c   LETTER_D
+00007fa5   LETTER_D_DATA
+00007c28   LETTER_E
+00007fae   LETTER_E_DATA
+00007c34   LETTER_F
+00007fb7   LETTER_F_DATA
+00007c40   LETTER_G
+00007fc0   LETTER_G_DATA
+00007c4c   LETTER_H
+00007fc9   LETTER_H_DATA
+00007c58   LETTER_I
+00007fd2   LETTER_I_DATA
+00007c64   LETTER_J
+00007fdb   LETTER_J_DATA
+00007c70   LETTER_K
+00007fe4   LETTER_K_DATA
+00007c7c   LETTER_L
+00007fed   LETTER_L_DATA
+00007c88   LETTER_M
+00007ff6   LETTER_M_DATA
+00007c94   LETTER_N
+00008005   LETTER_N_DATA
+00007ca0   LETTER_O
+0000800e   LETTER_O_DATA
+00007cac   LETTER_P
+00008017   LETTER_P_DATA
+00007cb8   LETTER_Q
+00008020   LETTER_Q_DATA
+00007cc4   LETTER_R
+0000802c   LETTER_R_DATA
+00007cd0   LETTER_S
+00008035   LETTER_S_DATA
+00007cdc   LETTER_T
+0000803e   LETTER_T_DATA
+00007ce8   LETTER_U
+00007d3c   LETTER_UNDEFINED
+0000808c   LETTER_UNDEFINED_DATA
+00008047   LETTER_U_DATA
+00007cf4   LETTER_V
+00008050   LETTER_V_DATA
+00007d00   LETTER_W
+00008059   LETTER_W_DATA
+00007d0c   LETTER_X
+00008068   LETTER_X_DATA
+00007d18   LETTER_Y
+00008071   LETTER_Y_DATA
+00007d24   LETTER_Z
+0000807a   LETTER_Z_DATA
+00007d30   LETTER__
+00008083   LETTER___DATA
 20007bc8   LEVELS_CLEARED_STRING
 20007bbc   LEVEL_STRING
 20007cf8   MAX_PORT_TICK_VALUE
 20007bc0   NEXT_STRING
-00007b4c   NUMBER0
-00007f24   NUMBER0_DATA
-00007b58   NUMBER1
-00007f2d   NUMBER1_DATA
-00007b64   NUMBER2
-00007f36   NUMBER2_DATA
-00007b70   NUMBER3
-00007f3f   NUMBER3_DATA
-00007b7c   NUMBER4
-00007f48   NUMBER4_DATA
-00007b88   NUMBER5
-00007f51   NUMBER5_DATA
-00007b94   NUMBER6
-00007f5a   NUMBER6_DATA
-00007ba0   NUMBER7
-00007f63   NUMBER7_DATA
-00007bac   NUMBER8
-00007f6c   NUMBER8_DATA
-00007bb8   NUMBER9
-00007f75   NUMBER9_DATA
+00007b50   NUMBER0
+00007f28   NUMBER0_DATA
+00007b5c   NUMBER1
+00007f31   NUMBER1_DATA
+00007b68   NUMBER2
+00007f3a   NUMBER2_DATA
+00007b74   NUMBER3
+00007f43   NUMBER3_DATA
+00007b80   NUMBER4
+00007f4c   NUMBER4_DATA
+00007b8c   NUMBER5
+00007f55   NUMBER5_DATA
+00007b98   NUMBER6
+00007f5e   NUMBER6_DATA
+00007ba4   NUMBER7
+00007f67   NUMBER7_DATA
+00007bb0   NUMBER8
+00007f70   NUMBER8_DATA
+00007bbc   NUMBER9
+00007f79   NUMBER9_DATA
 20007c58   NUMBERS
 20007b24   RIGHT
 20007be4   RIGHT_HELP_MSG
-000032ad   RIT128x96x4Clear
-0000352b   RIT128x96x4Disable
-0000367d   RIT128x96x4DisplayOff
-00003649   RIT128x96x4DisplayOn
-000034d1   RIT128x96x4Enable
-00003449   RIT128x96x4ImageDraw
-000035a5   RIT128x96x4Init
-00003309   RIT128x96x4StringDraw
+000032a5   RIT128x96x4Clear
+00003523   RIT128x96x4Disable
+00003675   RIT128x96x4DisplayOff
+00003641   RIT128x96x4DisplayOn
+000034c9   RIT128x96x4Enable
+00003441   RIT128x96x4ImageDraw
+0000359d   RIT128x96x4Init
+00003301   RIT128x96x4StringDraw
 20007bd8   ROTATE_HELP_MSG
 20007bd4   ROWS_COMPLETED_STRING
 20007ca8   RUNNING_ANIMATION
-00007bc4   RUNNING_ANIMATION0
-00007f7e   RUNNING_ANIMATION0_DATA
-00007bd0   RUNNING_ANIMATION1
-00007f80   RUNNING_ANIMATION1_DATA
-00007bdc   RUNNING_ANIMATION2
-00007f82   RUNNING_ANIMATION2_DATA
-00007be8   RUNNING_ANIMATION3
-00007f84   RUNNING_ANIMATION3_DATA
-00006b3b   ResetISR
+00007bc8   RUNNING_ANIMATION0
+00007f82   RUNNING_ANIMATION0_DATA
+00007bd4   RUNNING_ANIMATION1
+00007f84   RUNNING_ANIMATION1_DATA
+00007be0   RUNNING_ANIMATION2
+00007f86   RUNNING_ANIMATION2_DATA
+00007bec   RUNNING_ANIMATION3
+00007f88   RUNNING_ANIMATION3_DATA
+00006b3f   ResetISR
 20007bb8   SCORE_STRING
 UNDEFED    SHT$$INIT_ARRAY$$Base
 UNDEFED    SHT$$INIT_ARRAY$$Limit
-00007b10   SMALL_CUBE
-00008348   SMALL_CUBE_DATA
-00006b65   SSIBusy
-0000681d   SSIConfigSetExpClk
-00006ae9   SSIDataGetNonBlocking
-00006b47   SSIDataPut
-00006b51   SSIDisable
-00006b5b   SSIEnable
-00004b91   SysCtlClockGet
-00005459   SysCtlClockSet
-00006b79   SysCtlDelay
-00006731   SysCtlPeripheralEnable
-00006205   SysCtlPeripheralReset
+00007b14   SMALL_CUBE
+0000834c   SMALL_CUBE_DATA
+00006b69   SSIBusy
+00006821   SSIConfigSetExpClk
+00006aed   SSIDataGetNonBlocking
+00006b4b   SSIDataPut
+00006b55   SSIDisable
+00006b5f   SSIEnable
+00004b99   SysCtlClockGet
+0000545d   SysCtlClockSet
+00006b7d   SysCtlDelay
+00006735   SysCtlPeripheralEnable
+00006209   SysCtlPeripheralReset
 20007bd0   TEMP_GAME_OVER_STRING
 20007bf0   TEMP_TETRIS_STRING
-00007b40   TETRIS_BACKGROUND
-00006b84   TETRIS_BACKGROUND_DATA
+00007b44   TETRIS_BACKGROUND
+00006b88   TETRIS_BACKGROUND_DATA
 20007bcc   THANKS_STRING
 20007af4   UP
 20007bec   VERSION_STRING
-00006b2d   _Dclass
-000068e9   _Dtest
+00006b31   _Dclass
+000068ed   _Dtest
 20005d20   __CIOBUF_
 200077f8   __STACK_END
 00001800   __STACK_SIZE
@@ -433,63 +433,63 @@ UNDEFED    SHT$$INIT_ARRAY$$Limit
 00008c00   __TI_Handler_Table_Base
 00008c0c   __TI_Handler_Table_Limit
 00000001   __TI_args_main
-00006171   __TI_auto_init
-00004e31   __TI_cleanup
+00006175   __TI_auto_init
+00004e39   __TI_cleanup
 20007ce4   __TI_cleanup_ptr
-000060d9   __TI_closefile
-00006b1f   __TI_decompress_none
-00006b7f   __TI_decompress_rle24
-00005d99   __TI_doflush
+000060dd   __TI_closefile
+00006b23   __TI_decompress_none
+00006b83   __TI_decompress_rle24
+00005d9d   __TI_doflush
 20007ce8   __TI_dtors_ptr
 20007cb8   __TI_ft_end
 00000ca3   __TI_printfi
-00005ebb   __TI_rd_ok
-00006647   __TI_readmsg
+00005ebf   __TI_rd_ok
+0000664b   __TI_readmsg
 00000000   __TI_static_base__
 20005e40   __TI_tmpnams
-00006619   __TI_writemsg
-00005e59   __TI_wrt_ok
-00006afb   __TI_zero_init
-0000628d   __aeabi_cdcmpeq
-0000628d   __aeabi_cdcmple
-00006313   __aeabi_cdrcmple
-000067d5   __aeabi_d2iz
-000052ab   __aeabi_dadd
-0000559d   __aeabi_ddiv
-00005937   __aeabi_dmul
-000052a1   __aeabi_dsub
-000069bf   __aeabi_i2d
-00006a41   __aeabi_lmul
-00006399   __aeabi_memclr
-00006399   __aeabi_memclr4
-00006399   __aeabi_memclr8
-0000603d   __aeabi_memcpy
-0000603d   __aeabi_memcpy4
-0000603d   __aeabi_memcpy8
-0000639b   __aeabi_memset
-0000639b   __aeabi_memset4
-0000639b   __aeabi_memset8
+0000661d   __TI_writemsg
+00005e5d   __TI_wrt_ok
+00006aff   __TI_zero_init
+00006291   __aeabi_cdcmpeq
+00006291   __aeabi_cdcmple
+00006317   __aeabi_cdrcmple
+000067d9   __aeabi_d2iz
+000052af   __aeabi_dadd
+000055a1   __aeabi_ddiv
+0000593b   __aeabi_dmul
+000052a5   __aeabi_dsub
+000069c3   __aeabi_i2d
+00006a45   __aeabi_lmul
+0000639d   __aeabi_memclr
+0000639d   __aeabi_memclr4
+0000639d   __aeabi_memclr8
+00006041   __aeabi_memcpy
+00006041   __aeabi_memcpy4
+00006041   __aeabi_memcpy8
+0000639f   __aeabi_memset
+0000639f   __aeabi_memset4
+0000639f   __aeabi_memset8
 20007cc4   __aeabi_stderr
 20007cbc   __aeabi_stdin
 20007cc0   __aeabi_stdout
-0000499d   __aeabi_uldivmod
+000049a5   __aeabi_uldivmod
 ffffffff   __binit__
 ffffffff   __c_args__
 20005ff8   __stack
-00006a29   _args_main
-0000692d   _c_int00
-00008092   _ctypes_
+00006a2d   _args_main
+00006931   _c_int00
+00008096   _ctypes_
 200077f8   _ftable
 20007cdc   _lock
-00006aab   _nop
-00006aa3   _register_lock
-00006a9d   _register_unlock
+00006aaf   _nop
+00006aa7   _register_lock
+00006aa1   _register_unlock
 20000000   _sys_memory
 20007ce0   _unlock
-000068a9   abort
-0000311b   abs_modulo
-000040df   add_device
-00006789   atoi
+000068ad   abort
+00003113   abs_modulo
+000040d7   add_device
+0000678d   atoi
 20007bf4   base_game
 ffffffff   binit
 200079b8   block0
@@ -499,226 +499,226 @@ ffffffff   binit
 20007a28   block4
 20007a44   block5
 20007a60   block6
-00004ff1   button_event_occurred
-000010a1   button_process_loop
-0000151b   calculate_tetris_grid_x_position
-00001505   calculate_tetris_grid_y_position
-00003e45   calloc
-0000162f   can_drop_current_tetrominoe
-00001641   can_rotate_current_tetrominoe
-00001659   can_shift_current_tetrominoe
-0000471d   clear_board
-0000371d   clear_display
-000018bd   clear_full_rows
-000048d3   clear_row
-0000408d   close
-00006861   copy_in
-0000154d   current_tetrominoe_can_occupy
-0000170d   debug_board
-00001405   draw_current_tetrominoe
-00001425   draw_current_tetrominoe_as
-0000185d   draw_next_tetrominoe_on_side
-0000146d   draw_tetrominoe
-00005cbd   elapsed_time_ms
-000050c7   enqueue_button_event
-00003927   enqueue_display_task
-00001413   erase_current_tetrominoe
-0000188d   erase_next_tetrominoe_on_side
-00003887   execute_display_task
-000068b1   exit
-0000613f   fclose
-00005de5   fflush
-00004e87   fopen
-00005fa1   fputc
-000056d5   fputs
-00003b9f   free
-00004e5d   freopen
-000064f5   fseek
-00001ab7   full_drop_current_tetrominoe
+000051b5   button_event_occurred
+0000109b   button_process_loop
+00001513   calculate_tetris_grid_x_position
+000014fd   calculate_tetris_grid_y_position
+00003e3d   calloc
+00001627   can_drop_current_tetrominoe
+00001639   can_rotate_current_tetrominoe
+00001651   can_shift_current_tetrominoe
+00004725   clear_board
+00003715   clear_display
+000018b5   clear_full_rows
+000048db   clear_row
+00004085   close
+00006865   copy_in
+00001545   current_tetrominoe_can_occupy
+00001705   debug_board
+000013fd   draw_current_tetrominoe
+0000141d   draw_current_tetrominoe_as
+00001855   draw_next_tetrominoe_on_side
+00001465   draw_tetrominoe
+00005cc1   elapsed_time_ms
+00005285   enqueue_button_event
+0000391f   enqueue_display_task
+0000140b   erase_current_tetrominoe
+00001885   erase_next_tetrominoe_on_side
+0000387f   execute_display_task
+000068b5   exit
+00006143   fclose
+00005de9   fflush
+00004e8f   fopen
+00005fa5   fputc
+000056d9   fputs
+00003b97   free
+00004e65   freopen
+000064f9   fseek
+00001aaf   full_drop_current_tetrominoe
 00000000   g_pfnVectors
 20007c80   game_board
-00001019   game_loop
-0000474f   get_board_value
-000013ef   get_current_tetrominoe
-000047b9   get_next_complete_row
-000017f1   get_next_tetrominoe
-0000642d   get_tetromineo_grid
+00001013   game_loop
+00004757   get_board_value
+000013e7   get_current_tetrominoe
+000047c1   get_next_complete_row
+000017e9   get_next_tetrominoe
+00006431   get_tetromineo_grid
 20005a00   grid
-00005bf5   has_timed_out
-00004969   highest_occupied_cell_in_column
-00008420   i_pose1
-00008460   i_pose2
-00004fb1   initalise_button
-000050af   initalise_button_event_queue
-00004f29   initalise_buttons
-0000370b   initalise_display
-0000390f   initalise_display_queue
-0000131f   initalise_game
-0000310b   initalise_random_number_generator
-000048a9   is_occupied
-00004875   is_off_board
-000084a0   ll_pose1
-000084e0   ll_pose2
-00008520   ll_pose3
-00008560   ll_pose4
-00004069   lseek
-000066d7   ltoa
-000085a0   lz_pose1
-000085e0   lz_pose2
-00004461   main
+00005bf9   has_timed_out
+00004971   highest_occupied_cell_in_column
+00008424   i_pose1
+00008464   i_pose2
+00005175   initalise_button
+0000526d   initalise_button_event_queue
+000050ed   initalise_buttons
+00003703   initalise_display
+00003907   initalise_display_queue
+00001317   initalise_game
+00003103   initalise_random_number_generator
+000048b1   is_occupied
+0000487d   is_off_board
+000084a4   ll_pose1
+000084e4   ll_pose2
+00008524   ll_pose3
+00008564   ll_pose4
+00004061   lseek
+000066db   ltoa
+000085a4   lz_pose1
+000085e4   lz_pose2
+00004459   main
 20007cf4   main_func_sp
-00003b3d   malloc
-00003d65   memalign
-00006a0f   memccpy
-00006a71   memchr
-000069ed   memcmp
-0000603d   memcpy
-000063a1   memset
-00003ab1   minit
-00004815   num_complete_rows
-00003fbb   open
-00001681   place_current_tetrominoe
-0000648d   printf
-000010ed   process_button_event
-00006025   putc
-00006029   putchar
-000057df   puts
-000050e5   pvPortMalloc
+00003b35   malloc
+00003d5d   memalign
+00006a13   memccpy
+00006a75   memchr
+000069f1   memcmp
+00006041   memcpy
+000063a5   memset
+00003aa9   minit
+0000481d   num_complete_rows
+00003fb3   open
+00001679   place_current_tetrominoe
+00006491   printf
+000010e7   process_button_event
+00006029   putc
+0000602d   putchar
+000057e3   puts
+00004f31   pvPortMalloc
 20007c28   pxCurrentTCB
-00005a35   pxPortInitialiseStack
-000039d5   quick_clear_screen
-00003971   quick_initalise_screen
-000039a5   quick_send_image
-000039f9   quick_send_number
-00003a29   quick_send_string
-00003a5d   quick_send_string_rit
-000030d9   rand_range
-00003f97   read
-00004fc7   read_button
-00003c5f   realloc
-000019e5   redraw_empty_cells
-00003f0d   remove
-00003f6f   remove_device
-00003f31   rename
-00001335   reset_game
-00006411   reset_tetromineo
-00008620   rl_pose1
-00008660   rl_pose2
-000086a0   rl_pose3
-000086e0   rl_pose4
-00006443   rotate_tetromineo
-00008720   rz_pose1
-00008760   rz_pose2
-000087a0   s_pose1
-00001261   score_screen_loop
+00005a39   pxPortInitialiseStack
+000039cd   quick_clear_screen
+00003969   quick_initalise_screen
+0000399d   quick_send_image
+000039f1   quick_send_number
+00003a21   quick_send_string
+00003a55   quick_send_string_rit
+000030d1   rand_range
+00003f8f   read
+0000518b   read_button
+00003c57   realloc
+000019dd   redraw_empty_cells
+00003f05   remove
+00003f67   remove_device
+00003f29   rename
+0000132d   reset_game
+00006415   reset_tetromineo
+00008624   rl_pose1
+00008664   rl_pose2
+000086a4   rl_pose3
+000086e4   rl_pose4
+00006447   rotate_tetromineo
+00008724   rz_pose1
+00008764   rz_pose2
+000087a4   s_pose1
+00001259   score_screen_loop
 20005ff4   seed
-00004795   set_board_value
-00005b19   setvbuf
-00006463   shift_tetrominoe
-00001791   spawn_new_tetrominoe
-0000113f   splash_screen_loop
-000065b9   sprintf
-00005c4b   start_timeout
-00006a87   strchr
-00006a59   strcmp
-00006b0d   strcpy
-00006ab1   strlen
-00006961   strncpy
-0000314b   symbols_in_number
-000087e0   t_pose1
-00008820   t_pose2
-00008860   t_pose3
-000088a0   t_pose4
-00001967   temp_fill_cells
+0000479d   set_board_value
+00005b1d   setvbuf
+00006467   shift_tetrominoe
+00001789   spawn_new_tetrominoe
+00001139   splash_screen_loop
+000065bd   sprintf
+00005c4f   start_timeout
+00006a8b   strchr
+00006a5d   strcmp
+00006b11   strcpy
+00006ab5   strlen
+00006965   strncpy
+00003143   symbols_in_number
+000087e4   t_pose1
+00008824   t_pose2
+00008864   t_pose3
+000088a4   t_pose4
+0000195f   temp_fill_cells
 20007c8c   tetrominoes
-00004503   tetronimoe_drop_test
-0000458b   tetronimoe_drop_test2
-00005c1d   tick_difference
+00004507   tetronimoe_drop_test
+0000458f   tetronimoe_drop_test2
+00005c21   tick_difference
 20007b64   tick_rates
-00005c61   timer_start
-00005cab   timer_stop
-00005c7b   timer_update
-0000491f   trickle_down_column
-00001a63   try_rotate_current_tetrominoe
-00001a89   try_shift_current_tetrominoe
-00003f0d   unlink
-00001afd   update_level_display
-00001b19   update_score_and_level
-00001ae3   update_score_display
-0000309d   urand
-00002a5b   uxQueueMessagesWaiting
-00002a71   uxQueueMessagesWaitingFromISR
-00002085   uxTaskGetNumberOfTasks
-00001e19   uxTaskPriorityGet
-000046c7   vApplicationIdleHook
-000046bb   vApplicationMallocFailedHook
-000046bd   vApplicationStackOverflowHook
-000046c9   vApplicationTickHook
-00004693   vButtonTest
-0000464d   vDisplayRunning
-00005809   vListInitialise
-00005839   vListInitialiseItem
-0000588d   vListInsert
-00005849   vListInsertEnd
-000058f3   vListRemove
-00005f51   vPortClearInterruptMask
-00005f8f   vPortEnableVFP
-00005aa5   vPortEndScheduler
-00005ab1   vPortEnterCritical
-00005ac1   vPortExitCritical
-00005217   vPortFree
-0000527f   vPortInitialiseBlocks
-00005f5f   vPortSVCHandler
-00005f43   vPortSetInterruptMask
-00005f7d   vPortStartFirstTask
-00005aa7   vPortYieldFromISR
-00006559   vPrintString
-0000657d   vPrintStringAndNumber
-00002a83   vQueueDelete
-00001db5   vTaskDelay
-000044c1   vTaskDelayTest
-00001d05   vTaskDelayUntil
-00001c9d   vTaskDelete
-00001f83   vTaskEndScheduler
-00004497   vTaskFunction
-00004615   vTaskImageFun
-0000208b   vTaskIncrementTick
-00002375   vTaskMissedYield
-000021f9   vTaskPlaceOnEventList
-000025b1   vTaskPriorityDisinherit
-00002529   vTaskPriorityInherit
-00001e55   vTaskPrioritySet
-000022e5   vTaskSetTimeOutState
-00001f3d   vTaskStartScheduler
-00001f95   vTaskSuspendAll
-0000213d   vTaskSwitchContext
-00003e7d   write
-000036dd   write_image
-000036b5   write_string
-0000372d   write_tetris_number
-000037b5   write_tetris_string
-00005035   xButtonReadTask
-0000385f   xDisplayTask
+00005c65   timer_start
+00005caf   timer_stop
+00005c7f   timer_update
+00004927   trickle_down_column
+00001a5b   try_rotate_current_tetrominoe
+00001a81   try_shift_current_tetrominoe
+00003f05   unlink
+00001af5   update_level_display
+00001b11   update_score_and_level
+00001adb   update_score_display
+00003095   urand
+00002a53   uxQueueMessagesWaiting
+00002a69   uxQueueMessagesWaitingFromISR
+0000207d   uxTaskGetNumberOfTasks
+00001e11   uxTaskPriorityGet
+000046cb   vApplicationIdleHook
+000046bf   vApplicationMallocFailedHook
+000046c1   vApplicationStackOverflowHook
+000046cd   vApplicationTickHook
+00004697   vButtonTest
+00004651   vDisplayRunning
+0000580d   vListInitialise
+0000583d   vListInitialiseItem
+00005891   vListInsert
+0000584d   vListInsertEnd
+000058f7   vListRemove
+00005f55   vPortClearInterruptMask
+00005f93   vPortEnableVFP
+00005aa9   vPortEndScheduler
+00005ab5   vPortEnterCritical
+00005ac5   vPortExitCritical
+00005063   vPortFree
+000050cb   vPortInitialiseBlocks
+00005f63   vPortSVCHandler
+00005f47   vPortSetInterruptMask
+00005f81   vPortStartFirstTask
+00005aab   vPortYieldFromISR
+0000655d   vPrintString
+00006581   vPrintStringAndNumber
+00002a7b   vQueueDelete
+00001dad   vTaskDelay
+000044c5   vTaskDelayTest
+00001cfd   vTaskDelayUntil
+00001c95   vTaskDelete
+00001f7b   vTaskEndScheduler
+0000449b   vTaskFunction
+00004619   vTaskImageFun
+00002083   vTaskIncrementTick
+0000236d   vTaskMissedYield
+000021f1   vTaskPlaceOnEventList
+000025a9   vTaskPriorityDisinherit
+00002521   vTaskPriorityInherit
+00001e4d   vTaskPrioritySet
+000022dd   vTaskSetTimeOutState
+00001f35   vTaskStartScheduler
+00001f8d   vTaskSuspendAll
+00002135   vTaskSwitchContext
+00003e75   write
+000036d5   write_image
+000036ad   write_string
+00003725   write_tetris_number
+000037ad   write_tetris_string
+000051f9   xButtonReadTask
+00003857   xDisplayTask
 00000fad   xGameEngineTask
-00005279   xPortGetFreeHeapSize
-00005f09   xPortPendSVHandler
-00005a7d   xPortStartScheduler
-00005ad7   xPortSysTickHandler
-00002641   xQueueCreate
-0000274f   xQueueCreateCountingSemaphore
-000026e7   xQueueCreateMutex
-000028bf   xQueueGenericReceive
-0000276d   xQueueGenericSend
-00002855   xQueueGenericSendFromISR
-00002bfd   xQueueIsQueueEmptyFromISR
-00002c37   xQueueIsQueueFullFromISR
-000029f3   xQueueReceiveFromISR
-0000230d   xTaskCheckForTimeOut
-00001b89   xTaskGenericCreate
-0000250f   xTaskGetCurrentTaskHandle
-00002071   xTaskGetTickCount
-00002261   xTaskRemoveFromEventList
-00001fad   xTaskResumeAll
+000050c5   xPortGetFreeHeapSize
+00005f0d   xPortPendSVHandler
+00005a81   xPortStartScheduler
+00005adb   xPortSysTickHandler
+00002639   xQueueCreate
+00002747   xQueueCreateCountingSemaphore
+000026df   xQueueCreateMutex
+000028b7   xQueueGenericReceive
+00002765   xQueueGenericSend
+0000284d   xQueueGenericSendFromISR
+00002bf5   xQueueIsQueueEmptyFromISR
+00002c2f   xQueueIsQueueFullFromISR
+000029eb   xQueueReceiveFromISR
+00002305   xTaskCheckForTimeOut
+00001b81   xTaskGenericCreate
+00002507   xTaskGetCurrentTaskHandle
+00002069   xTaskGetTickCount
+00002259   xTaskRemoveFromEventList
+00001fa5   xTaskResumeAll
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -730,414 +730,414 @@ address    name
 00000001   __TI_args_main
 00000ca3   __TI_printfi
 00000fad   xGameEngineTask
-00001019   game_loop
-000010a1   button_process_loop
-000010ed   process_button_event
-0000113f   splash_screen_loop
-00001261   score_screen_loop
-0000131f   initalise_game
-00001335   reset_game
-000013ef   get_current_tetrominoe
-00001405   draw_current_tetrominoe
-00001413   erase_current_tetrominoe
-00001425   draw_current_tetrominoe_as
-0000146d   draw_tetrominoe
-00001505   calculate_tetris_grid_y_position
-0000151b   calculate_tetris_grid_x_position
-0000154d   current_tetrominoe_can_occupy
-0000162f   can_drop_current_tetrominoe
-00001641   can_rotate_current_tetrominoe
-00001659   can_shift_current_tetrominoe
-00001681   place_current_tetrominoe
-0000170d   debug_board
-00001791   spawn_new_tetrominoe
-000017f1   get_next_tetrominoe
+00001013   game_loop
+0000109b   button_process_loop
+000010e7   process_button_event
+00001139   splash_screen_loop
+00001259   score_screen_loop
+00001317   initalise_game
+0000132d   reset_game
+000013e7   get_current_tetrominoe
+000013fd   draw_current_tetrominoe
+0000140b   erase_current_tetrominoe
+0000141d   draw_current_tetrominoe_as
+00001465   draw_tetrominoe
+000014fd   calculate_tetris_grid_y_position
+00001513   calculate_tetris_grid_x_position
+00001545   current_tetrominoe_can_occupy
+00001627   can_drop_current_tetrominoe
+00001639   can_rotate_current_tetrominoe
+00001651   can_shift_current_tetrominoe
+00001679   place_current_tetrominoe
+00001705   debug_board
+00001789   spawn_new_tetrominoe
+000017e9   get_next_tetrominoe
 00001800   __STACK_SIZE
-0000185d   draw_next_tetrominoe_on_side
-0000188d   erase_next_tetrominoe_on_side
-000018bd   clear_full_rows
-00001967   temp_fill_cells
-000019e5   redraw_empty_cells
-00001a63   try_rotate_current_tetrominoe
-00001a89   try_shift_current_tetrominoe
-00001ab7   full_drop_current_tetrominoe
-00001ae3   update_score_display
-00001afd   update_level_display
-00001b19   update_score_and_level
-00001b89   xTaskGenericCreate
-00001c9d   vTaskDelete
-00001d05   vTaskDelayUntil
-00001db5   vTaskDelay
-00001e19   uxTaskPriorityGet
-00001e55   vTaskPrioritySet
-00001f3d   vTaskStartScheduler
-00001f83   vTaskEndScheduler
-00001f95   vTaskSuspendAll
-00001fad   xTaskResumeAll
-00002071   xTaskGetTickCount
-00002085   uxTaskGetNumberOfTasks
-0000208b   vTaskIncrementTick
-0000213d   vTaskSwitchContext
-000021f9   vTaskPlaceOnEventList
-00002261   xTaskRemoveFromEventList
-000022e5   vTaskSetTimeOutState
-0000230d   xTaskCheckForTimeOut
-00002375   vTaskMissedYield
-0000250f   xTaskGetCurrentTaskHandle
-00002529   vTaskPriorityInherit
-000025b1   vTaskPriorityDisinherit
-00002641   xQueueCreate
-000026e7   xQueueCreateMutex
-0000274f   xQueueCreateCountingSemaphore
-0000276d   xQueueGenericSend
-00002855   xQueueGenericSendFromISR
-000028bf   xQueueGenericReceive
-000029f3   xQueueReceiveFromISR
-00002a5b   uxQueueMessagesWaiting
-00002a71   uxQueueMessagesWaitingFromISR
-00002a83   vQueueDelete
-00002bfd   xQueueIsQueueEmptyFromISR
-00002c37   xQueueIsQueueFullFromISR
-00002cc9   EEPROMInit
-00002d0d   EEPROMSizeGet
-00002d19   EEPROMBlockCountGet
-00002d27   EEPROMRead
-00002d79   EEPROMProgram
-00002e53   EEPROMProgramNonBlocking
-00002e95   EEPROMMassErase
-00002ed3   EEPROMBlockProtectGet
-00002ee7   EEPROMBlockProtectSet
-00002f0b   EEPROMBlockPasswordSet
-00002f5d   EEPROMBlockLock
-00002f85   EEPROMBlockUnlock
-00002fcd   EEPROMBlockHide
-00002fe5   EEPROMIntEnable
-0000300d   EEPROMIntDisable
-00003031   EEPROMIntStatus
-00003061   EEPROMIntClear
-00003089   EEPROMStatusGet
-0000309d   urand
-000030d9   rand_range
-0000310b   initalise_random_number_generator
-0000311b   abs_modulo
-0000314b   symbols_in_number
+00001855   draw_next_tetrominoe_on_side
+00001885   erase_next_tetrominoe_on_side
+000018b5   clear_full_rows
+0000195f   temp_fill_cells
+000019dd   redraw_empty_cells
+00001a5b   try_rotate_current_tetrominoe
+00001a81   try_shift_current_tetrominoe
+00001aaf   full_drop_current_tetrominoe
+00001adb   update_score_display
+00001af5   update_level_display
+00001b11   update_score_and_level
+00001b81   xTaskGenericCreate
+00001c95   vTaskDelete
+00001cfd   vTaskDelayUntil
+00001dad   vTaskDelay
+00001e11   uxTaskPriorityGet
+00001e4d   vTaskPrioritySet
+00001f35   vTaskStartScheduler
+00001f7b   vTaskEndScheduler
+00001f8d   vTaskSuspendAll
+00001fa5   xTaskResumeAll
+00002069   xTaskGetTickCount
+0000207d   uxTaskGetNumberOfTasks
+00002083   vTaskIncrementTick
+00002135   vTaskSwitchContext
+000021f1   vTaskPlaceOnEventList
+00002259   xTaskRemoveFromEventList
+000022dd   vTaskSetTimeOutState
+00002305   xTaskCheckForTimeOut
+0000236d   vTaskMissedYield
+00002507   xTaskGetCurrentTaskHandle
+00002521   vTaskPriorityInherit
+000025a9   vTaskPriorityDisinherit
+00002639   xQueueCreate
+000026df   xQueueCreateMutex
+00002747   xQueueCreateCountingSemaphore
+00002765   xQueueGenericSend
+0000284d   xQueueGenericSendFromISR
+000028b7   xQueueGenericReceive
+000029eb   xQueueReceiveFromISR
+00002a53   uxQueueMessagesWaiting
+00002a69   uxQueueMessagesWaitingFromISR
+00002a7b   vQueueDelete
+00002bf5   xQueueIsQueueEmptyFromISR
+00002c2f   xQueueIsQueueFullFromISR
+00002cc1   EEPROMInit
+00002d05   EEPROMSizeGet
+00002d11   EEPROMBlockCountGet
+00002d1f   EEPROMRead
+00002d71   EEPROMProgram
+00002e4b   EEPROMProgramNonBlocking
+00002e8d   EEPROMMassErase
+00002ecb   EEPROMBlockProtectGet
+00002edf   EEPROMBlockProtectSet
+00002f03   EEPROMBlockPasswordSet
+00002f55   EEPROMBlockLock
+00002f7d   EEPROMBlockUnlock
+00002fc5   EEPROMBlockHide
+00002fdd   EEPROMIntEnable
+00003005   EEPROMIntDisable
+00003029   EEPROMIntStatus
+00003059   EEPROMIntClear
+00003081   EEPROMStatusGet
+00003095   urand
+000030d1   rand_range
+00003103   initalise_random_number_generator
+00003113   abs_modulo
+00003143   symbols_in_number
 00003200   __SYSMEM_SIZE
-000032ad   RIT128x96x4Clear
-00003309   RIT128x96x4StringDraw
-00003449   RIT128x96x4ImageDraw
-000034d1   RIT128x96x4Enable
-0000352b   RIT128x96x4Disable
-000035a5   RIT128x96x4Init
-00003649   RIT128x96x4DisplayOn
-0000367d   RIT128x96x4DisplayOff
-000036b5   write_string
-000036dd   write_image
-0000370b   initalise_display
-0000371d   clear_display
-0000372d   write_tetris_number
-000037b5   write_tetris_string
-0000385f   xDisplayTask
-00003887   execute_display_task
-0000390f   initalise_display_queue
-00003927   enqueue_display_task
-00003971   quick_initalise_screen
-000039a5   quick_send_image
-000039d5   quick_clear_screen
-000039f9   quick_send_number
-00003a29   quick_send_string
-00003a5d   quick_send_string_rit
-00003ab1   minit
-00003b3d   malloc
-00003b9f   free
-00003c5f   realloc
-00003d65   memalign
-00003e45   calloc
-00003e7d   write
-00003f0d   remove
-00003f0d   unlink
-00003f31   rename
-00003f6f   remove_device
-00003f97   read
-00003fbb   open
-00004069   lseek
-0000408d   close
-000040df   add_device
-0000418d   HOSTwrite
-000041d9   HOSTunlink
-00004211   HOSTtime
-0000424b   HOSTrename
-000042a9   HOSTread
-000042f5   HOSTopen
-00004347   HOSTlseek
-000043a3   HOSTgetenv
-000043e1   HOSTclose
-00004419   HOSTclock
-00004461   main
-00004497   vTaskFunction
-000044c1   vTaskDelayTest
-00004503   tetronimoe_drop_test
-0000458b   tetronimoe_drop_test2
-00004615   vTaskImageFun
-0000464d   vDisplayRunning
-00004693   vButtonTest
-000046bb   vApplicationMallocFailedHook
-000046bd   vApplicationStackOverflowHook
-000046c7   vApplicationIdleHook
-000046c9   vApplicationTickHook
-0000471d   clear_board
-0000474f   get_board_value
-00004795   set_board_value
-000047b9   get_next_complete_row
-00004815   num_complete_rows
-00004875   is_off_board
-000048a9   is_occupied
-000048d3   clear_row
-0000491f   trickle_down_column
-00004969   highest_occupied_cell_in_column
-0000499d   __aeabi_uldivmod
-00004b91   SysCtlClockGet
-00004e31   __TI_cleanup
-00004e5d   freopen
-00004e87   fopen
-00004f29   initalise_buttons
-00004fb1   initalise_button
-00004fc7   read_button
-00004ff1   button_event_occurred
-00005035   xButtonReadTask
-000050af   initalise_button_event_queue
-000050c7   enqueue_button_event
-000050e5   pvPortMalloc
-00005217   vPortFree
-00005279   xPortGetFreeHeapSize
-0000527f   vPortInitialiseBlocks
-000052a1   __aeabi_dsub
-000052ab   __aeabi_dadd
-00005459   SysCtlClockSet
-0000559d   __aeabi_ddiv
-000056d5   fputs
-000057df   puts
-00005809   vListInitialise
-00005839   vListInitialiseItem
-00005849   vListInsertEnd
-0000588d   vListInsert
-000058f3   vListRemove
-00005937   __aeabi_dmul
-00005a35   pxPortInitialiseStack
-00005a7d   xPortStartScheduler
-00005aa5   vPortEndScheduler
-00005aa7   vPortYieldFromISR
-00005ab1   vPortEnterCritical
-00005ac1   vPortExitCritical
-00005ad7   xPortSysTickHandler
-00005b19   setvbuf
-00005bf5   has_timed_out
-00005c1d   tick_difference
-00005c4b   start_timeout
-00005c61   timer_start
-00005c7b   timer_update
-00005cab   timer_stop
-00005cbd   elapsed_time_ms
-00005cd1   GPIOPadConfigSet
-00005d99   __TI_doflush
-00005de5   fflush
-00005e59   __TI_wrt_ok
-00005ebb   __TI_rd_ok
-00005f09   xPortPendSVHandler
-00005f43   vPortSetInterruptMask
-00005f51   vPortClearInterruptMask
-00005f5f   vPortSVCHandler
-00005f7d   vPortStartFirstTask
-00005f8f   vPortEnableVFP
-00005fa1   fputc
-00006025   putc
-00006029   putchar
-0000603d   __aeabi_memcpy
-0000603d   __aeabi_memcpy4
-0000603d   __aeabi_memcpy8
-0000603d   memcpy
-000060d9   __TI_closefile
-0000613f   fclose
-00006171   __TI_auto_init
-00006205   SysCtlPeripheralReset
-0000628d   __aeabi_cdcmpeq
-0000628d   __aeabi_cdcmple
-00006313   __aeabi_cdrcmple
-00006399   __aeabi_memclr
-00006399   __aeabi_memclr4
-00006399   __aeabi_memclr8
-0000639b   __aeabi_memset
-0000639b   __aeabi_memset4
-0000639b   __aeabi_memset8
-000063a1   memset
-00006411   reset_tetromineo
-0000642d   get_tetromineo_grid
-00006443   rotate_tetromineo
-00006463   shift_tetrominoe
-0000648d   printf
-000064f5   fseek
-00006559   vPrintString
-0000657d   vPrintStringAndNumber
-000065b9   sprintf
-00006619   __TI_writemsg
-00006643   C$$IO$$
-00006647   __TI_readmsg
-000066d7   ltoa
-00006731   SysCtlPeripheralEnable
-00006789   atoi
-000067d5   __aeabi_d2iz
-0000681d   SSIConfigSetExpClk
-00006861   copy_in
-000068a5   C$$EXIT
-000068a9   abort
-000068b1   exit
-000068e9   _Dtest
-0000692d   _c_int00
-00006961   strncpy
-00006991   GPIODirModeSet
-000069bf   __aeabi_i2d
-000069ed   memcmp
-00006a0f   memccpy
-00006a29   _args_main
-00006a41   __aeabi_lmul
-00006a59   strcmp
-00006a71   memchr
-00006a87   strchr
-00006a9d   _register_unlock
-00006aa3   _register_lock
-00006aab   _nop
-00006ab1   strlen
-00006ac5   GPIOPinTypeGPIOOutput
-00006ad7   GPIOPinTypeSSI
-00006ae9   SSIDataGetNonBlocking
-00006afb   __TI_zero_init
-00006b0d   strcpy
-00006b1f   __TI_decompress_none
-00006b2d   _Dclass
-00006b3b   ResetISR
-00006b47   SSIDataPut
-00006b51   SSIDisable
-00006b5b   SSIEnable
-00006b65   SSIBusy
-00006b6d   GPIOPinRead
-00006b73   GPIOPinWrite
-00006b79   SysCtlDelay
-00006b7f   __TI_decompress_rle24
-00006b84   TETRIS_BACKGROUND_DATA
-00007b04   CUBE
-00007b10   SMALL_CUBE
-00007b1c   FULL_CELL
-00007b28   EMPTY_CELL
-00007b34   BUTTON_ICON
-00007b40   TETRIS_BACKGROUND
-00007b4c   NUMBER0
-00007b58   NUMBER1
-00007b64   NUMBER2
-00007b70   NUMBER3
-00007b7c   NUMBER4
-00007b88   NUMBER5
-00007b94   NUMBER6
-00007ba0   NUMBER7
-00007bac   NUMBER8
-00007bb8   NUMBER9
-00007bc4   RUNNING_ANIMATION0
-00007bd0   RUNNING_ANIMATION1
-00007bdc   RUNNING_ANIMATION2
-00007be8   RUNNING_ANIMATION3
-00007bf4   LETTER_A
-00007c00   LETTER_B
-00007c0c   LETTER_C
-00007c18   LETTER_D
-00007c24   LETTER_E
-00007c30   LETTER_F
-00007c3c   LETTER_G
-00007c48   LETTER_H
-00007c54   LETTER_I
-00007c60   LETTER_J
-00007c6c   LETTER_K
-00007c78   LETTER_L
-00007c84   LETTER_M
-00007c90   LETTER_N
-00007c9c   LETTER_O
-00007ca8   LETTER_P
-00007cb4   LETTER_Q
-00007cc0   LETTER_R
-00007ccc   LETTER_S
-00007cd8   LETTER_T
-00007ce4   LETTER_U
-00007cf0   LETTER_V
-00007cfc   LETTER_W
-00007d08   LETTER_X
-00007d14   LETTER_Y
-00007d20   LETTER_Z
-00007d2c   LETTER__
-00007d38   LETTER_UNDEFINED
-00007f24   NUMBER0_DATA
-00007f2d   NUMBER1_DATA
-00007f36   NUMBER2_DATA
-00007f3f   NUMBER3_DATA
-00007f48   NUMBER4_DATA
-00007f51   NUMBER5_DATA
-00007f5a   NUMBER6_DATA
-00007f63   NUMBER7_DATA
-00007f6c   NUMBER8_DATA
-00007f75   NUMBER9_DATA
-00007f7e   RUNNING_ANIMATION0_DATA
-00007f80   RUNNING_ANIMATION1_DATA
-00007f82   RUNNING_ANIMATION2_DATA
-00007f84   RUNNING_ANIMATION3_DATA
-00007f86   LETTER_A_DATA
-00007f8f   LETTER_B_DATA
-00007f98   LETTER_C_DATA
-00007fa1   LETTER_D_DATA
-00007faa   LETTER_E_DATA
-00007fb3   LETTER_F_DATA
-00007fbc   LETTER_G_DATA
-00007fc5   LETTER_H_DATA
-00007fce   LETTER_I_DATA
-00007fd7   LETTER_J_DATA
-00007fe0   LETTER_K_DATA
-00007fe9   LETTER_L_DATA
-00007ff2   LETTER_M_DATA
-00008001   LETTER_N_DATA
-0000800a   LETTER_O_DATA
-00008013   LETTER_P_DATA
-0000801c   LETTER_Q_DATA
-00008028   LETTER_R_DATA
-00008031   LETTER_S_DATA
-0000803a   LETTER_T_DATA
-00008043   LETTER_U_DATA
-0000804c   LETTER_V_DATA
-00008055   LETTER_W_DATA
-00008064   LETTER_X_DATA
-0000806d   LETTER_Y_DATA
-00008076   LETTER_Z_DATA
-0000807f   LETTER___DATA
-00008088   LETTER_UNDEFINED_DATA
-00008092   _ctypes_
-00008340   CUBE_DATA
-00008348   SMALL_CUBE_DATA
-0000834c   FULL_CELL_DATA
-0000835e   EMPTY_CELL_DATA
-00008370   BUTTON_ICON_DATA
-00008420   i_pose1
-00008460   i_pose2
-000084a0   ll_pose1
-000084e0   ll_pose2
-00008520   ll_pose3
-00008560   ll_pose4
-000085a0   lz_pose1
-000085e0   lz_pose2
-00008620   rl_pose1
-00008660   rl_pose2
-000086a0   rl_pose3
-000086e0   rl_pose4
-00008720   rz_pose1
-00008760   rz_pose2
-000087a0   s_pose1
-000087e0   t_pose1
-00008820   t_pose2
-00008860   t_pose3
-000088a0   t_pose4
+000032a5   RIT128x96x4Clear
+00003301   RIT128x96x4StringDraw
+00003441   RIT128x96x4ImageDraw
+000034c9   RIT128x96x4Enable
+00003523   RIT128x96x4Disable
+0000359d   RIT128x96x4Init
+00003641   RIT128x96x4DisplayOn
+00003675   RIT128x96x4DisplayOff
+000036ad   write_string
+000036d5   write_image
+00003703   initalise_display
+00003715   clear_display
+00003725   write_tetris_number
+000037ad   write_tetris_string
+00003857   xDisplayTask
+0000387f   execute_display_task
+00003907   initalise_display_queue
+0000391f   enqueue_display_task
+00003969   quick_initalise_screen
+0000399d   quick_send_image
+000039cd   quick_clear_screen
+000039f1   quick_send_number
+00003a21   quick_send_string
+00003a55   quick_send_string_rit
+00003aa9   minit
+00003b35   malloc
+00003b97   free
+00003c57   realloc
+00003d5d   memalign
+00003e3d   calloc
+00003e75   write
+00003f05   remove
+00003f05   unlink
+00003f29   rename
+00003f67   remove_device
+00003f8f   read
+00003fb3   open
+00004061   lseek
+00004085   close
+000040d7   add_device
+00004185   HOSTwrite
+000041d1   HOSTunlink
+00004209   HOSTtime
+00004243   HOSTrename
+000042a1   HOSTread
+000042ed   HOSTopen
+0000433f   HOSTlseek
+0000439b   HOSTgetenv
+000043d9   HOSTclose
+00004411   HOSTclock
+00004459   main
+0000449b   vTaskFunction
+000044c5   vTaskDelayTest
+00004507   tetronimoe_drop_test
+0000458f   tetronimoe_drop_test2
+00004619   vTaskImageFun
+00004651   vDisplayRunning
+00004697   vButtonTest
+000046bf   vApplicationMallocFailedHook
+000046c1   vApplicationStackOverflowHook
+000046cb   vApplicationIdleHook
+000046cd   vApplicationTickHook
+00004725   clear_board
+00004757   get_board_value
+0000479d   set_board_value
+000047c1   get_next_complete_row
+0000481d   num_complete_rows
+0000487d   is_off_board
+000048b1   is_occupied
+000048db   clear_row
+00004927   trickle_down_column
+00004971   highest_occupied_cell_in_column
+000049a5   __aeabi_uldivmod
+00004b99   SysCtlClockGet
+00004e39   __TI_cleanup
+00004e65   freopen
+00004e8f   fopen
+00004f31   pvPortMalloc
+00005063   vPortFree
+000050c5   xPortGetFreeHeapSize
+000050cb   vPortInitialiseBlocks
+000050ed   initalise_buttons
+00005175   initalise_button
+0000518b   read_button
+000051b5   button_event_occurred
+000051f9   xButtonReadTask
+0000526d   initalise_button_event_queue
+00005285   enqueue_button_event
+000052a5   __aeabi_dsub
+000052af   __aeabi_dadd
+0000545d   SysCtlClockSet
+000055a1   __aeabi_ddiv
+000056d9   fputs
+000057e3   puts
+0000580d   vListInitialise
+0000583d   vListInitialiseItem
+0000584d   vListInsertEnd
+00005891   vListInsert
+000058f7   vListRemove
+0000593b   __aeabi_dmul
+00005a39   pxPortInitialiseStack
+00005a81   xPortStartScheduler
+00005aa9   vPortEndScheduler
+00005aab   vPortYieldFromISR
+00005ab5   vPortEnterCritical
+00005ac5   vPortExitCritical
+00005adb   xPortSysTickHandler
+00005b1d   setvbuf
+00005bf9   has_timed_out
+00005c21   tick_difference
+00005c4f   start_timeout
+00005c65   timer_start
+00005c7f   timer_update
+00005caf   timer_stop
+00005cc1   elapsed_time_ms
+00005cd5   GPIOPadConfigSet
+00005d9d   __TI_doflush
+00005de9   fflush
+00005e5d   __TI_wrt_ok
+00005ebf   __TI_rd_ok
+00005f0d   xPortPendSVHandler
+00005f47   vPortSetInterruptMask
+00005f55   vPortClearInterruptMask
+00005f63   vPortSVCHandler
+00005f81   vPortStartFirstTask
+00005f93   vPortEnableVFP
+00005fa5   fputc
+00006029   putc
+0000602d   putchar
+00006041   __aeabi_memcpy
+00006041   __aeabi_memcpy4
+00006041   __aeabi_memcpy8
+00006041   memcpy
+000060dd   __TI_closefile
+00006143   fclose
+00006175   __TI_auto_init
+00006209   SysCtlPeripheralReset
+00006291   __aeabi_cdcmpeq
+00006291   __aeabi_cdcmple
+00006317   __aeabi_cdrcmple
+0000639d   __aeabi_memclr
+0000639d   __aeabi_memclr4
+0000639d   __aeabi_memclr8
+0000639f   __aeabi_memset
+0000639f   __aeabi_memset4
+0000639f   __aeabi_memset8
+000063a5   memset
+00006415   reset_tetromineo
+00006431   get_tetromineo_grid
+00006447   rotate_tetromineo
+00006467   shift_tetrominoe
+00006491   printf
+000064f9   fseek
+0000655d   vPrintString
+00006581   vPrintStringAndNumber
+000065bd   sprintf
+0000661d   __TI_writemsg
+00006647   C$$IO$$
+0000664b   __TI_readmsg
+000066db   ltoa
+00006735   SysCtlPeripheralEnable
+0000678d   atoi
+000067d9   __aeabi_d2iz
+00006821   SSIConfigSetExpClk
+00006865   copy_in
+000068a9   C$$EXIT
+000068ad   abort
+000068b5   exit
+000068ed   _Dtest
+00006931   _c_int00
+00006965   strncpy
+00006995   GPIODirModeSet
+000069c3   __aeabi_i2d
+000069f1   memcmp
+00006a13   memccpy
+00006a2d   _args_main
+00006a45   __aeabi_lmul
+00006a5d   strcmp
+00006a75   memchr
+00006a8b   strchr
+00006aa1   _register_unlock
+00006aa7   _register_lock
+00006aaf   _nop
+00006ab5   strlen
+00006ac9   GPIOPinTypeGPIOOutput
+00006adb   GPIOPinTypeSSI
+00006aed   SSIDataGetNonBlocking
+00006aff   __TI_zero_init
+00006b11   strcpy
+00006b23   __TI_decompress_none
+00006b31   _Dclass
+00006b3f   ResetISR
+00006b4b   SSIDataPut
+00006b55   SSIDisable
+00006b5f   SSIEnable
+00006b69   SSIBusy
+00006b71   GPIOPinRead
+00006b77   GPIOPinWrite
+00006b7d   SysCtlDelay
+00006b83   __TI_decompress_rle24
+00006b88   TETRIS_BACKGROUND_DATA
+00007b08   CUBE
+00007b14   SMALL_CUBE
+00007b20   FULL_CELL
+00007b2c   EMPTY_CELL
+00007b38   BUTTON_ICON
+00007b44   TETRIS_BACKGROUND
+00007b50   NUMBER0
+00007b5c   NUMBER1
+00007b68   NUMBER2
+00007b74   NUMBER3
+00007b80   NUMBER4
+00007b8c   NUMBER5
+00007b98   NUMBER6
+00007ba4   NUMBER7
+00007bb0   NUMBER8
+00007bbc   NUMBER9
+00007bc8   RUNNING_ANIMATION0
+00007bd4   RUNNING_ANIMATION1
+00007be0   RUNNING_ANIMATION2
+00007bec   RUNNING_ANIMATION3
+00007bf8   LETTER_A
+00007c04   LETTER_B
+00007c10   LETTER_C
+00007c1c   LETTER_D
+00007c28   LETTER_E
+00007c34   LETTER_F
+00007c40   LETTER_G
+00007c4c   LETTER_H
+00007c58   LETTER_I
+00007c64   LETTER_J
+00007c70   LETTER_K
+00007c7c   LETTER_L
+00007c88   LETTER_M
+00007c94   LETTER_N
+00007ca0   LETTER_O
+00007cac   LETTER_P
+00007cb8   LETTER_Q
+00007cc4   LETTER_R
+00007cd0   LETTER_S
+00007cdc   LETTER_T
+00007ce8   LETTER_U
+00007cf4   LETTER_V
+00007d00   LETTER_W
+00007d0c   LETTER_X
+00007d18   LETTER_Y
+00007d24   LETTER_Z
+00007d30   LETTER__
+00007d3c   LETTER_UNDEFINED
+00007f28   NUMBER0_DATA
+00007f31   NUMBER1_DATA
+00007f3a   NUMBER2_DATA
+00007f43   NUMBER3_DATA
+00007f4c   NUMBER4_DATA
+00007f55   NUMBER5_DATA
+00007f5e   NUMBER6_DATA
+00007f67   NUMBER7_DATA
+00007f70   NUMBER8_DATA
+00007f79   NUMBER9_DATA
+00007f82   RUNNING_ANIMATION0_DATA
+00007f84   RUNNING_ANIMATION1_DATA
+00007f86   RUNNING_ANIMATION2_DATA
+00007f88   RUNNING_ANIMATION3_DATA
+00007f8a   LETTER_A_DATA
+00007f93   LETTER_B_DATA
+00007f9c   LETTER_C_DATA
+00007fa5   LETTER_D_DATA
+00007fae   LETTER_E_DATA
+00007fb7   LETTER_F_DATA
+00007fc0   LETTER_G_DATA
+00007fc9   LETTER_H_DATA
+00007fd2   LETTER_I_DATA
+00007fdb   LETTER_J_DATA
+00007fe4   LETTER_K_DATA
+00007fed   LETTER_L_DATA
+00007ff6   LETTER_M_DATA
+00008005   LETTER_N_DATA
+0000800e   LETTER_O_DATA
+00008017   LETTER_P_DATA
+00008020   LETTER_Q_DATA
+0000802c   LETTER_R_DATA
+00008035   LETTER_S_DATA
+0000803e   LETTER_T_DATA
+00008047   LETTER_U_DATA
+00008050   LETTER_V_DATA
+00008059   LETTER_W_DATA
+00008068   LETTER_X_DATA
+00008071   LETTER_Y_DATA
+0000807a   LETTER_Z_DATA
+00008083   LETTER___DATA
+0000808c   LETTER_UNDEFINED_DATA
+00008096   _ctypes_
+00008344   CUBE_DATA
+0000834c   SMALL_CUBE_DATA
+00008350   FULL_CELL_DATA
+00008362   EMPTY_CELL_DATA
+00008374   BUTTON_ICON_DATA
+00008424   i_pose1
+00008464   i_pose2
+000084a4   ll_pose1
+000084e4   ll_pose2
+00008524   ll_pose3
+00008564   ll_pose4
+000085a4   lz_pose1
+000085e4   lz_pose2
+00008624   rl_pose1
+00008664   rl_pose2
+000086a4   rl_pose3
+000086e4   rl_pose4
+00008724   rz_pose1
+00008764   rz_pose2
+000087a4   s_pose1
+000087e4   t_pose1
+00008824   t_pose2
+00008864   t_pose3
+000088a4   t_pose4
 00008c00   __TI_Handler_Table_Base
 00008c0c   __TI_Handler_Table_Limit
 00008c18   __TI_CINIT_Base

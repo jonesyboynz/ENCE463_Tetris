@@ -56,7 +56,7 @@ typedef struct button_s {
 	Timeout debounce;
 } Button;
 
-
+extern Button* BUTTONS[NUM_BUTTONS];
 
 void initalise_buttons(Button** button);
 

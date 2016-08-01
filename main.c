@@ -85,7 +85,8 @@ int main( void )
 	//RIT128x96x4Init(1000000);
 	//initalise_button_interrupts();
 	initalise_random_number_generator(512512);
-
+	initalise_buttons(BUTTONS);
+	initalise_game(&base_game);
 	//debugging tasks
 	//xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);

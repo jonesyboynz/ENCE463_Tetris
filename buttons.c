@@ -77,7 +77,6 @@ int button_event_occurred(Button* button, ButtonEvent* event){ //reads a button 
 
 void xButtonReadTask(void* parameters){ //task to pereodically poll the buttons
 	xQueueHandle button_queue = (xQueueHandle) parameters;
-	initalise_buttons(BUTTONS);
 	ButtonEvent event;
 	int i;
 	while (TRUE){

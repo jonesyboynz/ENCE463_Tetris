@@ -31,11 +31,10 @@ Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1, tic
 
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
-	initalise_game(game);
 
 	//create the button and display tasks
-	xTaskCreate(xDisplayTask, "display task", 300, (void*) game -> display_queue, 1, NULL);
-	xTaskCreate(xButtonReadTask, "button poll task", 300, (void*) game -> button_queue, 1, NULL);
+	xTaskCreate(xDisplayTask, "display task", 500, (void*) game -> display_queue, 1, NULL);
+	xTaskCreate(xButtonReadTask, "button poll task", 500, (void*) game -> button_queue, 1, NULL);
 
 	while (TRUE){
 		//start screen loop
