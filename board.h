@@ -22,6 +22,10 @@ typedef struct board_s {
 #define EMPTY_CELL_VALUE 0
 #define CELL_OFF_BOARD_VALUE 0
 
+#define CHANGE_NONE 0
+#define CHANGE_FILLED 1
+#define CHANGE_CLEARED -1
+
 void clear_board(Board* board);
 
 int get_board_value(Board* board, int x, int y);
@@ -41,5 +45,9 @@ void clear_row(Board* board, int row);
 void trickle_down_column(Board* board, int base_row, int column);
 
 int highest_occupied_cell_in_column(Board* board, int column);
+
+void copy_board(Board* source, Board* dest);
+
+void board_difference(Board* board_a, Board* board_b, Board* output);
 
 #endif /* BOARD_H_ */

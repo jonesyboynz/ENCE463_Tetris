@@ -24,4 +24,10 @@ extern const char* DROP_HELP_MSG;
 extern const char* LEFT_HELP_MSG;
 extern const char* RIGHT_HELP_MSG;
 
+extern const char* DEBUG_TITLE_STRING;
+extern const char* DEBUG_AVERAGE_INPUT_DELAY_STRING;
+extern const char* DEBUG_MAXIMUM_INPUT_DELAY_STRING;
+extern const char* DEBUG_SYSTEM_TICK_RATE_STRING;
+extern const char* GAME_REFRESH_RATE_STRING;
+
 #endif

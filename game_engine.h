@@ -89,6 +89,10 @@ void splash_screen_loop(Game* game);
 
 void score_screen_loop(Game* game);
 
+void debug_screen_loop(Game* game);
+
+void generic_wait_loop(Game* game);
+
 Tetrominoe* get_current_tetrominoe(Game* game);
 
 void draw_current_tetrominoe(Game* game);
@@ -115,7 +119,7 @@ int can_shift_current_tetrominoe(Game* game, int direction);
 
 void place_current_tetrominoe(Game* game);
 
-void debug_board(Game* game);
+void debug_board(Board* board);
 
 int spawn_new_tetrominoe(Game* game);
 
@@ -126,6 +130,8 @@ void draw_next_tetrominoe_on_side(Game* game);
 void erase_next_tetrominoe_on_side(Game* game);
 
 void clear_full_rows(Game* game);
+
+void draw_differences(Game* game, Board* differences);
 
 void temp_fill_cells(Game* game, int column, int bottom_row, int top_row);
 

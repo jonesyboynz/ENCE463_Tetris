@@ -114,4 +114,22 @@ int highest_occupied_cell_in_column(Board* board, int column){ //returns the hei
 	return board -> height - 1;
 }
 
+void copy_board(Board* source, Board* dest){ //copies a board's data over
+	int x;
+	int y;
+	for (y = 0; y < source -> height; y++){
+		for (x = 0; x < source -> width; x++){
+			set_board_value(dest, x, y, get_board_value(source, x, y));
+		}
+	}
+}
 
+void board_difference(Board* board_a, Board* board_b, Board* output){ //fins the differences between two boards
+	int x;
+	int y;
+	for (y = 0; y < output -> height; y++){
+		for (x = 0; x < output -> width; x++){
+			set_board_value(output, x, y, get_board_value(board_a, x, y) - get_board_value(board_b, x, y));
+		}
+	}
+}

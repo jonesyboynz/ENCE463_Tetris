@@ -33,16 +33,9 @@ Button* BUTTONS[NUM_BUTTONS] = {&UP, &DOWN, &LEFT, &RIGHT};
 
 void initalise_buttons(Button** buttons){ //initalises the buttons for standard polling mode
 	int i;
-	int port_ids = 0;
-	int button_ids = 0;
-	for (i = 0; i < NUM_BUTTONS; i++){
-		port_ids |= buttons[i] -> port;
-		button_ids |= buttons[i] -> id;
-	}
-	taskENTER_CRITICAL();
-	SysCtlPeripheralEnable (port_ids); //calling this several times is a bit dodgey
-	GPIOPadConfigSet (port_ids, button_ids, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
-	taskEXIT_CRITICAL();
+	//Do a fancy button initalizer here if there is time
+	SysCtlPeripheralEnable (SYSCTL_PERIPH_GPIOG);
+	GPIOPadConfigSet (GPIO_PORTG_BASE, NAV_BUTTONS, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 	for (i = 0; i < NUM_BUTTONS; i++){
 		initalise_button(buttons[i]);
 	}
