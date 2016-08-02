@@ -1,0 +1,1 @@
+extern const char* START_SCREEN_DATA;
