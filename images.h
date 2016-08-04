@@ -13,13 +13,16 @@ typedef struct image_s {
 	int height;
 } Image;
 
-extern const Image SMALL_CUBE;
-extern const Image CUBE;
 extern const Image FULL_CELL;
 extern const Image EMPTY_CELL;
 extern const Image TETRIS_BACKGROUND;
+extern const Image TETRIS_START_SCREEN;
 
 extern const Image BUTTON_ICON;
+extern const Image UP_BUTTON_ICON;
+extern const Image DOWN_BUTTON_ICON;
+extern const Image LEFT_BUTTON_ICON;
+extern const Image RIGHT_BUTTON_ICON;
 
 extern const Image NUMBER0;
 extern const Image NUMBER1;
