@@ -21,6 +21,7 @@
 #include "strings.h"
 
 #define DEBUG_SCREEN_ENABLE
+#define GENERIC_LOOP_WAIT_TIME_MS 500
 
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
@@ -28,7 +29,7 @@ Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 
 //setup for the game engine
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
-int tick_rates[20] = {500, 475, 450, 325, 300, 290, 280, 270, 260, 250, 240, 230, 210, 200, 166, 133, 100, 50, 30, 16};
+int tick_rates[20] = {500, 480, 460, 440, 420, 400, 380, 360, 340, 320, 300, 280, 260, 240, 220, 200, 150, 100, 50, 16};
 Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1, tick_rates, 0};
 
 //setup some temporary variables needed to clear completed rows
@@ -175,6 +176,11 @@ void debug_screen_loop(Game* game){ //displays debug information
 void generic_wait_loop(Game* game){ //a generic loop which exits on button input
 	int waiting = TRUE;
 	ButtonEvent event;
+	Timeout timeout;
+	start_timeout(&timeout, GENERIC_LOOP_WAIT_TIME_MS);
+	while (has_timed_out(&timeout) == FALSE){ //sit in this loop for 500ms
+		xQueueReceive(game -> button_queue, &event, 0); //discard any button inputs
+	}
 	while (waiting == TRUE){
 		if (xQueueReceive(game -> button_queue, &event, 0) != pdPASS){
 		}
