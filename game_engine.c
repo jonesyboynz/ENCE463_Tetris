@@ -19,9 +19,10 @@
 #include "math.h"
 #include "timer.h"
 #include "strings.h"
+#include "screen_draw.h"
 
 #define DEBUG_SCREEN_ENABLE
-#define GENERIC_LOOP_WAIT_TIME_MS 500
+#define GENERIC_LOOP_WAIT_TIME_MS 250
 
 //Setup for the default game grid. This grid will be used most of the time
 int grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
@@ -30,7 +31,8 @@ Board game_board = {grid, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT};
 //setup for the game engine
 Tetrominoe* tetrominoes[7] = {&block0, &block1, &block2, &block3, &block4, &block5, &block6};
 int tick_rates[20] = {500, 480, 460, 440, 420, 400, 380, 360, 340, 320, 300, 280, 260, 240, 220, 200, 150, 100, 50, 16};
-Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1, tick_rates, 0};
+Game base_game = {&game_board, tetrominoes, 7, 0, 0, 0, NULL, NULL, 0, 0, 1, tick_rates, 0, &DEBUG_TIMERS};
+int score_bonuses[4] = {100, 250, 525, 800};
 
 //setup some temporary variables needed to clear completed rows
 int temp_board_grid[DEFAULT_GRID_HEIGHT * DEFAULT_GRID_WIDTH];
@@ -65,6 +67,7 @@ void game_loop(Game* game){ //loop in which the game runs
 	update_score_and_level(game, 0);
 	int running = TRUE;
 	while (running == TRUE){
+		timer_start(&(game -> debug_timers -> refresh_rate_timer));
 		draw_current_tetrominoe(game);
 		button_process_loop(game);
 		if (can_drop_current_tetrominoe(game) == TRUE){
@@ -83,9 +86,14 @@ void game_loop(Game* game){ //loop in which the game runs
 			if (spawn_new_tetrominoe(game) != TRUE){
 				running = FALSE;
 			}
-
+			timer_stop(&(game -> debug_timers -> refresh_rate_timer));
+			update_refresh_rate(game);
 		}
 	}
+}
+
+void update_refresh_rate(Game* game){ //updates the refresh rate
+	game -> debug_timers -> refresh_rate = (int) (game -> debug_timers -> refresh_rate_timer.elapsed_ticks);
 }
 
 void button_process_loop(Game* game){ //a loop in which the game waits for button events
@@ -98,10 +106,15 @@ void button_process_loop(Game* game){ //a loop in which the game waits for butto
 		}
 		else{
 			process_button_event(&event, game);
+#ifdef DEBUG_SCREEN_ENABLE
+			DisplayTask d_task = {(void*) (event.occurance_tick), 0, 0, COMMAND_UPDATE_LATENCY}; //for debugging button latency
+			enqueue_display_task(&(game -> display_queue), &d_task);
+#endif
 		}
 		if (has_timed_out(&timer) == TRUE){
 			running = FALSE;
 		}
+		//timer_update(&(game -> debug_timers -> refresh_rate_timer)); //this function causes bugs. cause: unknown
 	}
 }
 
@@ -123,22 +136,7 @@ void process_button_event(ButtonEvent* event, Game* game){ //processes a button 
 }
 
 void splash_screen_loop(Game* game){
-	quick_clear_screen(&(game -> display_queue));
-	quick_send_string(&(game -> display_queue), 100, 35, (char*) TEMP_TETRIS_STRING);
-	quick_send_string(&(game -> display_queue), 1, 1, (char*) VERSION_STRING);
-	quick_send_number(&(game -> display_queue), 1, 30, 1);
-	quick_send_string(&(game -> display_queue), 1, 37, (char*) AUTHOR_STRING);
-
-	quick_send_image(&(game -> display_queue), 64, 44, &BUTTON_ICON);
-	quick_send_image(&(game -> display_queue), 56, 52, &BUTTON_ICON);
-	quick_send_image(&(game -> display_queue), 56, 36, &BUTTON_ICON);
-	quick_send_image(&(game -> display_queue), 48, 44, &BUTTON_ICON);
-
-	quick_send_string(&(game -> display_queue), 75, 36, (char*) ROTATE_HELP_MSG);
-	quick_send_string(&(game -> display_queue), 39, 30, (char*) DROP_HELP_MSG);
-	quick_send_string(&(game -> display_queue), 57, 19, (char*) LEFT_HELP_MSG);
-	quick_send_string(&(game -> display_queue), 57, 62, (char*) RIGHT_HELP_MSG);
-
+	draw_start_screen(game);
 	generic_wait_loop(game);
 }
 
@@ -152,8 +150,8 @@ void score_screen_loop(Game* game){
 	quick_send_string(&(game -> display_queue), 64, 15, (char*) LEVELS_CLEARED_STRING);
 	quick_send_number(&(game -> display_queue), 64, 75, game -> level);
 
-	quick_send_string(&(game -> display_queue), 44, 20, (char*) ROWS_COMPLETED_STRING);
-	quick_send_number(&(game -> display_queue), 44, 70, game -> completed_rows);
+	quick_send_string(&(game -> display_queue), 44, 15, (char*) ROWS_COMPLETED_STRING);
+	quick_send_number(&(game -> display_queue), 44, 78, game -> completed_rows);
 
 	quick_send_string(&(game -> display_queue), 21, 5, (char*) THANKS_STRING);
 
@@ -161,15 +159,11 @@ void score_screen_loop(Game* game){
 }
 
 void debug_screen_loop(Game* game){ //displays debug information
-	quick_clear_screen(&(game -> display_queue));
-	quick_send_string(&(game -> display_queue), 118, 0, (char*) DEBUG_TITLE_STRING);
-	quick_send_string(&(game -> display_queue), 103, 0, (char*) DEBUG_AVERAGE_INPUT_DELAY_STRING);
-	quick_send_string(&(game -> display_queue), 88, 0, (char*) DEBUG_MAXIMUM_INPUT_DELAY_STRING);
-
-	quick_send_string(&(game -> display_queue), 73, 0, (char*) DEBUG_SYSTEM_TICK_RATE_STRING);
-	quick_send_number(&(game -> display_queue), 67, 0, (int) portTICK_RATE_MS);
-
-	quick_send_string(&(game -> display_queue), 58, 0, (char*) GAME_REFRESH_RATE_STRING);
+	game -> debug_timers -> average_input_latency = AVERAGE_TIMEOUT; //no semaphore. completely reliant on the fixed score screen delay to prevent resource collision
+	game -> debug_timers -> max_input_latency = MAX_TIMEOUT;
+	AVERAGE_TIMEOUT = 0;
+	MAX_TIMEOUT = 0;
+	draw_debug_screen(game);
 	generic_wait_loop(game);
 }
 
@@ -208,11 +202,7 @@ void reset_game(Game* game){ //resets the game
 	game -> completed_rows = 0;
 	game -> current_tick_rate = game -> tick_rates[game -> level - 1];
 	clear_board(game -> board);
-	quick_clear_screen(&(game -> display_queue));
-	quick_send_image(&(game -> display_queue), BACKGROUND_OFFSET_Y, BACKGROUND_OFFSET_X, &TETRIS_BACKGROUND);
-	quick_send_string(&(game -> display_queue), NEXT_TEXT_X, NEXT_TEXT_Y, (char*) NEXT_STRING);
-	quick_send_string(&(game -> display_queue), LEVEL_TEXT_X, LEVEL_TEXT_Y, (char*) LEVEL_STRING);
-	quick_send_string(&(game -> display_queue), SCORE_TEXT_X, SCORE_TEXT_Y, (char*) SCORE_STRING);
+	draw_tetris_background(game);
 	get_next_tetrominoe(game); //initalise the tetrominoes
 	get_next_tetrominoe(game); //the next tetrominoe is known
 	//todo clear the button queue
@@ -464,7 +454,7 @@ void update_level_display(Game* game){
 
 void update_score_and_level(Game* game, int rows_broken){
 	if (rows_broken >= 1){ //catch the initial case
-		game -> score += ((rows_broken * rows_broken) + 2) / 2 * 100;
+		game -> score += score_bonuses[rows_broken - 1];
 		game -> completed_rows += rows_broken;
 		game -> level = game -> completed_rows / ROWS_TILL_LEVEL_ADVANCE + 1;
 	}

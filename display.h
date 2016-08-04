@@ -14,6 +14,7 @@
 #define COMMAND_WRITE_NUMBER 3
 #define COMMAND_WRITE_STRING 4
 #define COMMAND_WRITE_RIT_STRING 5
+#define COMMAND_UPDATE_LATENCY 6
 
 #define DISPLAY_QUEUE_LENGTH 80
 
@@ -28,6 +29,9 @@ typedef struct display_task_s {
 	int y;
 	int command;
 } DisplayTask;
+
+extern int MAX_TIMEOUT;
+extern int AVERAGE_TIMEOUT;
 
 void write_string(char* string, int x, int y, int brightness);
 
@@ -44,6 +48,8 @@ void clear_display(void);
 void xDisplayTask(void* parameters);
 
 void execute_display_task(DisplayTask* task);
+
+void update_latency(DisplayTask* task);
 
 void initalise_display_queue(xQueueHandle* queue);
 

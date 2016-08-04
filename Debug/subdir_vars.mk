@@ -20,10 +20,12 @@ C_SRCS += \
 ../math.c \
 ../queue.c \
 ../rit128x96x4.c \
+../screen_draw.c \
 ../startup_ccs.c \
 ../strings.c \
 ../tasks.c \
 ../tetris_background.c \
+../tetris_start_screen.c \
 ../tetrominoe.c \
 ../text_images.c \
 ../timer.c 
@@ -39,10 +41,12 @@ OBJS += \
 ./math.obj \
 ./queue.obj \
 ./rit128x96x4.obj \
+./screen_draw.obj \
 ./startup_ccs.obj \
 ./strings.obj \
 ./tasks.obj \
 ./tetris_background.obj \
+./tetris_start_screen.obj \
 ./tetrominoe.obj \
 ./text_images.obj \
 ./timer.obj 
@@ -58,10 +62,12 @@ C_DEPS += \
 ./math.pp \
 ./queue.pp \
 ./rit128x96x4.pp \
+./screen_draw.pp \
 ./startup_ccs.pp \
 ./strings.pp \
 ./tasks.pp \
 ./tetris_background.pp \
+./tetris_start_screen.pp \
 ./tetrominoe.pp \
 ./text_images.pp \
 ./timer.pp 
@@ -77,10 +83,12 @@ C_DEPS__QUOTED += \
 "math.pp" \
 "queue.pp" \
 "rit128x96x4.pp" \
+"screen_draw.pp" \
 "startup_ccs.pp" \
 "strings.pp" \
 "tasks.pp" \
 "tetris_background.pp" \
+"tetris_start_screen.pp" \
 "tetrominoe.pp" \
 "text_images.pp" \
 "timer.pp" 
@@ -96,10 +104,12 @@ OBJS__QUOTED += \
 "math.obj" \
 "queue.obj" \
 "rit128x96x4.obj" \
+"screen_draw.obj" \
 "startup_ccs.obj" \
 "strings.obj" \
 "tasks.obj" \
 "tetris_background.obj" \
+"tetris_start_screen.obj" \
 "tetrominoe.obj" \
 "text_images.obj" \
 "timer.obj" 
@@ -118,10 +128,12 @@ C_SRCS__QUOTED += \
 "../math.c" \
 "../queue.c" \
 "../rit128x96x4.c" \
+"../screen_draw.c" \
 "../startup_ccs.c" \
 "../strings.c" \
 "../tasks.c" \
 "../tetris_background.c" \
+"../tetris_start_screen.c" \
 "../tetrominoe.c" \
 "../text_images.c" \
 "../timer.c" 

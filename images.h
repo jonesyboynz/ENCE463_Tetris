@@ -17,12 +17,15 @@ extern const Image FULL_CELL;
 extern const Image EMPTY_CELL;
 extern const Image TETRIS_BACKGROUND;
 extern const Image TETRIS_START_SCREEN;
+extern const Image NEXT_TETROMINOE_BOARDER;
 
 extern const Image BUTTON_ICON;
 extern const Image UP_BUTTON_ICON;
 extern const Image DOWN_BUTTON_ICON;
 extern const Image LEFT_BUTTON_ICON;
 extern const Image RIGHT_BUTTON_ICON;
+
+extern const Image NEGATIVE_SYMBOL_IMAGE;
 
 extern const Image NUMBER0;
 extern const Image NUMBER1;

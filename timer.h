@@ -24,6 +24,16 @@ typedef struct timer_s {
 	int running;
 } Timer;
 
+typedef struct game_stats_debug_timer_s {
+	Timer input_latency_timer;
+	Timer refresh_rate_timer;
+	int average_input_latency;
+	int max_input_latency;
+	int refresh_rate;
+} GameDebugTimers;
+
+extern GameDebugTimers DEBUG_TIMERS;
+
 int has_timed_out(Timeout* timer);
 
 void start_timeout(Timeout* timer, int timeout_ms);

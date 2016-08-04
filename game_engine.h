@@ -4,6 +4,8 @@
 #define DEFAULT_GRID_HEIGHT 20
 #define DEFAULT_GRID_WIDTH 10
 
+#define CELL_SIZE 6
+
 #define BACKGROUND_OFFSET_X 1
 #define BACKGROUND_OFFSET_Y 2
 #define BACKGROUND_HOLDOFF_X 2
@@ -24,13 +26,14 @@
 #define LEVEL_POSITION_X (LEVEL_TEXT_X - 9)
 #define LEVEL_POSITION_Y (LEVEL_TEXT_Y)
 
-#define NEXT_TETROMINOE_X_GRID_POSITION (DEFAULT_GRID_WIDTH + 2)
+#define NEXT_TETROMINOE_X_GRID_POSITION (DEFAULT_GRID_WIDTH + 1)
 #define NEXT_TETROMINOE_Y_GRID_POSITION 5
+
+#define NEXT_TETROMINOE_BOARDER_X (((DEFAULT_GRID_HEIGHT - NEXT_TETROMINOE_Y_GRID_POSITION - 3) * CELL_SIZE) + BACKGROUND_OFFSET_X + BACKGROUND_HOLDOFF_X)
+#define NEXT_TETROMINOE_BOARDER_Y ((NEXT_TETROMINOE_X_GRID_POSITION * CELL_SIZE) + BACKGROUND_OFFSET_Y + BACKGROUND_HOLDOFF_Y - 3)
 
 #define LEFT -1
 #define RIGHT 1
-
-#define CELL_SIZE 6
 
 #define INITIAL_SCORE 0
 #define INITIAL_COMPLETED_ROWS 0
@@ -61,6 +64,7 @@ typedef struct game_s {
 	int level;
 	int* tick_rates;
 	int current_tick_rate;
+	GameDebugTimers* debug_timers;
 } Game;
 
 extern Game base_game;
@@ -82,6 +86,8 @@ void reset_game(Game* game);
 void game_loop(Game* game);
 
 void button_process_loop(Game* game);
+
+void update_refresh_rate(Game* game);
 
 void process_button_event(ButtonEvent* event, Game* game);
 

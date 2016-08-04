@@ -46,6 +46,7 @@
 typedef struct button_event_s {
 	int button_id;
 	int event_type;
+	int occurance_tick;
 } ButtonEvent;
 
 typedef struct button_s {

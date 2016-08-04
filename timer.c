@@ -15,6 +15,8 @@
 
 portTickType MAX_PORT_TICK_VALUE = 0xffffffff;
 
+GameDebugTimers DEBUG_TIMERS = {{0, 0}, {0, 0}, 0, 0, 0};
+
 int has_timed_out(Timeout* timer){ //checks if a timeout has occured
 	portTickType current_time = xTaskGetTickCount();
 	portTickType difference = tick_difference(timer -> starting_time, current_time);
@@ -53,7 +55,7 @@ void timer_update(Timer* timer){ //updates the timer's information. should be ca
 		portTickType current_time = xTaskGetTickCount();
 		portTickType difference = tick_difference(timer -> reference, current_time);
 		timer -> reference = current_time;
-		timer -> elapsed_ticks += difference;
+		timer -> elapsed_ticks += (unsigned long) difference;
 	}
 }
 

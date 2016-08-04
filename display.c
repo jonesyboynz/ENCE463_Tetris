@@ -9,19 +9,24 @@
 #include "include/task.h"
 #include "include/queue.h"
 
-#include "drivers/rit128x96x4.h"
+//game system includes
 #include "display.h"
 #include "images.h"
 #include "strings.h"
+#include "timer.h"
 
 /* Demo includes. */
 #include "demo_code\basic_io.h"
+#include "drivers/rit128x96x4.h"
 
 #include "stdlib.h"
 
 //#define ENABLE_DEBUG_MSG
 #define ERROR_MSG_X_POS 116
 #define ERROR_MSG_Y_POS 65
+
+int MAX_TIMEOUT = 0;
+int AVERAGE_TIMEOUT = 0;
 
 void write_string(char* string, int x, int y, int brightness){ //thread safe string draw
 	taskENTER_CRITICAL();
@@ -50,6 +55,11 @@ void clear_display(void){ //thread safe display clear
 void write_tetris_number(int number, int x, int y){ //displays a number in the tetris screen mode (rotated 90deg)
 	int numsize = 10;
 	int y_shift = 0;
+	if (number < 0){
+		write_image(&NEGATIVE_SYMBOL_IMAGE, x, y + y_shift);
+		y_shift += NEGATIVE_SYMBOL_IMAGE.height + 1;
+		number *= -1;
+	}
 	int number_copy = number;
 	while (numsize <= number){
 		numsize *= 10;
@@ -125,6 +135,18 @@ void execute_display_task(DisplayTask* task){ //executes a display task and free
 	else if (task -> command == COMMAND_WRITE_RIT_STRING){
 		write_string((char*) task -> data, task -> x, task -> y, MAX_BRIGHTNESS);
 	}
+	else if (task -> command == COMMAND_UPDATE_LATENCY){
+		update_latency(task);
+	}
+}
+
+void update_latency(DisplayTask* task){
+	int current_time = xTaskGetTickCount();
+	int difference = tick_difference((int) task -> data, current_time);
+	if (difference > MAX_TIMEOUT){
+		MAX_TIMEOUT = difference;
+	}
+	AVERAGE_TIMEOUT = (MAX_TIMEOUT + difference) / 2; //naieve implementation of an average. will be dominated by most recent sample. not too useful but better than nothing
 }
 
 void initalise_display_queue(xQueueHandle* queue){ //initalises a display queue

@@ -30,4 +30,6 @@ extern const char* DEBUG_MAXIMUM_INPUT_DELAY_STRING;
 extern const char* DEBUG_SYSTEM_TICK_RATE_STRING;
 extern const char* GAME_REFRESH_RATE_STRING;
 
+extern const char* ANY_KEY_TO_CONTINUE_STRING;
+
 #endif

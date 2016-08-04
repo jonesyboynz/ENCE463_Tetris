@@ -11,12 +11,15 @@ display.obj: ../include/mpu_wrappers.h
 display.obj: ../include/task.h
 display.obj: ../include/list.h
 display.obj: ../include/queue.h
-display.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h
 display.obj: ../display.h
 display.obj: ../images.h
 display.obj: ../include/queue.h
 display.obj: ../strings.h
+display.obj: ../timer.h
+display.obj: ../include/task.h
+display.obj: ../include/queue.h
 display.obj: ../demo_code/basic_io.h
+display.obj: P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h
 display.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 display.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h
 
@@ -31,11 +34,14 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stddef.h:
 ../include/task.h: 
 ../include/list.h: 
 ../include/queue.h: 
-P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h: 
 ../display.h: 
 ../images.h: 
 ../include/queue.h: 
 ../strings.h: 
+../timer.h: 
+../include/task.h: 
+../include/queue.h: 
 ../demo_code/basic_io.h: 
+P:/My\ Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968/drivers/rit128x96x4.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/linkage.h: 

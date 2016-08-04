@@ -60,7 +60,6 @@
 #define mainDELAY_LOOP_COUNT		( 0xfffff )
 
 /* The task function. */
-void vTaskFunction( void *pvParameters );
 void vTaskDelayTest(void* pvParameters);
 void vTaskImageFun(void* pvParameters);
 void write_background(void* parameters);
@@ -69,11 +68,6 @@ void tetronimoe_drop_test2(void* parameters);
 void vDisplayRunning(void* parameters);
 void vButtonTest(void* parameters);
 
-/* Define the strings that will be passed in as the task parameters.  These are
-defined const and off the stack to ensure they remain valid when the tasks are
-executing. */
-const char *pcTextForTask1 = "Task 1 is running\n";
-const char *pcTextForTask2 = "Task 2 is running\n";
 
 /*-----------------------------------------------------------*/
 
@@ -82,13 +76,11 @@ int main( void )
 	/* Set the clocking to run from the PLL at 50 MHz.  Assumes 8MHz XTAL,
 	whereas some older eval boards used 6MHz. */
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
-	//RIT128x96x4Init(1000000);
-	//initalise_button_interrupts();
 	initalise_random_number_generator(512512);
 	initalise_buttons(BUTTONS);
 	initalise_game(&base_game);
+
 	//debugging tasks
-	//xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 1, NULL );
 	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
 	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 	//xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, &base_game, 1, NULL);
@@ -105,32 +97,6 @@ int main( void )
 	heap available for the idle task to be created. */
 	for( ;; );
 }
-/*-----------------------------------------------------------*/
-
-void vTaskFunction( void *pvParameters )
-{
-char *pcTaskName;
-volatile unsigned long ul;
-
-	/* The string to print out is passed in via the parameter.  Cast this to a
-	character pointer. */
-	pcTaskName = ( char * ) pvParameters;
-
-	/* As per most tasks, this task is implemented in an infinite loop. */
-	for( ;; )
-	{
-		/* Print out the name of this task. */
-		vPrintString( pcTaskName );
-		/* Delay for a period. */
-		for( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++ )
-		{
-			/* This loop is just a very crude delay implementation.  There is
-			nothing to do in here.  Later exercises will replace this crude
-			loop with a proper delay/sleep function. */
-		}
-	}
-}
-/*-----------------------------------------------------------*/
 
 void vTaskDelayTest(void* pvParameters){
 	portTickType xLastWakeTime;

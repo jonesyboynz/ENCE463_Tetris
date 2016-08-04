@@ -39,6 +39,7 @@ game_engine.obj: ../include/queue.h
 game_engine.obj: ../bool.h
 game_engine.obj: ../math.h
 game_engine.obj: ../strings.h
+game_engine.obj: ../screen_draw.h
 
 ../game_engine.c: 
 ../include/FreeRTOS.h: 
@@ -79,3 +80,4 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h:
 ../bool.h: 
 ../math.h: 
 ../strings.h: 
+../screen_draw.h: 

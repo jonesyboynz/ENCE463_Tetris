@@ -58,6 +58,7 @@ int button_event_occurred(Button* button, ButtonEvent* event){ //reads a button 
 	if (current_state != button -> current_state){
 		event -> button_id = button -> id;
 		event -> event_type = current_state;
+		event -> occurance_tick = (int) xTaskGetTickCount();
 		button -> debouncing = TRUE;
 		button -> current_state = current_state;
 		start_timeout(&(button -> debounce), BUTTON_DEBOUNCE_MS);
