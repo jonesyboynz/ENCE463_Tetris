@@ -35,17 +35,24 @@ typedef struct game_stats_debug_timer_s {
 extern GameDebugTimers DEBUG_TIMERS;
 
 int has_timed_out(Timeout* timer);
+//returns true or false depending on whether a timeout has occured
 
 void start_timeout(Timeout* timer, int timeout_ms);
+//starts a timeout
 
 portTickType tick_difference(portTickType start_time, portTickType end_time);
+//calculates the difference between two freeRTOS systick values. Overflow safe.
 
 void timer_start(Timer* timer);
+//starts a timer
 
 void timer_update(Timer* timer);
+//updates a timer (should be called pereodically while a timer is operating)
 
 void timer_stop(Timer* timer);
+//stops a timer
 
 int elapsed_time_ms(Timer* timer);
+//gets a timer's elapsed time in ms
 
 #endif /* TIMER_H_ */

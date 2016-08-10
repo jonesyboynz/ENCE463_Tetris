@@ -11,9 +11,12 @@
 #include "game_engine.h"
 
 void draw_start_screen(Game* game);
+//draws the start screen
 
 void draw_tetris_background(Game* game);
+//draws the background for the tetris game
 
 void draw_debug_screen(Game* game);
+//draws the debug screen
 
 #endif /* SCREEN_DRAW_H_ */

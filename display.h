@@ -34,37 +34,54 @@ extern int MAX_TIMEOUT;
 extern int AVERAGE_TIMEOUT;
 
 void write_string(char* string, int x, int y, int brightness);
+//writes a string to the display
 
 void write_image(const Image* image, int x, int y);
+//writes an image to the display
 
 void write_tetris_number(int number, int x, int y);
+//writes a tetris-number to the display (uses tetris font)
 
 void write_tetris_string(char* string, int x, int y);
+//writes a tetris-string to the display (uses the tetris font)
 
 void initalise_display(void);
+//initalises the OLED display
 
 void clear_display(void);
+//clears the OLED display
 
 void xDisplayTask(void* parameters);
+//Display task
 
 void execute_display_task(DisplayTask* task);
+//executes a dispay task
 
 void update_latency(DisplayTask* task);
+//update the screen update latency recordings
 
 void initalise_display_queue(xQueueHandle* queue);
+//initalize the display queue
 
 void enqueue_display_task(xQueueHandle* queue, DisplayTask* task);
+//enqueue a display task on the display queue
 
 void quick_initalise_screen(xQueueHandle* queue);
+//initalize the screen
 
 void quick_send_image(xQueueHandle* queue, int x, int y, const Image* image);
+//send an image to the screen
 
 void quick_clear_screen(xQueueHandle* queue);
+//clear the screen
 
 void quick_send_number(xQueueHandle* queue, int x, int y, int number);
+//sends a number to the screen
 
 void quick_send_string(xQueueHandle* queue, int x, int y, char* string);
+//send a string to the screen
 
 void quick_send_string_rit(xQueueHandle* queue, int x, int y, char* string);
+//send a "normal" strin to the screen
 
 #endif /* DISPLAY_H_ */

@@ -34,11 +34,15 @@ extern Tetrominoe block5; //right Z
 extern Tetrominoe block6; //t
 
 void reset_tetromineo(Tetrominoe* block);
+//resets a tetrominoe
 
 const int* get_tetromineo_grid(Tetrominoe* block);
+//accesses the array defining the tetrominoe's current pose
 
 void rotate_tetromineo(Tetrominoe* block);
+//rotates the tetrominoe 90deg clockwise
 
 void shift_tetrominoe(Tetrominoe* block, int x, int y);
+//translates the tetrominoe by a given x and y
 
 #endif /* TETROMINOE_H_ */
