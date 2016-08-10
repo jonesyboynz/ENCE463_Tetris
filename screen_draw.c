@@ -21,7 +21,7 @@
 
 #define VERSION_NUMBER_X 1
 #define VERSION_NUMBER_Y 30
-#define VERSION 2
+#define VERSION 3
 
 #define AUTHOR_STRING_X 1
 #define AUTHOR_STRING_Y 37
@@ -81,8 +81,44 @@ void draw_tetris_background(Game* game){ //draws the background for the game
 	quick_send_string(&(game -> display_queue), SCORE_TEXT_X, SCORE_TEXT_Y, (char*) SCORE_STRING);
 }
 
-void draw_score_screen(Game* game){ //draws the score screen
+#define GAME_OVER_X 101
+#define GAME_OVER_Y 0
 
+#define SCORE_STRING_X 80
+#define SCORE_STRING_Y 20
+
+#define SCORE_NUMBER_X SCORE_STRING_X
+#define SCORE_NUMBER_Y (SCORE_STRING_Y + 50)
+
+#define LEVELS_STIRNG_X (SCORE_STRING_X - 21)
+#define LEVELS_STIRNG_Y 17
+
+#define LEVELS_NUMBER_X LEVELS_STIRNG_X
+#define LEVELS_NUMBER_Y (LEVELS_STIRNG_Y + 60)
+
+#define ROWS_STRING_X (LEVELS_STIRNG_X - 21)
+#define ROWS_STRING_Y 15
+
+#define ROWS_NUMBER_X ROWS_STRING_X
+#define ROWS_NUMBER_Y (ROWS_STRING_Y + 63)
+
+#define THANKS_STRING_X (ROWS_STRING_X - 21)
+#define THANKS_STRING_Y 5
+
+void draw_score_screen(Game* game){ //draws the score screen
+	quick_clear_screen(&(game -> display_queue));
+	quick_send_image(&(game -> display_queue), GAME_OVER_X, GAME_OVER_Y, &GAME_OVER_SCREEN);
+
+	quick_send_string(&(game -> display_queue), SCORE_STRING_X, SCORE_STRING_Y, (char*) FINAL_SCORE_STRING);
+	quick_send_number(&(game -> display_queue), SCORE_NUMBER_X, SCORE_NUMBER_Y, game -> score);
+
+	quick_send_string(&(game -> display_queue), LEVELS_STIRNG_X, LEVELS_STIRNG_Y, (char*) LEVELS_CLEARED_STRING);
+	quick_send_number(&(game -> display_queue), LEVELS_NUMBER_X, LEVELS_NUMBER_Y, game -> level);
+
+	quick_send_string(&(game -> display_queue), ROWS_STRING_X, ROWS_STRING_Y, (char*) ROWS_COMPLETED_STRING);
+	quick_send_number(&(game -> display_queue), ROWS_NUMBER_X, ROWS_NUMBER_Y, game -> completed_rows);
+
+	quick_send_string(&(game -> display_queue), THANKS_STRING_X, THANKS_STRING_Y, (char*) THANKS_STRING);
 }
 
 #define DEBUG_TITLE_X 118

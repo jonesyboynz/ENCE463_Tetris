@@ -28,6 +28,25 @@
 int MAX_TIMEOUT = 0;
 int AVERAGE_TIMEOUT = 0;
 
+void write_string(char* string, int x, int y, int brightness);
+//writes a string to the display
+
+void write_image(const Image* image, int x, int y);
+//writes an image to the display
+
+void write_tetris_number(int number, int x, int y);
+//writes a tetris-number to the display (uses tetris font)
+
+void write_tetris_string(char* string, int x, int y);
+//writes a tetris-string to the display (uses the tetris font)
+
+void initalise_display(void);
+//initalises the OLED display
+
+void clear_display(void);
+//clears the OLED display
+
+
 void write_string(char* string, int x, int y, int brightness){ //thread safe string draw
 	taskENTER_CRITICAL();
 	RIT128x96x4StringDraw(string, x, y, brightness);

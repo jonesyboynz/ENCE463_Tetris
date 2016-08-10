@@ -31,6 +31,13 @@ game_engine.obj: ../game_engine.c $(GEN_OPTS) $(GEN_HDRS)
 	@echo 'Finished building: $<'
 	@echo ' '
 
+game_over_screen.obj: ../game_over_screen.c $(GEN_OPTS) $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: ARM Compiler'
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me --include_path="c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/utils" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968" -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off --preproc_with_compile --preproc_dependency="game_over_screen.pp" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 images.obj: ../images.c $(GEN_OPTS) $(GEN_HDRS)
 	@echo 'Building file: $<'
 	@echo 'Invoking: ARM Compiler'
@@ -98,6 +105,13 @@ tasks.obj: ../tasks.c $(GEN_OPTS) $(GEN_HDRS)
 	@echo 'Building file: $<'
 	@echo 'Invoking: ARM Compiler'
 	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me --include_path="c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/utils" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968" -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off --preproc_with_compile --preproc_dependency="tasks.pp" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+tests.obj: ../tests.c $(GEN_OPTS) $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: ARM Compiler'
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M3 --code_state=16 --abi=eabi -me --include_path="c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/driverlib" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/utils" --include_path="P:/My Documents/2015/courses/ENCE361/StellarisWare/boards/ek-lm3s1968" -g --gcc --define="ccs" --define=PART_LM3S1968 --display_error_number --diag_warning=225 --diag_wrap=off --preproc_with_compile --preproc_dependency="tests.pp" $(GEN_OPTS__FLAG) "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

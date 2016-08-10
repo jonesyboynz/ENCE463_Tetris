@@ -16,6 +16,9 @@ void draw_start_screen(Game* game);
 void draw_tetris_background(Game* game);
 //draws the background for the tetris game
 
+void draw_score_screen(Game* game);
+//draws the score screen
+
 void draw_debug_screen(Game* game);
 //draws the debug screen
 

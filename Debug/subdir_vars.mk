@@ -14,6 +14,7 @@ C_SRCS += \
 ../buttons.c \
 ../display.c \
 ../game_engine.c \
+../game_over_screen.c \
 ../images.c \
 ../list.c \
 ../main.c \
@@ -24,6 +25,7 @@ C_SRCS += \
 ../startup_ccs.c \
 ../strings.c \
 ../tasks.c \
+../tests.c \
 ../tetris_background.c \
 ../tetris_start_screen.c \
 ../tetrominoe.c \
@@ -35,6 +37,7 @@ OBJS += \
 ./buttons.obj \
 ./display.obj \
 ./game_engine.obj \
+./game_over_screen.obj \
 ./images.obj \
 ./list.obj \
 ./main.obj \
@@ -45,6 +48,7 @@ OBJS += \
 ./startup_ccs.obj \
 ./strings.obj \
 ./tasks.obj \
+./tests.obj \
 ./tetris_background.obj \
 ./tetris_start_screen.obj \
 ./tetrominoe.obj \
@@ -56,6 +60,7 @@ C_DEPS += \
 ./buttons.pp \
 ./display.pp \
 ./game_engine.pp \
+./game_over_screen.pp \
 ./images.pp \
 ./list.pp \
 ./main.pp \
@@ -66,6 +71,7 @@ C_DEPS += \
 ./startup_ccs.pp \
 ./strings.pp \
 ./tasks.pp \
+./tests.pp \
 ./tetris_background.pp \
 ./tetris_start_screen.pp \
 ./tetrominoe.pp \
@@ -77,6 +83,7 @@ C_DEPS__QUOTED += \
 "buttons.pp" \
 "display.pp" \
 "game_engine.pp" \
+"game_over_screen.pp" \
 "images.pp" \
 "list.pp" \
 "main.pp" \
@@ -87,6 +94,7 @@ C_DEPS__QUOTED += \
 "startup_ccs.pp" \
 "strings.pp" \
 "tasks.pp" \
+"tests.pp" \
 "tetris_background.pp" \
 "tetris_start_screen.pp" \
 "tetrominoe.pp" \
@@ -98,6 +106,7 @@ OBJS__QUOTED += \
 "buttons.obj" \
 "display.obj" \
 "game_engine.obj" \
+"game_over_screen.obj" \
 "images.obj" \
 "list.obj" \
 "main.obj" \
@@ -108,6 +117,7 @@ OBJS__QUOTED += \
 "startup_ccs.obj" \
 "strings.obj" \
 "tasks.obj" \
+"tests.obj" \
 "tetris_background.obj" \
 "tetris_start_screen.obj" \
 "tetrominoe.obj" \
@@ -122,6 +132,7 @@ C_SRCS__QUOTED += \
 "../buttons.c" \
 "../display.c" \
 "../game_engine.c" \
+"../game_over_screen.c" \
 "../images.c" \
 "../list.c" \
 "../main.c" \
@@ -132,6 +143,7 @@ C_SRCS__QUOTED += \
 "../startup_ccs.c" \
 "../strings.c" \
 "../tasks.c" \
+"../tests.c" \
 "../tetris_background.c" \
 "../tetris_start_screen.c" \
 "../tetrominoe.c" \

@@ -15,9 +15,12 @@ typedef struct image_s {
 
 extern const Image FULL_CELL;
 extern const Image EMPTY_CELL;
+extern const Image SHADOW_CELL;
+
 extern const Image TETRIS_BACKGROUND;
 extern const Image TETRIS_START_SCREEN;
 extern const Image NEXT_TETROMINOE_BOARDER;
+extern const Image GAME_OVER_SCREEN;
 
 extern const Image BUTTON_ICON;
 extern const Image UP_BUTTON_ICON;

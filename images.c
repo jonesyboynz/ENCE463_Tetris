@@ -9,7 +9,7 @@
 #include "tetris_background.h" //includes the (extremely large) tetris background image
 #include "text_images.h"
 #include "tetris_start_screen.h" //includes the (extremely large) tetris start screen
-
+#include "game_over_screen.h"
 
 const unsigned char FULL_CELL_DATA[18] = {	0x77, 0x77, 0x77,
 											0x7f, 0xff, 0xf7,
@@ -17,6 +17,13 @@ const unsigned char FULL_CELL_DATA[18] = {	0x77, 0x77, 0x77,
 											0x7f, 0xff, 0xf7,
 											0x7f, 0xff, 0xf7,
 											0x77, 0x77, 0x77};
+
+const unsigned char SHADOW_CELL_DATA[18] = {0x33, 0x33, 0x33,
+											0x33, 0x33, 0x33,
+											0x33, 0x33, 0x33,
+											0x33, 0x33, 0x33,
+											0x33, 0x33, 0x33,
+											0x33, 0x33, 0x33};
 
 const unsigned char EMPTY_CELL_DATA[18] = {	0x00, 0x00, 0x00,
 											0x00, 0x00, 0x00,
@@ -116,6 +123,8 @@ const Image FULL_CELL = {FULL_CELL_DATA, 6, 6};
 
 const Image EMPTY_CELL = {EMPTY_CELL_DATA, 6, 6};
 
+const Image SHADOW_CELL = {SHADOW_CELL_DATA, 6, 6};
+
 const Image BUTTON_ICON = {BUTTON_ICON_DATA, 8, 8};
 const Image UP_BUTTON_ICON = {UP_BUTTON_ICON_DATA, 10, 10};
 const Image DOWN_BUTTON_ICON = {DOWN_BUTTON_ICON_DATA, 10, 10};
@@ -125,6 +134,8 @@ const Image RIGHT_BUTTON_ICON = {RIGHT_BUTTON_ICON_DATA, 10, 10};
 const Image TETRIS_BACKGROUND = {TETRIS_BACKGROUND_DATA, 124, 64};
 
 const Image NEXT_TETROMINOE_BOARDER = {NEXT_TETROMINOE_BOARDER_DATA, 22, 28};
+
+const Image GAME_OVER_SCREEN = {GAME_OVER_DATA, GAME_OVER_SCREEN_WIDTH, GAME_OVER_SCREEN_HEIGHT};
 
 const Image TETRIS_START_SCREEN = {START_SCREEN_DATA, START_SCREEN_WIDTH, START_SCREEN_HEIGHT};
 

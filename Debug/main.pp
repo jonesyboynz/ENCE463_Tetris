@@ -42,6 +42,7 @@ main.obj: ../include/queue.h
 main.obj: ../include/queue.h
 main.obj: ../bool.h
 main.obj: ../math.h
+main.obj: ../tests.h
 
 ../main.c: 
 ../include/FreeRTOS.h: 
@@ -85,3 +86,4 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h:
 ../include/queue.h: 
 ../bool.h: 
 ../math.h: 
+../tests.h: 

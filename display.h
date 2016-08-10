@@ -33,24 +33,6 @@ typedef struct display_task_s {
 extern int MAX_TIMEOUT;
 extern int AVERAGE_TIMEOUT;
 
-void write_string(char* string, int x, int y, int brightness);
-//writes a string to the display
-
-void write_image(const Image* image, int x, int y);
-//writes an image to the display
-
-void write_tetris_number(int number, int x, int y);
-//writes a tetris-number to the display (uses tetris font)
-
-void write_tetris_string(char* string, int x, int y);
-//writes a tetris-string to the display (uses the tetris font)
-
-void initalise_display(void);
-//initalises the OLED display
-
-void clear_display(void);
-//clears the OLED display
-
 void xDisplayTask(void* parameters);
 //Display task
 

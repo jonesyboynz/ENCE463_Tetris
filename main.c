@@ -56,18 +56,8 @@
 #include "buttons.h"
 #include "math.h"
 
-/* Used as a loop counter to create a very crude delay. */
-#define mainDELAY_LOOP_COUNT		( 0xfffff )
-
-/* The task function. */
-void vTaskDelayTest(void* pvParameters);
-void vTaskImageFun(void* pvParameters);
-void write_background(void* parameters);
-void tetronimoe_drop_test(void* parameters);
-void tetronimoe_drop_test2(void* parameters);
-void vDisplayRunning(void* parameters);
-void vButtonTest(void* parameters);
-
+/* test module include */
+#include "tests.h"
 
 /*-----------------------------------------------------------*/
 
@@ -76,117 +66,26 @@ int main( void )
 	/* Set the clocking to run from the PLL at 50 MHz.  Assumes 8MHz XTAL,
 	whereas some older eval boards used 6MHz. */
 	SysCtlClockSet( SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_8MHZ );
+
+	//game system initalisation
 	initalise_random_number_generator(512512);
 	initalise_buttons(BUTTONS);
 	initalise_game(&base_game);
 
 	//debugging tasks
-	//xTaskCreate(vTaskDelayTest, "Task 3", 240, NULL, 1, NULL);
-	//xTaskCreate(vTaskImageFun, "Task 4", 240, NULL, 1, NULL);
 	//xTaskCreate(tetronimoe_drop_test2, "Task 6", 600, &base_game, 1, NULL);
 	//xTaskCreate(vButtonTest, "button test", 200, (void*) base_game.button_queue, 1, NULL);
-
-	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
 	//xTaskCreate(vDisplayRunning, "display task test", 200, (void*) base_game.display_queue, 1, NULL);
+
+	//game system tasks
+	xTaskCreate(xGameEngineTask, "game engine", 600, (void*) &base_game, 1, NULL);
+	xTaskCreate(xDisplayTask, "display task", 500, (void*) base_game.display_queue, 1, NULL);
+	xTaskCreate(xButtonReadTask, "button poll task", 500, (void*) base_game.button_queue, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
 	
-	/* If all is well we will never reach here as the scheduler will now be
-	running.  If we do reach here then it is likely that there was insufficient
-	heap available for the idle task to be created. */
 	for( ;; );
-}
-
-void vTaskDelayTest(void* pvParameters){
-	portTickType xLastWakeTime;
-	while (1){
-		taskENTER_CRITICAL();
-		RIT128x96x4StringDraw("    Hz", 30, 24, 15);
-		taskEXIT_CRITICAL();
-		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
-		taskENTER_CRITICAL();
-		RIT128x96x4StringDraw("One   ", 30, 24, 15);
-		taskEXIT_CRITICAL();
-		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
-	}
-}
-
-void tetronimoe_drop_test(void* parameters){
-	//portTickType xLastWakeTime;
-	while (1){
-		base_game.tetrominoes[base_game.current_peice_index] -> x = 0;
-		draw_current_tetrominoe(&base_game);
-		vTaskDelay(250 / portTICK_RATE_MS);
-		erase_current_tetrominoe(&base_game);
-		base_game.tetrominoes[base_game.current_peice_index] -> y = (base_game.tetrominoes[base_game.current_peice_index] -> y + 1) % 17;
-		if (base_game.tetrominoes[base_game.current_peice_index] -> y == 0){
-			rotate_tetromineo(base_game.tetrominoes[base_game.current_peice_index]);
-			base_game.current_peice_index = (base_game.current_peice_index + 1) % base_game.num_tetrominoes;
-		}
-	}
-}
-
-void tetronimoe_drop_test2(void* parameters){
-	//portTickType xLastWakeTime;
-	Game* game = (Game*) parameters;
-	int x_pos = 0;
-	while (1){
-		game -> tetrominoes[game -> current_peice_index] -> x = x_pos;
-		draw_current_tetrominoe(game);
-		vTaskDelay(250 / portTICK_RATE_MS);
-		if (can_drop_current_tetrominoe(game) == TRUE){
-			erase_current_tetrominoe(game);
-			get_current_tetrominoe(game) -> y = get_current_tetrominoe(game) -> y + 1;
-		}
-		else{
-			place_current_tetrominoe(game);
-			//debug_board(&game);
-			//game.tetrominoes[game.current_peice_index] -> y = 0;
-			//game.tetrominoes[game.current_peice_index] -> rotation_state = rand_range(0, 3);
-			get_next_tetrominoe(game);
-			if (spawn_new_tetrominoe(game) != TRUE){
-				reset_game(game);
-			}
-			rotate_tetromineo(game -> tetrominoes[game -> current_peice_index]);
-			//game.current_peice_index = rand_range(0, game.num_tetrominoes);
-			//game.current_peice_index = (game.current_peice_index + 1) % game.num_tetrominoes;
-			x_pos = (x_pos + 2) % 7;
-		}
-	}
-}
-
-void vTaskImageFun(void* pvParameters){
-	int x = 0;
-	portTickType xLastWakeTime;
-	while (1){
-		write_image(&EMPTY_CELL, x, 60);
-		x = (x + 1) % 100;
-		write_image(&FULL_CELL, x, 60);
-		vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_RATE_MS));
-	}
-}
-
-void vDisplayRunning(void* parameters){
-	xQueueHandle display_queue = (xQueueHandle) parameters;
-	int index = 0;
-
-	while (1){
-		DisplayTask task1 ={(void*) RUNNING_ANIMATION[index], 0, 94};
-		enqueue_display_task(&display_queue, &task1);
-		vTaskDelay(50 / portTICK_RATE_MS);
-		index = (index + 1)  % 4;
-	}
-}
-
-void vButtonTest(void* parameters){
-	xQueueHandle ButtonQueue = (xQueueHandle) parameters;
-
-	while (1){
-		ButtonEvent event = {NAV_LEFT, PRESS_EVENT};
-		enqueue_button_event(&ButtonQueue, &event);
-		vTaskDelay(2000 / portTICK_RATE_MS);
-	}
 }
 
 
