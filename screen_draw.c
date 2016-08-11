@@ -128,15 +128,12 @@ void draw_score_screen(Game* game){ //draws the score screen
 #define AVG_INPUT_DELAY_STRING_Y 0
 
 #define AVG_INPUT_DELAY_NUMBER_X (AVG_INPUT_DELAY_STRING_X - 6)
-#define AVG_INPUT_DELAY_NUMBER_Y 0
+#define AVG_INPUT_DELAY_NUMBER_Y 5
 
-#define MAX_INPUT_DELAY_STRING_X (AVG_INPUT_DELAY_NUMBER_X - 17)
-#define MAX_INPUT_DELAY_STRING_Y 0
+#define MAX_INPUT_DELAY_NUMBER_X (AVG_INPUT_DELAY_STRING_X - 6)
+#define MAX_INPUT_DELAY_NUMBER_Y 44
 
-#define MAX_INPUT_DELAY_NUMBER_X (MAX_INPUT_DELAY_STRING_X - 6)
-#define MAX_INPUT_DELAY_NUMBER_Y 0
-
-#define SYSTEM_TICK_STRING_X (MAX_INPUT_DELAY_STRING_X - 17)
+#define SYSTEM_TICK_STRING_X (AVG_INPUT_DELAY_NUMBER_X - 17)
 #define SYSTEM_TICK_STRING_Y 0
 
 #define SYSTEM_TICK_NUMBER_X (SYSTEM_TICK_STRING_X - 6)
@@ -148,14 +145,21 @@ void draw_score_screen(Game* game){ //draws the score screen
 #define REFRESH_RATE_NUMBER_X (REFRESH_RATE_STRING_X - 6)
 #define REFRESH_RATE_NUMBER_Y 0
 
+#define REFRESH_RATE_ERROR_STRING_X (REFRESH_RATE_STRING_X - 17)
+#define REFRESH_RATE_ERROR_STRING_Y 0
+
+#define AVG_REFRESH_RATE_ERROR_NUMBER_X (REFRESH_RATE_ERROR_STRING_X - 6)
+#define AVG_REFRESH_RATE_ERROR_NUMBER_Y 5
+
+#define REFRESH_RATE_ERROR_NUMBER_X (REFRESH_RATE_ERROR_STRING_X - 6)
+#define REFRESH_RATE_ERROR_NUMBER_Y 44
+
 void draw_debug_screen(Game* game){ //draws the debug screen
 	quick_clear_screen(&(game -> display_queue));
 	quick_send_string(&(game -> display_queue), DEBUG_TITLE_X, DEBUG_TITLE_Y, (char*) DEBUG_TITLE_STRING);
 
-	quick_send_string(&(game -> display_queue), AVG_INPUT_DELAY_STRING_X, AVG_INPUT_DELAY_STRING_Y, (char*) DEBUG_AVERAGE_INPUT_DELAY_STRING);
+	quick_send_string(&(game -> display_queue), AVG_INPUT_DELAY_STRING_X, AVG_INPUT_DELAY_STRING_Y, (char*) INPUT_DELAY_STRING);
 	quick_send_number(&(game -> display_queue), AVG_INPUT_DELAY_NUMBER_X, AVG_INPUT_DELAY_NUMBER_Y, (int) game -> debug_timers -> average_input_latency);
-
-	quick_send_string(&(game -> display_queue), MAX_INPUT_DELAY_STRING_X, MAX_INPUT_DELAY_STRING_Y, (char*) DEBUG_MAXIMUM_INPUT_DELAY_STRING);
 	quick_send_number(&(game -> display_queue), MAX_INPUT_DELAY_NUMBER_X, MAX_INPUT_DELAY_NUMBER_Y, (int) game -> debug_timers -> max_input_latency);
 
 	quick_send_string(&(game -> display_queue), SYSTEM_TICK_STRING_X, SYSTEM_TICK_STRING_Y, (char*) DEBUG_SYSTEM_TICK_RATE_STRING);
@@ -163,4 +167,8 @@ void draw_debug_screen(Game* game){ //draws the debug screen
 
 	quick_send_string(&(game -> display_queue), REFRESH_RATE_STRING_X, REFRESH_RATE_STRING_Y, (char*) GAME_REFRESH_RATE_STRING);
 	quick_send_number(&(game -> display_queue), REFRESH_RATE_NUMBER_X, REFRESH_RATE_NUMBER_Y, (int) game -> debug_timers -> refresh_rate);
+
+	quick_send_string(&(game -> display_queue), REFRESH_RATE_ERROR_STRING_X, REFRESH_RATE_ERROR_STRING_Y, (char*) GAME_REFRESH_RATE_ERROR_STRING);
+	quick_send_number(&(game -> display_queue), REFRESH_RATE_ERROR_NUMBER_X, REFRESH_RATE_ERROR_NUMBER_Y, (int) game -> debug_timers -> refresh_rate_error);
+	quick_send_number(&(game -> display_queue), AVG_REFRESH_RATE_ERROR_NUMBER_X, AVG_REFRESH_RATE_ERROR_NUMBER_Y, (int) (game -> debug_timers -> average_refresh_rate_error / game -> debug_timers -> refresh_rate_samples));
 }

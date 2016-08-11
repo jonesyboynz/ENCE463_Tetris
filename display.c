@@ -26,7 +26,8 @@
 #define ERROR_MSG_Y_POS 65
 
 int MAX_TIMEOUT = 0;
-int AVERAGE_TIMEOUT = 0;
+long AVERAGE_TIMEOUT = 0;
+long TIMEOUT_SAMPLES = 0;
 
 void write_string(char* string, int x, int y, int brightness);
 //writes a string to the display
@@ -107,6 +108,9 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 			if (current_character == ' '){
 				current_character = 26;
 			}
+			else if (current_character == '%'){
+				current_character = 27;
+			}
 			else{
 				current_character -= 'A';
 				if (current_character > 29){
@@ -165,7 +169,8 @@ void update_latency(DisplayTask* task){
 	if (difference > MAX_TIMEOUT){
 		MAX_TIMEOUT = difference;
 	}
-	AVERAGE_TIMEOUT = (MAX_TIMEOUT + difference) / 2; //naieve implementation of an average. will be dominated by most recent sample. not too useful but better than nothing
+	AVERAGE_TIMEOUT += difference;
+	TIMEOUT_SAMPLES += 1;
 }
 
 void initalise_display_queue(xQueueHandle* queue){ //initalises a display queue

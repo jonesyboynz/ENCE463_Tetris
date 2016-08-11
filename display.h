@@ -31,7 +31,8 @@ typedef struct display_task_s {
 } DisplayTask;
 
 extern int MAX_TIMEOUT;
-extern int AVERAGE_TIMEOUT;
+extern long AVERAGE_TIMEOUT;
+extern long TIMEOUT_SAMPLES;
 
 void xDisplayTask(void* parameters);
 //Display task

@@ -114,6 +114,8 @@ void draw_shadow_tetrominoe(Game* game);
 
 void erase_shadow_tetrominoe(Game* game);
 
+void reset_debug_timers(Game* game);
+
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
 	while (TRUE){
@@ -163,8 +165,27 @@ void game_loop(Game* game){ //loop in which the game runs
 	}
 }
 
+void reset_debug_timers(Game* game){
+	AVERAGE_TIMEOUT = 0;
+	MAX_TIMEOUT = 0;
+	TIMEOUT_SAMPLES = 0;
+	game -> debug_timers -> refresh_rate_error = 0;
+	game -> debug_timers -> max_input_latency = 0;
+	game -> debug_timers -> refresh_rate = 0;
+	game -> debug_timers -> refresh_rate_samples = 0;
+	game -> debug_timers -> average_refresh_rate_error = 0;
+}
+
 void update_refresh_rate(Game* game){ //updates the refresh rate
 	game -> debug_timers -> refresh_rate = (int) (game -> debug_timers -> refresh_rate_timer.elapsed_ticks);
+	int error = (((game -> debug_timers -> refresh_rate) - (game -> current_tick_rate)) * 100) / (game -> current_tick_rate);
+	if (error > game -> debug_timers -> refresh_rate_error){
+		game -> debug_timers -> refresh_rate_error = error;
+	}
+	game -> debug_timers -> average_refresh_rate_error += (long) error;
+	game -> debug_timers -> refresh_rate_samples += 1;
+
+
 }
 
 void button_process_loop(Game* game){ //a loop in which the game waits for button events
@@ -218,10 +239,9 @@ void score_screen_loop(Game* game){
 }
 
 void debug_screen_loop(Game* game){ //displays debug information
-	game -> debug_timers -> average_input_latency = AVERAGE_TIMEOUT; //no semaphore. completely reliant on the fixed score screen delay to prevent resource collision
+	game -> debug_timers -> average_input_latency = (int) (AVERAGE_TIMEOUT / TIMEOUT_SAMPLES); //no semaphore. completely reliant on the fixed score screen delay to prevent resource collision
 	game -> debug_timers -> max_input_latency = MAX_TIMEOUT;
-	AVERAGE_TIMEOUT = 0;
-	MAX_TIMEOUT = 0;
+
 	draw_debug_screen(game);
 	generic_wait_loop(game);
 }
@@ -261,6 +281,7 @@ void reset_game(Game* game){ //resets the game
 	game -> completed_rows = 0;
 	game -> current_tick_rate = game -> tick_rates[game -> level - 1];
 	clear_board(game -> board);
+	reset_debug_timers(game);
 	draw_tetris_background(game);
 	get_next_tetrominoe(game); //initalise the tetrominoes
 	get_next_tetrominoe(game); //the next tetrominoe is known

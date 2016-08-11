@@ -15,7 +15,7 @@
 
 portTickType MAX_PORT_TICK_VALUE = 0xffffffff;
 
-GameDebugTimers DEBUG_TIMERS = {{0, 0}, {0, 0}, 0, 0, 0};
+GameDebugTimers DEBUG_TIMERS = {{0, 0}, {0, 0}, 0, 0, 0, 0, 0, 0};
 
 int has_timed_out(Timeout* timer){ //checks if a timeout has occured
 	portTickType current_time = xTaskGetTickCount();

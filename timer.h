@@ -30,6 +30,9 @@ typedef struct game_stats_debug_timer_s {
 	int average_input_latency;
 	int max_input_latency;
 	int refresh_rate;
+	int refresh_rate_error; //max
+	long average_refresh_rate_error;
+	long refresh_rate_samples;
 } GameDebugTimers;
 
 extern GameDebugTimers DEBUG_TIMERS;

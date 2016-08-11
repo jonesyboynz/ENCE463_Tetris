@@ -53,6 +53,7 @@ extern const unsigned char LETTER_X_DATA[9];
 extern const unsigned char LETTER_Y_DATA[9];
 extern const unsigned char LETTER_Z_DATA[9];
 extern const unsigned char LETTER___DATA[9];
+extern const unsigned char LETTER_PERCENT_DATA[15];
 extern const unsigned char LETTER_UNDEFINED_DATA[9];
 
 extern const unsigned char SCORE_IMAGE_DATA[57]; //unused
