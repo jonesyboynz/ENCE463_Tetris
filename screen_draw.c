@@ -1,6 +1,6 @@
 /*
  * screen_draw.c
- *
+ *	contains extensive constant definitions and drawing functionality to "draw" different screen states.
  *  Created on: Aug 4, 2016
  *      Author: srj52
  */

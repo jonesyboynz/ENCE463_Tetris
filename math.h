@@ -1,6 +1,6 @@
 /*
  * math.h
- *
+ * Shares the mathematical functions with other files
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */

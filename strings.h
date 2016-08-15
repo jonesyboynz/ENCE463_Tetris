@@ -1,4 +1,5 @@
-//constant strings
+//Shares the constant strings
+//By Simon Jones
 
 #ifndef STRINGS_H
 #define STRINGS_H

@@ -1,6 +1,6 @@
 /*
  * board.c
- *
+ * Implements functionality that abstacts the concept of a game "board". The board is really a one-dimensional grid that represents a 2d grid that holds information regarding the state of the game.
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */

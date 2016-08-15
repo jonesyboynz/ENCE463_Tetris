@@ -1,6 +1,6 @@
 /*
  * text_images.h
- *
+ *	Shares the data for the letter and number image data.
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */

@@ -7,7 +7,7 @@ by simon jones
 #ifndef IMAGES_H
 #define IMAGES_H
 
-typedef struct image_s {
+typedef struct image_s { //structure of an image.
 	const unsigned char* image;
 	int width;
 	int height;

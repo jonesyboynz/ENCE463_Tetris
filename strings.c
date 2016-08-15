@@ -1,4 +1,5 @@
-//constant strings for the game
+//Defines a series of constant strings for use in the game engine
+//By Simon Jones
 
 #include "strings.h"
 

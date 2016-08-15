@@ -1,6 +1,6 @@
 /*
  * screen_draw.h
- *
+ *	Shares the screen drawing functions
  *  Created on: Aug 4, 2016
  *      Author: srj52
  */

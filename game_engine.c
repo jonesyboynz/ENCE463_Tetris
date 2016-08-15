@@ -1,4 +1,4 @@
-//Game engine API - Contains functions to drive the game engine
+//Defines functions for driving the tetris game system. Defines the game task.
 //By Simon Jones
 
 /* FreeRTOS includes. */
@@ -116,17 +116,19 @@ void erase_shadow_tetrominoe(Game* game);
 
 void reset_debug_timers(Game* game);
 
+
+//Main game engine task. Alternates between 4 loops - Start screen, Game running, Score screen and Debug Screen.
 void xGameEngineTask(void* parameters){ //the main task for the game engine
 	Game* game = (Game*) parameters;
 	while (TRUE){
 		//start screen loop
 		//
-		splash_screen_loop(game);
+		splash_screen_loop(game); 	//start screen
 		reset_game(game);
-		game_loop(game);
-		score_screen_loop(game);
+		game_loop(game);		 	//game running
+		score_screen_loop(game); 	//score screen
 #ifdef DEBUG_SCREEN_ENABLE
-		debug_screen_loop(game);
+		debug_screen_loop(game);	//debug screen
 #endif
 
 	}

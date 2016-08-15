@@ -1,6 +1,6 @@
 /*
  * tetrominoe.h
- *
+ *	Shares the Tetrominoe functions and defines the tetrominoe structure
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */
@@ -14,11 +14,11 @@
 #define TETROMINOE_GRID_LENGTH (TETROMINOE_GRID_WIDTH * TETROMINOE_GRID_HEIGHT)
 
 
-typedef struct tetrominoe_grid_s {
+typedef struct tetrominoe_grid_s { //An array that contains the tetrominoe pose data
 	const int array[TETROMINOE_GRID_LENGTH];
 } TetrominoeGrid;
 
-typedef struct tetrominoe_s {
+typedef struct tetrominoe_s { //abstracts a tetrominoe
 	int rotation_state;
 	int x;
 	int y;

@@ -1,6 +1,6 @@
 /*
  * buttons.c
- *
+ *	Abstracts the concept of a button on the stellaris. Defines functions for interacting with buttons and a task for polling the buttons
  *  Created on: Jul 25, 2016
  *      Author: srj52
  */
@@ -69,7 +69,8 @@ int button_event_occurred(Button* button, ButtonEvent* event){ //reads a button 
 	}
 }
 
-void xButtonReadTask(void* parameters){ //task to pereodically poll the buttons
+//TASK that pereodically polls the buttons and write any "button events" that occur onto the button event queue.
+void xButtonReadTask(void* parameters){
 	xQueueHandle button_queue = (xQueueHandle) parameters;
 	ButtonEvent event;
 	int i;

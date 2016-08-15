@@ -1,6 +1,6 @@
 /*
  * display.h
- *
+ * shares all the display functions and some display structues and variables.
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */
@@ -23,7 +23,7 @@
 #include "images.h"
 #include "include/queue.h"
 
-typedef struct display_task_s {
+typedef struct display_task_s { //abstact container for a display task.
 	void* data;
 	int x;
 	int y;

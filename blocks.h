@@ -1,3 +1,9 @@
+/*
+Blocks.h
+Prototype header file for a module that never materialised. The Idea here was to abstact the conecpt of a "block" in tetris, however the tetrominoe file implemented this functionality
+By Simon Jones
+*/
+
 #ifndef BLOCKS_H
 #define BLOCKS_H
 

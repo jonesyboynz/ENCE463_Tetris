@@ -1,6 +1,6 @@
 /*
  * board.h
- * abstacts the idea of a simple grid on which to layout the game data
+ * abstacts the idea of a simple grid on which to layout the game data. Header file - shares all implemented functions.
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */
@@ -8,7 +8,7 @@
 #ifndef BOARD_H_
 #define BOARD_H_
 
-typedef struct board_s {
+typedef struct board_s { //board structure. contains the grid and some metadata (width height) regarding it.
 	int* grid;
 	int width;
 	int height;

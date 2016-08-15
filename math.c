@@ -1,6 +1,6 @@
 /*
  * math.c
- *
+ * Implements basic mathematical functions including randomnumber generation
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */

@@ -1,6 +1,6 @@
 /*
  * tetris_background.h
- *
+ *	Shares the tetris background data with other files.
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */

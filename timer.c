@@ -1,6 +1,6 @@
 /*
  * timer.c
- *
+ *	implements basic timer functions.
  *  Created on: Jul 28, 2016
  *      Author: srj52
  */

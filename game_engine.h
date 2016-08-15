@@ -1,3 +1,8 @@
+/*
+Shares a few of the game engine functions as some of them are used in the debug modules (Ideally none of them should be shared)
+By Simon Jones
+*/
+
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
 
@@ -50,7 +55,7 @@
 #include "board.h"
 #include "buttons.h"
 
-typedef struct game_s {
+typedef struct game_s { //Game structure. Contains all of the variables needed by the game engine. 
 	Board* board;
 	Tetrominoe** tetrominoes;
 	int num_tetrominoes;

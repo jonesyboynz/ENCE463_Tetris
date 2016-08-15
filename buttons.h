@@ -1,6 +1,6 @@
 /*
  * buttons.h
- *
+ * Shares most of the implemented button functions and defines button-related structures and constants.
  *  Created on: Jul 25, 2016
  *      Author: srj52
  */
@@ -43,13 +43,13 @@
 #include "include/FreeRTOS.h"
 #include "include/queue.h"
 
-typedef struct button_event_s {
+typedef struct button_event_s { //container for button event information
 	int button_id;
 	int event_type;
 	int occurance_tick;
 } ButtonEvent;
 
-typedef struct button_s {
+typedef struct button_s { //container for a button's information
 	int id;
 	int port;
 	int current_state;
@@ -67,13 +67,13 @@ int read_button(Button* button);
 
 int button_event_occurred(Button* button, ButtonEvent* event);
 
-void xButtonReadTask(void* parameters);
+void xButtonReadTask(void* parameters); //Button TASK.
 
 void initalise_button_event_queue(xQueueHandle* queue);
 
 void enqueue_button_event(xQueueHandle* queue, ButtonEvent* event);
 
-//ALL THE INTERRUPT-BASED BUTTON PROCESSING IS BROKE
+//ALL THE INTERRUPT-BASED BUTTON PROCESSING IS BROKE. DO NOT USE
 
 void button_ish(void);
 

@@ -1,4 +1,4 @@
-//game over screen header file
+//game over screen header file. Shares the data defined in the c file
 //by simon jones
 //08/08/0216
 

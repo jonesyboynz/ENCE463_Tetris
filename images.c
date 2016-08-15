@@ -1,6 +1,6 @@
 /*
  * images.c
- *
+ * Defines a series of constant images for use in the game.
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */

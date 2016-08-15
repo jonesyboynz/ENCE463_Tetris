@@ -1,4 +1,4 @@
-//tetris start screen data
+//shares the tetris start screen data
 //by simon jones
 //4/8/2016
 

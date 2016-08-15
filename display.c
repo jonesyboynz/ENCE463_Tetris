@@ -1,6 +1,6 @@
 /*
  * display.c
- *
+ * An output module that defines functions for interation with the OLED screen. Also implements the Display Task.
  *  Created on: Jul 23, 2016
  *      Author: srj52
  */
@@ -124,7 +124,8 @@ void write_tetris_string(char* string, int x, int y){ //displays a string in the
 	}
 }
 
-void xDisplayTask(void* parameters){ //display task. handles all output to the rit display
+//This is the display task. It pereodically polls the display task queue and executes any dequeued display tasks.
+void xDisplayTask(void* parameters){
 	initalise_display();
 	xQueueHandle display_queue = (xQueueHandle) parameters;
 	DisplayTask task;
@@ -163,7 +164,7 @@ void execute_display_task(DisplayTask* task){ //executes a display task and free
 	}
 }
 
-void update_latency(DisplayTask* task){
+void update_latency(DisplayTask* task){ //updates the input latency variables.
 	int current_time = xTaskGetTickCount();
 	int difference = tick_difference((int) task -> data, current_time);
 	if (difference > MAX_TIMEOUT){

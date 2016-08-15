@@ -1,3 +1,7 @@
+#A simple python script that generates a blank image of a given size
+#By Simon Jones
+#Usage: python3 generate_blank_images.py <width> <height>
+
 import sys
 
 if len(sys.argv) == 3:

@@ -1,6 +1,6 @@
 /*
  * text_images.c
- *
+ *	Defines a series of images for letters and numbers.
  *  Created on: Jul 26, 2016
  *      Author: srj52
  */

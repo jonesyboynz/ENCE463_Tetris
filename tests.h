@@ -1,6 +1,6 @@
 /*
  * tests.h
- *
+ * Prototypes the test functions so the main file can access them
  *  Created on: Aug 10, 2016
  *      Author: srj52
  */
